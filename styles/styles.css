@@ -1,0 +1,24 @@
+    /* Resets */
+
+    *,
+    *:before,
+    *:after {
+        box-sizing: border-box;
+    }
+
+    * {
+        margin : 0;
+        padding: 0;
+    }
+
+    img {
+        max-width: 100%;
+        display  : block;
+    }
+
+    /* End resets */
+
+    .test {
+        border : 10px solid black;
+        display: none;
+    }
