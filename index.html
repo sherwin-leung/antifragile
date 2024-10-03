@@ -16,26 +16,39 @@
     </header>
 
     <main>
-        <section id="section-load-routine">
-            <button class="button-selection" id="button-load-routine" onclick="loadTest()">
-                Load Routine
+        <section id="section-new-exercise">
+            <button class="button-selection" id="button-new-exercise" onclick="toggleViewOnAndOff('div-new-exercise')">
+                New Exercise
             </button>
 
-            <div class="test" id="load">
-                <p>Load placeholder</p>
+            <div class="div-toggle-view" id="div-new-exercise">
+                <form onsubmit="saveNewExercise()">
+                    <label for="exercise-name">Name</label>
+                    <input type="text" id="new-exercise-input" name="exercise-name">
+                </form>
             </div>
         </section>
 
-        <section id="section-create-routine">
-            <button class="button-selection" id="button-create-routine" onclick="createTest()">
-                Create Routine
+        <section id="section-new-routine">
+            <button class="button-selection" id="button-new-routine" onclick="toggleViewOnAndOff('div-new-routine')">
+                New Routine
             </button>
 
-            <div class="test" id="create">
-                <p>Create placeholder</p>
+            <div class="div-toggle-view" id="div-new-routine">
+                <p>new routine</p>
             </div>
-
         </section>
+
+        <section id="section-workout">
+            <button class="button-selection" id="button-workout" onclick="toggleViewOnAndOff('div-workout')">
+                Workout
+            </button>
+
+            <div class="div-toggle-view" id="div-workout">
+                <p>workout</p>
+            </div>
+        </section>
+
     </main>
 </body>
 
