@@ -37,3 +37,7 @@
     }
 
     /* End label and input */
+
+    hr {
+        border: 5px solid pink;
+    }

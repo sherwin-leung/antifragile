@@ -1,5 +1,17 @@
-/** This function handles toggling on and off the view of certain contents when the main three buttons are clicked/tapped
- *
+/**
+ * Runs this function upon page load
+ */
+window.onload = pageLoad();
+
+/**
+ * This function is a collection of functions that need to be run upon the user loading the page
+ */
+function pageLoad() {
+     testDisplayExercises();
+}
+
+/**
+ * This function handles toggling on and off the view of certain contents when the main three buttons are clicked/tapped
  * @param divId indicates which div to toggle on and off
  */
 function toggleViewOnAndOff(divId) {
@@ -11,31 +23,6 @@ function toggleViewOnAndOff(divId) {
           view.style.display = "block";
      }
 }
-
-// ! Not going to use, just was used for practicing. Will delete
-
-const exercisesArray = [];
-
-function saveNewExerciseToArray() {
-     // Prevents page from refreshing
-     event.preventDefault();
-
-     // Stores the input's value
-     let inputValue = document.getElementById("new-exercise-input").value;
-     console.log(inputValue);
-
-     // Pushes the value into the array
-     exercisesArray.push(inputValue);
-     console.log(exercisesArray);
-
-     // Resets the input field to be empty
-     document.getElementById("new-exercise-input").value = "";
-
-     // Toggles view off again
-     toggleViewOnAndOff("div-new-exercise");
-}
-
-// ! End
 
 // TODO: Working on the code below
 
@@ -64,4 +51,12 @@ function saveNewExerciseToLocalStorage() {
      // Resets the input field to be empty
      document.getElementById("new-exercise-input").value = "";
      console.log("step 5");
+
+     // ! remove later on
+     testDisplayExercises();
+}
+
+function testDisplayExercises() {
+     let exercise = localStorage.getItem("exerciseData");
+     document.getElementById("test").innerHTML = exercise;
 }
