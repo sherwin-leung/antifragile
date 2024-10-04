@@ -45,17 +45,16 @@ function saveNewExerciseToLocalStorage() {
      let newExercise = document.getElementById("new-exercise-input").value;
      console.log("step 2");
 
-     // const newExerciseData = {
-     //      name: newExercise,
-     // };
+     const newExerciseData = {
+          name: newExercise,
+     };
 
      // Append name of new exercise to existing data
-     existingData.push(newExercise);
-     console.log(existingData);
+     existingData.push(newExerciseData);
      console.log("step 3");
 
      // Save data to localStorage
-     localStorage.setItem("exerciseData", JSON.stringify(newExercise));
+     localStorage.setItem("exerciseData", JSON.stringify(newExerciseData));
      console.log("step 4");
 
      // Resets the input field to be empty
