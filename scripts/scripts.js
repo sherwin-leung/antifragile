@@ -12,6 +12,8 @@ function toggleViewOnAndOff(divId) {
      }
 }
 
+// ! Not going to use, just was used for practicing. Will delete
+
 const exercisesArray = [];
 
 function saveNewExerciseToArray() {
@@ -33,29 +35,30 @@ function saveNewExerciseToArray() {
      toggleViewOnAndOff("div-new-exercise");
 }
 
+// ! End
+
+// TODO: Working on the code below
+
 function saveNewExerciseToLocalStorage() {
      event.preventDefault();
-     console.log("just in");
+     console.log("stepping in");
 
      // Get existing data from localStorage or retrieve an empty array if there is none as a fallback
-     const existingData = JSON.parse(localStorage.getItem("exerciseData")) || [];
+     const existingExerciseData = JSON.parse(localStorage.getItem("exerciseData")) || [];
      console.log("step 1");
+     console.log(`existingExerciseData is type of:  ${typeof existingExerciseData}`);
 
      // Get input's value (the name of the exercise)
      let newExercise = document.getElementById("new-exercise-input").value;
      console.log("step 2");
 
-     // const newExerciseData = {
-     //      name: newExercise,
-     // };
-
      // Append name of new exercise to existing data
-     existingData.push(newExercise);
-     console.log(existingData);
+     existingExerciseData.push(newExercise);
+     console.log(existingExerciseData);
      console.log("step 3");
 
      // Save data to localStorage
-     localStorage.setItem("exerciseData", JSON.stringify(newExercise));
+     localStorage.setItem("exerciseData", JSON.stringify(existingExerciseData));
      console.log("step 4");
 
      // Resets the input field to be empty
