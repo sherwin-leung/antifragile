@@ -7,6 +7,7 @@
     <title>Exercise Timer</title>
 
     <link rel="stylesheet" href="styles/styles.css">
+    <script src="scripts/jquery-3.7.1.min.js" defer></script>
     <script src="scripts/scripts.js" defer></script>
 </head>
 
@@ -22,7 +23,7 @@
             </button>
 
             <div class="div-toggle-view" id="div-new-exercise">
-                <form onsubmit="saveNewExercise()">
+                <form onsubmit="saveNewExerciseToLocalStorage()">
                     <label for="exercise-name">Name</label>
                     <input type="text" id="new-exercise-input" name="exercise-name">
                 </form>

@@ -21,11 +21,10 @@
     /* START DIV TOGGLE VIEW */
 
     .div-toggle-view {
-        border : 5px solid black;
-        /* uncomment line below when demoing */
-        display: none;
-        padding: 2rem;
-        margin : 1rem 0;
+        border    : 5px solid black;
+        /* display: none; */
+        padding   : 2rem;
+        margin    : 1rem 0;
     }
 
     /* End div toggle view */
