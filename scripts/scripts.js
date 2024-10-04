@@ -1,7 +1,7 @@
 /**
  * * Global Variables
  */
-const existingExerciseArray = [];
+const existingExerciseArray = []; // Holds the names of all exercises that have already been created as buttons already by user
 
 /**
  * * Helper Functions
@@ -94,12 +94,18 @@ function populateButtonsForNewRoutines() {
           if (checkIfExerciseAlreadyExists(existingExerciseDataInObjectForm[i].name)) {
                continue;
           } else {
-               const newButton = document.createElement("button");
+               // Grab the next exercise that doesn't already exist as a button
                const exerciseName = existingExerciseDataInObjectForm[i].name;
-               // TODO: Should add a class/ids to these buttons?
 
+               // Create a button for it and assign various properties to it
+               const newButton = document.createElement("button");
+               newButton.classList.add("exercise-button");
                newButton.innerHTML = exerciseName;
-               document.getElementById("div-new-routine").append(newButton);
+
+               // Append the button to a parent
+               document.getElementById("exercise-buttons-container").append(newButton);
+
+               // Add the new exercise the array that tracks which exercises exist already
                existingExerciseArray.push(exerciseName.toLowerCase());
           }
      }
@@ -113,4 +119,9 @@ function testDisplayExercises() {
      document.getElementById("testing-area").innerHTML = exercises;
 }
 
-console.log(existingExerciseArray);
+function saveNewRoutineToLocalStorage() {
+     event.preventDefault();
+
+     const routineName = document.getElementById("new-routine-input").value;
+     console.log(routineName);
+}

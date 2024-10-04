@@ -18,12 +18,16 @@
 
     /* End resets */
 
+    /* ! Can delete later */
+    .test-area {
+        border: 5px solid pink;
+    }
+
     /* * START DIV TOGGLE VIEW */
 
+    /* Sections are hidden on page load */
     .div-toggle-view {
         /* display: none; */
-        margin : 1rem 0;
-        padding: 1rem;
     }
 
     #div-new-exercise {
@@ -49,9 +53,15 @@
 
     /* End label and input */
 
-    /* * START BUTTON */
+    /* * START NEW-ROUTINE SECTION */
 
-    /* ! Can delete later  */
-    .test-area {
-        border: 5px solid pink;
+    .exercise-buttons-container {
+        display        : flex;
+        flex-wrap      : wrap;
+        gap            : 1rem;
+        justify-content: space-evenly;
+    }
+
+    .exercise-button {
+        width: 30%;
     }

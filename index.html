@@ -7,7 +7,6 @@
     <title>Exercise Timer</title>
 
     <link rel="stylesheet" href="styles/styles.css">
-    <script src="scripts/jquery-3.7.1.min.js" defer></script>
     <script src="scripts/scripts.js" defer></script>
 </head>
 
@@ -25,6 +24,7 @@
             <br>
         </div>
 
+        <!-- ! New Exercise Section -->
         <section id="section-new-exercise">
             <button class="button-selection" id="button-new-exercise" onclick="toggleViewOnAndOff('div-new-exercise')">
                 New Exercise
@@ -32,21 +32,28 @@
 
             <div class="div-toggle-view" id="div-new-exercise">
                 <form onsubmit="saveNewExerciseToLocalStorage()">
-                    <label for="exercise-name">Name</label>
+                    <label for="exercise-name">Exercise Name</label>
                     <input type="text" id="new-exercise-input" name="exercise-name">
                 </form>
             </div>
         </section>
 
+        <!--! New Routine Section -->
         <section id="section-new-routine">
             <button class="button-selection" id="button-new-routine" onclick="toggleViewOnAndOff('div-new-routine')">
                 New Routine
             </button>
 
             <div class="div-toggle-view" id="div-new-routine">
+                <form onsubmit="saveNewRoutineToLocalStorage()">
+                    <label for="routine-name">Routine Name</label>
+                    <input type="text" id="new-routine-input" name="routine-name">
+                </form>
+                <div class="exercise-buttons-container" id="exercise-buttons-container"></div>
             </div>
         </section>
 
+        <!-- ! Workout Section -->
         <section id="section-workout">
             <button class="button-selection" id="button-workout" onclick="toggleViewOnAndOff('div-workout')">
                 Workout
@@ -57,8 +64,6 @@
             </div>
         </section>
 
-        <!-- testing button -->
-        <!-- <button onclick="populateButtonsForNewRoutines()">Refresh</button> -->
     </main>
 </body>
 
