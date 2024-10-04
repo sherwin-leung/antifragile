@@ -39,8 +39,6 @@ function saveNewExerciseToArray() {
 
 // TODO: Working on the code below
 
-console.log("i don't want this code");
-
 function saveNewExerciseToLocalStorage() {
      event.preventDefault();
      console.log("stepping in");
