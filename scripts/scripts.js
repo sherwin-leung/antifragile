@@ -15,7 +15,7 @@ function pageLoad() {
  * @param divId indicates which div to toggle on and off
  */
 function toggleViewOnAndOff(divId) {
-     let view = document.getElementById(divId);
+     const view = document.getElementById(divId);
 
      if (view.style.display === "block") {
           view.style.display = "none";
@@ -24,39 +24,41 @@ function toggleViewOnAndOff(divId) {
      }
 }
 
-// TODO: Working on the code below
-
+/**
+ * This function handles the saving of new exercises into localStorage
+ */
+// TODO: Make it so that exercise names must be unique
 function saveNewExerciseToLocalStorage() {
      event.preventDefault();
-     console.log("stepping in");
 
      // Get existing data from localStorage or retrieve an empty array if there is none as a fallback
-     const existingExerciseData = JSON.parse(localStorage.getItem("exerciseData")) || [];
-     console.log("step 1");
-     console.log(`existingExerciseData is type of:  ${typeof existingExerciseData}`);
+     const existingExerciseData = JSON.parse(localStorage.getItem("exerciseDataKey")) || [];
 
-     // Get input's value (the name of the exercise)
-     let newExercise = document.getElementById("new-exercise-input").value;
-     console.log("step 2");
+     // Creates a new exercise object
+     const newExercise = {
+          name: document.getElementById("new-exercise-input").value,
+          category: "",
+     };
 
-     // Append name of new exercise to existing data
+     // Pushes the new exercise object into the existing exercise data
      existingExerciseData.push(newExercise);
-     console.log(existingExerciseData);
-     console.log("step 3");
 
-     // Save data to localStorage
-     localStorage.setItem("exerciseData", JSON.stringify(existingExerciseData));
-     console.log("step 4");
+     // Save existing data with the new exercise to localStorage
+     localStorage.setItem("exerciseDataKey", JSON.stringify(existingExerciseData));
 
      // Resets the input field to be empty
      document.getElementById("new-exercise-input").value = "";
-     console.log("step 5");
 
      // ! remove later on
      testDisplayExercises();
 }
 
+// * WORKING ON CODE BELOW
+
+// ! remove later on
 function testDisplayExercises() {
-     let exercise = localStorage.getItem("exerciseData");
+     const exercise = localStorage.getItem("exerciseDataKey");
      document.getElementById("test").innerHTML = exercise;
 }
+
+function populateButtonsForRoutine() {}

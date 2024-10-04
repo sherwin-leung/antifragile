@@ -21,10 +21,21 @@
     /* START DIV TOGGLE VIEW */
 
     .div-toggle-view {
-        border    : 5px solid black;
         /* display: none; */
-        padding   : 2rem;
-        margin    : 1rem 0;
+        margin : 1rem 0;
+        padding: 1rem;
+    }
+
+    #div-new-exercise {
+        border: 5px solid rgb(233, 81, 81);
+    }
+
+    #div-new-routine {
+        border: 5px solid rgb(73, 163, 73);
+    }
+
+    #div-workout {
+        border: 5px solid rgb(67, 67, 230);
     }
 
     /* End div toggle view */
@@ -38,6 +49,12 @@
 
     /* End label and input */
 
-    hr {
+    /* ! Can delete later  */
+    .test-area {
         border: 5px solid pink;
     }
+
+    /* section {
+        border    : 5px solid black;
+        margin-top: 10px;
+    } */
