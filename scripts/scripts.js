@@ -1,4 +1,9 @@
 /**
+ * Global variables
+ */
+const alreadyCreatedButtonsArray = []; // Used for populateButtonsForNewRoutines()
+
+/**
  * Runs this function upon page load
  */
 window.onload = pageLoad();
@@ -8,6 +13,7 @@ window.onload = pageLoad();
  */
 function pageLoad() {
      testDisplayExercises();
+     populateButtonsForNewRoutines();
 }
 
 /**
@@ -34,13 +40,21 @@ function saveNewExerciseToLocalStorage() {
      // Get existing data from localStorage or retrieve an empty array if there is none as a fallback
      const existingExerciseData = JSON.parse(localStorage.getItem("exerciseDataKey")) || [];
 
-     // Creates a new exercise object
-     const newExercise = {
-          name: document.getElementById("new-exercise-input").value,
-          category: "",
-     };
+     // Create class for Exercise Objects
+     class Exercise {
+          constructor(name, category) {
+               this.name = name;
+               this.category = category;
+          }
+     }
 
-     // Pushes the new exercise object into the existing exercise data
+     // Store user input value
+     const exerciseName = document.getElementById("new-exercise-input").value;
+
+     // Create a new Exercise Object, its name will be the value from input
+     const newExercise = new Exercise(exerciseName, "");
+
+     // Pushes the new Exercise Object into the existing exercise data
      existingExerciseData.push(newExercise);
 
      // Save existing data with the new exercise to localStorage
@@ -49,16 +63,40 @@ function saveNewExerciseToLocalStorage() {
      // Resets the input field to be empty
      document.getElementById("new-exercise-input").value = "";
 
-     // ! remove later on
+     // Populates routine section with a new button for the new exercise
+     populateButtonsForNewRoutines();
+
+     // ! for testing area, remove later
      testDisplayExercises();
 }
 
 // * WORKING ON CODE BELOW
 
-// ! remove later on
+// ! for testing area, remove later
 function testDisplayExercises() {
-     const exercise = localStorage.getItem("exerciseDataKey");
-     document.getElementById("test").innerHTML = exercise;
+     const exercises = localStorage.getItem("exerciseDataKey");
+     document.getElementById("testing-area").innerHTML = exercises;
 }
 
-function populateButtonsForRoutine() {}
+function populateButtonsForNewRoutines() {
+     // Grabs existing exercises data from localStorage and converts it into an object
+     const existingExerciseDataInStringForm = localStorage.getItem("exerciseDataKey");
+     const existingExerciseDataInObjectForm = existingExerciseDataInStringForm ? JSON.parse(existingExerciseDataInStringForm) : [];
+
+     for (i = 0; i < existingExerciseDataInObjectForm.length; i++) {
+          let doesExerciseAlreadyExist = alreadyCreatedButtonsArray.includes(existingExerciseDataInObjectForm[i].name);
+
+          // If an exercise already exists as a button, don't create another one for it
+          if (doesExerciseAlreadyExist) {
+               continue;
+          } else {
+               const newButton = document.createElement("button");
+               const exerciseName = existingExerciseDataInObjectForm[i].name;
+               // TODO: Should add a class/ids to these buttons?
+
+               newButton.innerHTML = exerciseName;
+               document.getElementById("div-new-routine").append(newButton);
+               alreadyCreatedButtonsArray.push(exerciseName);
+          }
+     }
+}

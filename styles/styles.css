@@ -1,4 +1,4 @@
-    /* START RESETS */
+    /* * START RESETS */
 
     *,
     *:before,
@@ -18,7 +18,7 @@
 
     /* End resets */
 
-    /* START DIV TOGGLE VIEW */
+    /* * START DIV TOGGLE VIEW */
 
     .div-toggle-view {
         /* display: none; */
@@ -40,7 +40,7 @@
 
     /* End div toggle view */
 
-    /* START LABEL AND INPUT */
+    /* * START LABEL AND INPUT */
 
     label,
     input {
@@ -49,12 +49,9 @@
 
     /* End label and input */
 
+    /* * START BUTTON */
+
     /* ! Can delete later  */
     .test-area {
         border: 5px solid pink;
     }
-
-    /* section {
-        border    : 5px solid black;
-        margin-top: 10px;
-    } */
