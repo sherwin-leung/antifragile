@@ -76,6 +76,9 @@ function saveNewExerciseToLocalStorage() {
      // Always resets the input field to be empty
      document.getElementById("new-exercise-input").value = "";
 
+     // Hide the display again
+     document.getElementById("div-new-exercise").style.display = "none";
+
      // ! for testing area, remove later
      testDisplayExercises();
 }
@@ -122,6 +125,20 @@ function testDisplayExercises() {
 function saveNewRoutineToLocalStorage() {
      event.preventDefault();
 
+     // Get existing data from localStorage or retrieve an empty array if there is none as a fallback
+     const existingRoutineData = JSON.parse(localStorage.getItem("exerciseRoutineKey")) || [];
+
+     // Create class for Routine Objects
+     class Routine {
+          constructor(name, list) {
+               this.name = name;
+               this.list = list;
+          }
+     }
+
      const routineName = document.getElementById("new-routine-input").value;
      console.log(routineName);
+
+     if (routineName.trim().length > 0 && checkIfExerciseAlreadyExists(routineName) === false) {
+     }
 }
