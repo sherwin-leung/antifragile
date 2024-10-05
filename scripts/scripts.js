@@ -1,14 +1,16 @@
 /**
  * * Global Variables
  */
-const existingExerciseArray = []; // Holds the names of all exercises that have already been created as buttons already by user
+const existingExerciseArray = []; // Holds the names of all exercises that have already been created as buttons by user
+const existingRoutineArray = []; // Holds the names of all routines that have already been created by user
 
 /**
  * * Helper Functions
  */
 
-function checkIfExerciseAlreadyExists(exercise) {
-     return existingExerciseArray.includes(exercise.toLowerCase());
+// Check if an exercise or routine already exists in localStorage by checking arrays stored as global variables and seeing if the name already exists in it
+function checkIfAlreadyExistsInLocalStorage(arrayToCheck, name) {
+     return arrayToCheck.includes(name.toLowerCase());
 }
 
 /**
@@ -59,7 +61,7 @@ function saveNewExerciseToLocalStorage() {
      const exerciseName = document.getElementById("new-exercise-input").value;
 
      // Only create a new exercise if it isn't an empty string and it doesn't already exist
-     if (exerciseName.trim().length > 0 && checkIfExerciseAlreadyExists(exerciseName) === false) {
+     if (exerciseName.trim().length > 0 && checkIfAlreadyExistsInLocalStorage(existingExerciseArray, exerciseName) === false) {
           // Create a new Exercise Object, its name will be the value from input
           const newExercise = new Exercise(exerciseName, "");
 
@@ -77,7 +79,7 @@ function saveNewExerciseToLocalStorage() {
      document.getElementById("new-exercise-input").value = "";
 
      // Hide the display again
-     document.getElementById("div-new-exercise").style.display = "none";
+     // document.getElementById("div-new-exercise").style.display = "none";
 
      // ! for testing area, remove later
      testDisplayExercises();
@@ -94,7 +96,7 @@ function populateButtonsForNewRoutines() {
 
      for (i = 0; i < existingExerciseDataInObjectForm.length; i++) {
           // If an exercise already exists as a button, don't create another one for it
-          if (checkIfExerciseAlreadyExists(existingExerciseDataInObjectForm[i].name)) {
+          if (checkIfAlreadyExistsInLocalStorage(existingExerciseArray, existingExerciseDataInObjectForm[i].name)) {
                continue;
           } else {
                // Grab the next exercise that doesn't already exist as a button
@@ -139,6 +141,7 @@ function saveNewRoutineToLocalStorage() {
      const routineName = document.getElementById("new-routine-input").value;
      console.log(routineName);
 
-     if (routineName.trim().length > 0 && checkIfExerciseAlreadyExists(routineName) === false) {
+     if (routineName.trim().length > 0 && checkIfAlreadyExistsInLocalStorage(existingRoutineArray, routineName) === false) {
+          // TODO CONTINUE FROM HERE
      }
 }
