@@ -60,7 +60,7 @@ function saveNewExerciseToLocalStorage() {
      // Store user input value
      const exerciseName = document.getElementById("new-exercise-input").value;
 
-     // Only create a new exercise if it isn't an empty string and it doesn't already exist
+     // Only create a new exercise if its name isn't an empty string and it doesn't already exist
      if (exerciseName.trim().length > 0 && checkIfAlreadyExistsInLocalStorage(existingExerciseArray, exerciseName) === false) {
           // Create a new Exercise Object, its name will be the value from input
           const newExercise = new Exercise(exerciseName, "");
@@ -132,18 +132,23 @@ function saveNewRoutineToLocalStorage() {
 
      // Create class for Routine Objects
      class Routine {
-          constructor(name, list) {
+          constructor(name, listOfExercises) {
                this.name = name;
-               this.list = list;
+               this.listOfExercises = listOfExercises;
           }
      }
 
      const routineName = document.getElementById("new-routine-input").value;
      console.log(routineName);
 
+     // Only create a new routine if its name isn't an empty string and it doesn't already exist
      if (routineName.trim().length > 0 && checkIfAlreadyExistsInLocalStorage(existingRoutineArray, routineName) === false) {
           // TODO CONTINUE FROM HERE
      }
 }
 
-// Testing GitHub Desktop switch to laptop
+// have to check if name is valid and doesn't already exist DONE
+
+// create an empty array and then add in the name of exercise the user presses the associated button for. allow users to add duplicate
+
+// create a new Routine object using the name and array with exercises as the parameters
