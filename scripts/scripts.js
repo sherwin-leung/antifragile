@@ -1,8 +1,6 @@
 /**
  * * Global Variables
  */
-const existingExerciseArray = []; // Holds the names of all exercises that have already been created as buttons by user
-const existingRoutineArray = []; // Holds the names of all routines that have already been created by user
 
 /**
  * * Constructors for various Objects
@@ -30,18 +28,31 @@ function pageLoad() {
 /**
  * * Helper Functions
  *
- *  checkIfAlreadyExistsInLocalStorage() checks if an exercise or routine already exists in localStorage by checking arrays stored as global variables and seeing if the name already exists in it
+ * checkIfAlreadyExistsInLocalStorage() checks if an exercise or routine already exists in localStorage
+ *
+ * toTitleCase() changes the first letter of each word in a string to capital using regex
  */
 // ! for testing area, remove later
 function testDisplayExercises() {
+     // puts stuff in the testing area
      const exercises = localStorage.getItem("exerciseDataKey");
      document.getElementById("testing-area").innerHTML = exercises;
-
-     console.log(existingExerciseArray);
 }
 
 function checkIfAlreadyExistsInLocalStorage(arrayToCheck, name) {
-     return arrayToCheck.includes(name.toLowerCase());
+     for (i = 0; i < arrayToCheck.length; i++) {
+          if (arrayToCheck[i].name === name) {
+               return true;
+          }
+     }
+
+     return false;
+}
+
+function toTitleCase(string) {
+     return string.toLowerCase().replace(/\b\w/g, function (s) {
+          return s.toUpperCase();
+     });
 }
 
 /**
@@ -67,11 +78,12 @@ function saveNewExerciseToLocalStorage() {
      // Get existing data from localStorage or retrieve an empty array if there is none as a fallback
      const existingExerciseData = JSON.parse(localStorage.getItem("exerciseDataKey")) || [];
 
-     // Store user input value
+     // Store user's input
      const exerciseName = document.getElementById("new-exercise-input").value;
+     // const exerciseName = toTitleCase(document.getElementById("new-exercise-input").value);
 
      // Only create a new Exercise if its name isn't an empty string and it doesn't already exist
-     if (exerciseName.trim().length > 0 && checkIfAlreadyExistsInLocalStorage(existingExerciseArray, exerciseName) === false) {
+     if (exerciseName.trim().length > 0 && checkIfAlreadyExistsInLocalStorage(existingExerciseData, exerciseName) === false) {
           // Create a new Exercise Object and pushes it into the existing exercise data. Afterwards, save existing data with the new exercise to localStorage
           const newExercise = new Exercise(exerciseName, "");
           existingExerciseData.push(newExercise);
@@ -79,9 +91,6 @@ function saveNewExerciseToLocalStorage() {
 
           // Refreshes buttons
           refreshExerciseButtons();
-
-          // Add the new exercise's namee the global array that tracks which exercises exist already
-          existingExerciseArray.push(exerciseName.toLowerCase());
      }
 
      // Always resets the input field to be empty
@@ -103,7 +112,7 @@ function refreshExerciseButtons() {
 }
 
 function clearExerciseButtons() {
-     let parentButtonsContainer = document.getElementById("exercise-buttons-container");
+     const parentButtonsContainer = document.getElementById("exercise-buttons-container");
      let childButton = parentButtonsContainer.firstElementChild;
 
      while (childButton) {
@@ -124,39 +133,59 @@ function renderExerciseButtons() {
      const existingExerciseDataInObjectForm = existingExerciseDataInStringForm ? JSON.parse(existingExerciseDataInStringForm) : [];
 
      for (i = 0; i < existingExerciseDataInObjectForm.length; i++) {
-          // Grab the name of the exercise in the current index
-          const exerciseName = existingExerciseDataInObjectForm[i].name;
-
           // Create a button for it and assign various properties to it, then append it to the parent
+          const exerciseName = existingExerciseDataInObjectForm[i].name;
           const newButton = document.createElement("button");
+
           newButton.classList.add("exercise-button");
           newButton.innerHTML = exerciseName;
           document.getElementById("exercise-buttons-container").append(newButton);
      }
+
+     // Add Even Listeners to to all exercise buttons
+     addEventListenerToExerciseButtons();
 }
 
 // TODO: WORKING ON CODE BELOW
 
-// Do this after eventhandler part for the timer
-function saveNewRoutineToLocalStorage() {
-     event.preventDefault();
+function addEventListenerToExerciseButtons() {
+     const exerciseButtons = document.querySelectorAll(".exercise-button");
 
-     // Get existing data from localStorage or retrieve an empty array if there is none as a fallback
-     const existingRoutineData = JSON.parse(localStorage.getItem("exerciseRoutineKey")) || [];
+     exerciseButtons.forEach(function (button) {
+          button.addEventListener("click", function () {
+               button.style.backgroundColor = "#181818";
+               button.style.color = "whitesmoke";
 
-     // Create class for Routine Objects
-     class Routine {
-          constructor(name, listOfExercises) {
-               this.name = name;
-               this.listOfExercises = listOfExercises;
-          }
-     }
-
-     const routineName = document.getElementById("new-routine-input").value;
-     console.log(routineName);
-
-     // Only create a new Routine if its name isn't an empty string and it doesn't already exist
-     if (routineName.trim().length > 0 && checkIfAlreadyExistsInLocalStorage(existingRoutineArray, routineName) === false) {
-          // ? TODO CONTINUE FROM HERE once ready to continue with this function
-     }
+               const inputTimer = document.createElement("input");
+               inputTimer.type = "number";
+               // document.getElementById("test").append(inputTimer);
+               button.append(inputTimer);
+          });
+     });
 }
+
+function removeEventListenerToExerciseButtons() {}
+
+// Do this after eventhandler part for the timer
+// function saveNewRoutineToLocalStorage() {
+//      event.preventDefault();
+
+//      // Get existing data from localStorage or retrieve an empty array if there is none as a fallback
+//      const existingRoutineData = JSON.parse(localStorage.getItem("routineDataKey")) || [];
+
+//      // Create class for Routine Objects
+//      class Routine {
+//           constructor(name, listOfExercises) {
+//                this.name = name;
+//                this.listOfExercises = listOfExercises;
+//           }
+//      }
+
+//      const routineName = document.getElementById("new-routine-input").value;
+//      console.log(routineName);
+
+//      // Only create a new Routine if its name isn't an empty string and it doesn't already exist
+//      if (routineName.trim().length > 0 && checkIfAlreadyExistsInLocalStorage(existingRoutineArray, routineName) === false) {
+//           // ? TODO CONTINUE FROM HERE once ready to continue with this function
+//      }
+// }
