@@ -45,7 +45,6 @@ function checkIfAlreadyExistsInLocalStorage(arrayToCheck, name) {
                return true;
           }
      }
-
      return false;
 }
 
@@ -142,50 +141,28 @@ function renderExerciseButtons() {
           document.getElementById("exercise-buttons-container").append(newButton);
      }
 
-     // Add Even Listeners to to all exercise buttons
-     addEventListenerToExerciseButtons();
+     // Add Event Listeners to to all exercise buttons
+     // addEventListenerToExerciseButtons();
 }
 
 // TODO: WORKING ON CODE BELOW
 
-function addEventListenerToExerciseButtons() {
-     const exerciseButtons = document.querySelectorAll(".exercise-button");
+// function addEventListenerToExerciseButtons() {
+//      const exerciseButtons = document.querySelectorAll(".exercise-button");
 
-     exerciseButtons.forEach(function (button) {
-          button.addEventListener("click", function () {
-               button.style.backgroundColor = "#181818";
-               button.style.color = "whitesmoke";
+//      exerciseButtons.forEach(function (button) {
+//           button.addEventListener("click", function () {
+//                // Changing styles for visual clarity
+//                button.style.backgroundColor = "pink";
 
-               const inputTimer = document.createElement("input");
-               inputTimer.type = "number";
-               // document.getElementById("test").append(inputTimer);
-               button.append(inputTimer);
-          });
-     });
-}
+//                // Inserting timer input
+//                const newInputTimer = document.createElement("input");
+//                newInputTimer.type = "number";
+//                button.append(newInputTimer);
 
-function removeEventListenerToExerciseButtons() {}
-
-// Do this after eventhandler part for the timer
-// function saveNewRoutineToLocalStorage() {
-//      event.preventDefault();
-
-//      // Get existing data from localStorage or retrieve an empty array if there is none as a fallback
-//      const existingRoutineData = JSON.parse(localStorage.getItem("routineDataKey")) || [];
-
-//      // Create class for Routine Objects
-//      class Routine {
-//           constructor(name, listOfExercises) {
-//                this.name = name;
-//                this.listOfExercises = listOfExercises;
-//           }
-//      }
-
-//      const routineName = document.getElementById("new-routine-input").value;
-//      console.log(routineName);
-
-//      // Only create a new Routine if its name isn't an empty string and it doesn't already exist
-//      if (routineName.trim().length > 0 && checkIfAlreadyExistsInLocalStorage(existingRoutineArray, routineName) === false) {
-//           // ? TODO CONTINUE FROM HERE once ready to continue with this function
-//      }
+//                const exerciseButton = document.querySelector(".exercise-button");
+//                const parent = document.querySelector(".exercise-button").parentNode;
+//                parent.insertBefore(newInputTimer, exerciseButton.nextSibling);
+//           });
+//      });
 // }
