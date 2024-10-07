@@ -15,15 +15,6 @@ class Exercise {
 }
 
 /**
- * * Helper Functions
- */
-
-// Check if an exercise or routine already exists in localStorage by checking arrays stored as global variables and seeing if the name already exists in it
-function checkIfAlreadyExistsInLocalStorage(arrayToCheck, name) {
-     return arrayToCheck.includes(name.toLowerCase());
-}
-
-/**
  * * On page load, run this function
  */
 window.onload = pageLoad();
@@ -34,6 +25,23 @@ window.onload = pageLoad();
 function pageLoad() {
      testDisplayExercises();
      refreshExerciseButtons();
+}
+
+/**
+ * * Helper Functions
+ *
+ *  checkIfAlreadyExistsInLocalStorage() checks if an exercise or routine already exists in localStorage by checking arrays stored as global variables and seeing if the name already exists in it
+ */
+// ! for testing area, remove later
+function testDisplayExercises() {
+     const exercises = localStorage.getItem("exerciseDataKey");
+     document.getElementById("testing-area").innerHTML = exercises;
+
+     console.log(existingExerciseArray);
+}
+
+function checkIfAlreadyExistsInLocalStorage(arrayToCheck, name) {
+     return arrayToCheck.includes(name.toLowerCase());
 }
 
 /**
@@ -64,32 +72,36 @@ function saveNewExerciseToLocalStorage() {
 
      // Only create a new Exercise if its name isn't an empty string and it doesn't already exist
      if (exerciseName.trim().length > 0 && checkIfAlreadyExistsInLocalStorage(existingExerciseArray, exerciseName) === false) {
-          // Create a new Exercise Object, its name will be the value from input
+          // Create a new Exercise Object and pushes it into the existing exercise data. Afterwards, save existing data with the new exercise to localStorage
           const newExercise = new Exercise(exerciseName, "");
-
-          // Pushes the new Exercise Object into the existing exercise data
           existingExerciseData.push(newExercise);
-
-          // Save existing data with the new exercise to localStorage
           localStorage.setItem("exerciseDataKey", JSON.stringify(existingExerciseData));
 
-          // Refreshes buttons to display new one created
+          // Refreshes buttons
           refreshExerciseButtons();
+
+          // Add the new exercise's namee the global array that tracks which exercises exist already
+          existingExerciseArray.push(exerciseName.toLowerCase());
      }
 
      // Always resets the input field to be empty
      document.getElementById("new-exercise-input").value = "";
-
-     // ! Enable when deploy
-     // document.getElementById("div-new-exercise").style.display = "none";
 
      // ! for testing area, remove later
      testDisplayExercises();
 }
 
 /**
- * This function clears all existing exercise buttons
+ * The following three functions work together
+ * refreshExerciseButtons() couples the two following functions together
+ * clearExerciseButtons() which clears all existing exercise buttons
+ * renderExerciseButtons() which renders all the exercise buttons anew
  */
+function refreshExerciseButtons() {
+     clearExerciseButtons();
+     renderExerciseButtons();
+}
+
 function clearExerciseButtons() {
      let parentButtonsContainer = document.getElementById("exercise-buttons-container");
      let childButton = parentButtonsContainer.firstElementChild;
@@ -100,9 +112,6 @@ function clearExerciseButtons() {
      }
 }
 
-/**
- * This function renders all exercises stored in the localStorage exercise array as buttons
- */
 function renderExerciseButtons() {
      // Create the Add Rest button which is always at the beginning
      const restButton = document.createElement("button");
@@ -123,30 +132,12 @@ function renderExerciseButtons() {
           newButton.classList.add("exercise-button");
           newButton.innerHTML = exerciseName;
           document.getElementById("exercise-buttons-container").append(newButton);
-
-          // Add the new exercise the global array that tracks which exercises exist already
-          existingExerciseArray.push(exerciseName.toLowerCase());
      }
 }
 
-/**
- * This function couples two functions together
- * clearExerciseButtons() clears existing exercise buttons
- * renderExerciseButtons() renders all the buttons anew
- */
-function refreshExerciseButtons() {
-     clearExerciseButtons();
-     renderExerciseButtons();
-}
+// TODO: WORKING ON CODE BELOW
 
-// ! for testing area, remove later
-function testDisplayExercises() {
-     const exercises = localStorage.getItem("exerciseDataKey");
-     document.getElementById("testing-area").innerHTML = exercises;
-}
-
-// * WORKING ON CODE BELOW
-
+// Do this after eventhandler part for the timer
 function saveNewRoutineToLocalStorage() {
      event.preventDefault();
 
@@ -166,12 +157,6 @@ function saveNewRoutineToLocalStorage() {
 
      // Only create a new Routine if its name isn't an empty string and it doesn't already exist
      if (routineName.trim().length > 0 && checkIfAlreadyExistsInLocalStorage(existingRoutineArray, routineName) === false) {
-          // TODO CONTINUE FROM HERE
+          // ? TODO CONTINUE FROM HERE once ready to continue with this function
      }
 }
-
-// have to check if name is valid and doesn't already exist DONE
-
-// create an empty array and then add in the name of exercise the user presses the associated button for. allow users to add duplicate
-
-// create a new Routine object using the name and array with exercises as the parameters
