@@ -56,13 +56,19 @@
 
     /* * START NEW-ROUTINE SECTION */
 
-    .exercise-buttons-container {
+    .exercise-cards-container {
         display              : grid;
-        grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
         gap                  : 1rem;
     }
 
-    .exercise-button {
-        padding       : 1rem;
-        text-transform: capitalize;
+    .button-exercise,
+    .input-duration {
+        width  : 100%;
+        padding: 0.5rem;
+    }
+
+    .label-duration,
+    .input-duration {
+        display: none;
     }

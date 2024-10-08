@@ -22,7 +22,7 @@ window.onload = pageLoad();
  */
 function pageLoad() {
      testDisplayExercises();
-     refreshExerciseButtons();
+     refreshExerciseCards();
 }
 
 /**
@@ -36,7 +36,7 @@ function pageLoad() {
 function testDisplayExercises() {
      // puts stuff in the testing area
      const exercises = localStorage.getItem("exerciseDataKey");
-     document.getElementById("testing-area").innerHTML = exercises;
+     document.getElementById("testing-area").textContent = exercises;
 }
 
 function checkIfAlreadyExistsInLocalStorage(arrayToCheck, name) {
@@ -89,7 +89,7 @@ function saveNewExerciseToLocalStorage() {
           localStorage.setItem("exerciseDataKey", JSON.stringify(existingExerciseData));
 
           // Refreshes buttons
-          refreshExerciseButtons();
+          refreshExerciseCards();
      }
 
      // Always resets the input field to be empty
@@ -101,68 +101,100 @@ function saveNewExerciseToLocalStorage() {
 
 /**
  * The following three functions work together
- * refreshExerciseButtons() couples the two following functions together
- * clearExerciseButtons() which clears all existing exercise buttons
- * renderExerciseButtons() which renders all the exercise buttons anew
+ * refreshExerciseCards() couples the two following functions together
+ * clearExerciseCards() which clears all existing exercise cards
+ * renderExerciseCards() which renders all the exercise cards anew
  */
-function refreshExerciseButtons() {
-     clearExerciseButtons();
-     renderExerciseButtons();
+function refreshExerciseCards() {
+     clearExerciseCards();
+     renderExerciseCards();
 }
 
-function clearExerciseButtons() {
-     const parentButtonsContainer = document.getElementById("exercise-buttons-container");
-     let childButton = parentButtonsContainer.firstElementChild;
+function clearExerciseCards() {
+     const parentExerciseCardsContainer = document.getElementById("exercise-cards-container");
+     let childButton = parentExerciseCardsContainer.firstElementChild;
 
      while (childButton) {
-          parentButtonsContainer.removeChild(childButton);
-          childButton = parentButtonsContainer.firstElementChild;
+          parentExerciseCardsContainer.removeChild(childButton);
+          childButton = parentExerciseCardsContainer.firstElementChild;
      }
 }
 
-function renderExerciseButtons() {
+function renderExerciseCards() {
      // Create the Add Rest button which is always at the beginning
-     const restButton = document.createElement("button");
-     restButton.classList.add("exercise-button");
-     restButton.innerHTML = "Add Rest";
-     document.getElementById("exercise-buttons-container").append(restButton);
+     createNewExerciseCard("rest");
 
-     // Grabs existing exercises data from localStorage and converts it into an object
+     // Grabs existing exercises data from localStorage and converts it into an array
      const existingExerciseDataInStringForm = localStorage.getItem("exerciseDataKey");
-     const existingExerciseDataInObjectForm = existingExerciseDataInStringForm ? JSON.parse(existingExerciseDataInStringForm) : [];
+     const existingExerciseDataInArrayForm = existingExerciseDataInStringForm ? JSON.parse(existingExerciseDataInStringForm) : [];
 
-     for (i = 0; i < existingExerciseDataInObjectForm.length; i++) {
-          // Create a button for it and assign various properties to it, then append it to the parent
-          const exerciseName = existingExerciseDataInObjectForm[i].name;
-          const newButton = document.createElement("button");
-
-          newButton.classList.add("exercise-button");
-          newButton.innerHTML = exerciseName;
-          document.getElementById("exercise-buttons-container").append(newButton);
+     // Now for each  exercise in the array
+     for (i = 0; i < existingExerciseDataInArrayForm.length; i++) {
+          const name = existingExerciseDataInArrayForm[i].name;
+          createNewExerciseCard(name);
      }
 
      // Add Event Listeners to to all exercise buttons
-     // addEventListenerToExerciseButtons();
+     addEventListenerToExerciseButtons();
 }
 
 // TODO: WORKING ON CODE BELOW
 
-// function addEventListenerToExerciseButtons() {
-//      const exerciseButtons = document.querySelectorAll(".exercise-button");
+function createNewExerciseCard(name) {
+     // This is just so that if an exercise name is two words, like "jumping jacks", we won't get class/id/etc as "class="jumping jacks" but rather "class="jumping-jacks"
+     // ! This is probably bad?
+     const nameHyphenated = name.split(" ").join("-");
 
-//      exerciseButtons.forEach(function (button) {
-//           button.addEventListener("click", function () {
-//                // Changing styles for visual clarity
-//                button.style.backgroundColor = "pink";
+     // Create a new div which acts as as container
+     const newButtonInputContainer = document.createElement("div");
+     newButtonInputContainer.classList.add("container-exercise-card");
+     document.getElementById("exercise-cards-container").append(newButtonInputContainer);
 
-//                // Inserting timer input
-//                const newInputTimer = document.createElement("input");
-//                newInputTimer.type = "number";
-//                button.append(newInputTimer);
+     // Create a button then append it to the parent container
+     const newButton = document.createElement("button");
+     newButton.textContent = name; // ! We do NOT want to force hyphenation here
+     newButton.classList.add("button-exercise");
+     newButton.id = `button-${nameHyphenated}`;
+     newButtonInputContainer.append(newButton);
 
-//                const exerciseButton = document.querySelector(".exercise-button");
-//                const parent = document.querySelector(".exercise-button").parentNode;
-//                parent.insertBefore(newInputTimer, exerciseButton.nextSibling);
-//           });
-//      });
-// }
+     // Create a new label and append it to the parent container (siblings with newButton)
+     const newDurationLabel = document.createElement("label");
+     newDurationLabel.textContent = "Duration (in seconds)";
+     newDurationLabel.classList.add("label-duration");
+     newDurationLabel.htmlFor = `input-${nameHyphenated}`; // Setting for
+     newButtonInputContainer.append(newDurationLabel);
+
+     // Create a new input and append it to the parent container (siblings with newButton AND newLabel)
+     const newDurationInput = document.createElement("input");
+     newDurationInput.classList.add("input-duration");
+     newDurationInput.id = `input-${nameHyphenated}`;
+     newDurationInput.type = "number";
+     newDurationInput.name = `input-${nameHyphenated}`;
+     newButtonInputContainer.append(newDurationInput);
+}
+
+function addEventListenerToExerciseButtons() {
+     const exerciseButtons = document.querySelectorAll(".button-exercise");
+
+     exerciseButtons.forEach(function (currentButton) {
+          currentButton.addEventListener("click", function () {
+               // Hide all labels and inputs first
+               const allContainers = document.querySelectorAll(".container-exercise-card");
+               allContainers.forEach(function (container) {
+                    const label = container.querySelector("label");
+                    const input = container.querySelector("input");
+                    label.style.display = "none";
+                    input.style.display = "none";
+               });
+
+               // Find the parent container of the button
+               const currentContainer = currentButton.closest(".container-exercise-card");
+
+               // Select the label and input within the same container and change their display
+               const currentLabel = currentContainer.querySelector("label");
+               const currentInput = currentContainer.querySelector("input");
+               currentLabel.style.display = "block";
+               currentInput.style.display = "block";
+          });
+     });
+}
