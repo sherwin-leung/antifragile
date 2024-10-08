@@ -72,3 +72,7 @@
     .input-duration {
         display: none;
     }
+
+    ol {
+        padding: 1rem;
+    }

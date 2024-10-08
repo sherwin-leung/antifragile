@@ -32,7 +32,7 @@
 
             <div class="div-toggle-view" id="div-new-exercise">
                 <form onsubmit="saveNewExerciseToLocalStorage()">
-                    <label for="exercise-name">Exercise Name</label>
+                    <label for="exercise-name">Enter Exercise Name</label>
                     <input type="text" id="new-exercise-input" name="exercise-name">
                 </form>
             </div>
@@ -45,10 +45,21 @@
             </button>
 
             <div class="div-toggle-view" id="div-new-routine">
-                <form onsubmit="saveNewRoutineToLocalStorage()">
+                <div id="creation-routine-instructions">
+                    <p>INSTRUCTIONS</p>
+                    <ol>
+                        <li>Enter a name</li>
+                        <li>Select an exercise and enter a duration, then press [Add Exercise]</li>
+                        <li>Press [Save New Routine] button</li>
+                    </ol>
+                </div>
+
+                <div>
                     <label for="routine-name">Routine Name</label>
                     <input type="text" id="new-routine-input" name="routine-name">
-                </form>
+                </div>
+
+                <button id="button-save-routine">Save New Routine</button>
 
                 <div class="exercise-cards-container" id="exercise-cards-container">
                 </div>

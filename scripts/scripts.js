@@ -1,14 +1,23 @@
 /**
  * * Global Variables
  */
+let currentlySelectedExerciseButton;
 
 /**
  * * Constructors for various Objects
  */
 class Exercise {
-     constructor(name, category) {
+     constructor(name, duration, category) {
           this.name = name;
+          this.duration = duration;
           this.category = category;
+     }
+}
+
+class Routine {
+     constructor(name, list) {
+          this.name = name;
+          this.category = list;
      }
 }
 
@@ -84,7 +93,7 @@ function saveNewExerciseToLocalStorage() {
      // Only create a new Exercise if its name isn't an empty string and it doesn't already exist
      if (exerciseName.trim().length > 0 && checkIfAlreadyExistsInLocalStorage(existingExerciseData, exerciseName) === false) {
           // Create a new Exercise Object and pushes it into the existing exercise data. Afterwards, save existing data with the new exercise to localStorage
-          const newExercise = new Exercise(exerciseName, "");
+          const newExercise = new Exercise(exerciseName, 0, "");
           existingExerciseData.push(newExercise);
           localStorage.setItem("exerciseDataKey", JSON.stringify(existingExerciseData));
 
@@ -138,7 +147,7 @@ function renderExerciseCards() {
      addEventListenerToExerciseButtons();
 }
 
-// TODO: WORKING ON CODE BELOW
+// TODO: Ready for feedback from Vince
 
 function createNewExerciseCard(name) {
      // This is just so that if an exercise name is two words, like "jumping jacks", we won't get class/id/etc as "class="jumping jacks" but rather "class="jumping-jacks"
@@ -154,7 +163,7 @@ function createNewExerciseCard(name) {
      const newButton = document.createElement("button");
      newButton.textContent = name; // ! We do NOT want to force hyphenation here
      newButton.classList.add("button-exercise");
-     newButton.id = `button-${nameHyphenated}`;
+     newButton.id = `${nameHyphenated}`;
      newButtonInputContainer.append(newButton);
 
      // Create a new label and append it to the parent container (siblings with newButton)
@@ -181,20 +190,43 @@ function addEventListenerToExerciseButtons() {
                // Hide all labels and inputs first
                const allContainers = document.querySelectorAll(".container-exercise-card");
                allContainers.forEach(function (container) {
-                    const label = container.querySelector("label");
-                    const input = container.querySelector("input");
-                    label.style.display = "none";
-                    input.style.display = "none";
+                    container.querySelector("label").style.display = "none";
+                    container.querySelector("input").style.display = "none";
                });
 
                // Find the parent container of the button
                const currentContainer = currentButton.closest(".container-exercise-card");
 
                // Select the label and input within the same container and change their display
-               const currentLabel = currentContainer.querySelector("label");
-               const currentInput = currentContainer.querySelector("input");
-               currentLabel.style.display = "block";
-               currentInput.style.display = "block";
+               currentContainer.querySelector("label").style.display = "block";
+               currentContainer.querySelector("input").style.display = "block";
+               ("block");
+
+               // Stores id of current exerciseButton selected/"opened" in global variable
+               currentlySelectedExerciseButton = currentButton.id;
           });
      });
 }
+
+// TODO: Figuring out how to create new Routine objects
+
+// * Routine constructor. it requires the properties name and a list. (list is an array that stores Exercise objects that have a name + duration properties)
+// Up top of the page
+
+function saveNewRoutineToLocalStorage() {
+     // Storing Routine name and list of Exercises
+     const routineName = document.getElementById("new-routine-input").value;
+
+     // Populate Exercise array
+     const exerciseArray = [];
+     const newExercise = new Exercise(currentlySelectedExerciseButton);
+     console.log(newExercise);
+
+     // Create new Routine
+     const newRoutine = new Routine(routineName, exerciseArray);
+     // console.log(newRoutine);
+}
+
+document.getElementById("button-save-routine").addEventListener("click", function () {
+     saveNewRoutineToLocalStorage();
+});
