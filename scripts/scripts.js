@@ -160,26 +160,32 @@ function createNewExerciseCard(name) {
      document.getElementById("exercise-cards-container").append(newButtonInputContainer);
 
      // Create a button then append it to the parent container
-     const newButton = document.createElement("button");
-     newButton.textContent = name; // ! We do NOT want to force hyphenation here
-     newButton.classList.add("button-exercise");
-     newButton.id = `${nameHyphenated}`;
-     newButtonInputContainer.append(newButton);
+     const newExerciseButton = document.createElement("button");
+     newExerciseButton.textContent = name; // ! We do NOT want to force hyphenation here
+     newExerciseButton.classList.add("button-exercise");
+     newExerciseButton.id = `${nameHyphenated}`;
+     newButtonInputContainer.append(newExerciseButton);
 
-     // Create a new label and append it to the parent container (siblings with newButton)
+     // Create a new label and append it to the parent container
      const newDurationLabel = document.createElement("label");
      newDurationLabel.textContent = "Duration (in seconds)";
      newDurationLabel.classList.add("label-duration");
      newDurationLabel.htmlFor = `input-${nameHyphenated}`; // Setting for
      newButtonInputContainer.append(newDurationLabel);
 
-     // Create a new input and append it to the parent container (siblings with newButton AND newLabel)
+     // Create a new input and append it to the parent container
      const newDurationInput = document.createElement("input");
      newDurationInput.classList.add("input-duration");
      newDurationInput.id = `input-${nameHyphenated}`;
      newDurationInput.type = "number";
      newDurationInput.name = `input-${nameHyphenated}`;
      newButtonInputContainer.append(newDurationInput);
+
+     // Create another button and append it to the parent container. This one is for submitting
+     const newAddButton = document.createElement("button"); // TODO
+     newAddButton.textContent = "Add";
+     newAddButton.classList.add("button-add");
+     newButtonInputContainer.append(newAddButton);
 }
 
 function addEventListenerToExerciseButtons() {
@@ -187,22 +193,24 @@ function addEventListenerToExerciseButtons() {
 
      exerciseButtons.forEach(function (currentButton) {
           currentButton.addEventListener("click", function () {
-               // Hide all labels and inputs first
+               // Hide all labels, inputs, and add buttons first
                const allContainers = document.querySelectorAll(".container-exercise-card");
                allContainers.forEach(function (container) {
                     container.querySelector("label").style.display = "none";
                     container.querySelector("input").style.display = "none";
+                    container.querySelector(".button-add").style.display = "none";
                });
 
                // Find the parent container of the button
                const currentContainer = currentButton.closest(".container-exercise-card");
 
-               // Select the label and input within the same container and change their display
+               // Select the label, input, and add button within the same container and unhide them
                currentContainer.querySelector("label").style.display = "block";
                currentContainer.querySelector("input").style.display = "block";
                ("block");
+               currentContainer.querySelector(".button-add").style.display = "block";
 
-               // Stores id of current exerciseButton selected/"opened" in global variable
+               // Stores id of current exerciseButton selected/"expanded" in global variable to keep track of which is selected/"expanded"
                currentlySelectedExerciseButton = currentButton.id;
           });
      });
@@ -230,3 +238,5 @@ function saveNewRoutineToLocalStorage() {
 document.getElementById("button-save-routine").addEventListener("click", function () {
      saveNewRoutineToLocalStorage();
 });
+
+// TODO: line 185

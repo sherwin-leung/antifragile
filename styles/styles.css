@@ -69,7 +69,8 @@
     }
 
     .label-duration,
-    .input-duration {
+    .input-duration,
+    .button-add {
         display: none;
     }
 
