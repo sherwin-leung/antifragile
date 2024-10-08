@@ -15,9 +15,9 @@ class Exercise {
 }
 
 class Routine {
-     constructor(name, list) {
+     constructor(name, exerciseList) {
           this.name = name;
-          this.list = list;
+          this.exerciseList = exerciseList;
      }
 }
 
@@ -161,9 +161,9 @@ function createNewExerciseCard(name) {
      // ! This is probably bad?
      const nameHyphenated = name.split(" ").join("-");
 
-     // Create a new div which acts as as container
+     // Create a new div which acts as as the card container
      const newButtonInputContainer = document.createElement("div");
-     newButtonInputContainer.classList.add("container-exercise-card");
+     newButtonInputContainer.classList.add("exercise-card");
      document.getElementById("exercise-cards-container").append(newButtonInputContainer);
 
      // Create a button then append it to the parent container
@@ -207,7 +207,7 @@ function addEventListenerToExerciseButtons() {
      exerciseButtons.forEach(function (currentButton) {
           currentButton.addEventListener("click", function () {
                // Hide all labels, inputs, and add buttons first
-               const allContainers = document.querySelectorAll(".container-exercise-card");
+               const allContainers = document.querySelectorAll(".exercise-card");
                allContainers.forEach(function (container) {
                     container.querySelector("label").style.display = "none";
                     container.querySelector("input").style.display = "none";
@@ -215,7 +215,7 @@ function addEventListenerToExerciseButtons() {
                });
 
                // Find the parent container of the button
-               const currentContainer = currentButton.closest(".container-exercise-card");
+               const currentContainer = currentButton.closest(".exercise-card");
 
                // Select the label, input, and add button within the same container and unhide them
                currentContainer.querySelector("label").style.display = "block";
