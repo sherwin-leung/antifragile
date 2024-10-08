@@ -1,23 +1,23 @@
 /**
  * * Global Variables
  */
-let currentlySelectedExerciseButton;
+let currentlySelectedExerciseButtonId;
+let tempExerciseArray = [];
 
 /**
  * * Constructors for various Objects
  */
 class Exercise {
-     constructor(name, duration, category) {
+     constructor(name, duration) {
           this.name = name;
           this.duration = duration;
-          this.category = category;
      }
 }
 
 class Routine {
      constructor(name, list) {
           this.name = name;
-          this.category = list;
+          this.list = list;
      }
 }
 
@@ -27,25 +27,26 @@ class Routine {
 window.onload = pageLoad();
 
 /**
- * * This function is a collection of functions that need to be run upon the user loading the page
+ * This function is a collection of functions that need to be run upon the user loading the page
  */
 function pageLoad() {
-     testDisplayExercises();
+     testDisplay(); // ! testing only, remove later
      refreshExerciseCards();
 }
 
 /**
  * * Helper Functions
- *
  * checkIfAlreadyExistsInLocalStorage() checks if an exercise or routine already exists in localStorage
- *
- * toTitleCase() changes the first letter of each word in a string to capital using regex
  */
+
 // ! for testing area, remove later
-function testDisplayExercises() {
+function testDisplay() {
      // puts stuff in the testing area
      const exercises = localStorage.getItem("exerciseDataKey");
-     document.getElementById("testing-area").textContent = exercises;
+     document.getElementById("testing-area").innerHTML = `Here are the exercises:<br>${exercises}`;
+
+     const routines = localStorage.getItem("routineDataKey");
+     document.getElementById("testing-area").innerHTML += `<br><br>Here are the routines:<br>${routines}`;
 }
 
 function checkIfAlreadyExistsInLocalStorage(arrayToCheck, name) {
@@ -57,14 +58,8 @@ function checkIfAlreadyExistsInLocalStorage(arrayToCheck, name) {
      return false;
 }
 
-function toTitleCase(string) {
-     return string.toLowerCase().replace(/\b\w/g, function (s) {
-          return s.toUpperCase();
-     });
-}
-
 /**
- * This function handles toggling on and off the view of certain contents when the main three buttons are clicked/tapped
+ * * This function handles toggling on and off the view of certain contents when the main three buttons are clicked/tapped
  * @param divId indicates which div to toggle on and off
  */
 function toggleViewOnAndOff(divId) {
@@ -78,7 +73,7 @@ function toggleViewOnAndOff(divId) {
 }
 
 /**
- * This function handles the saving of new exercises into localStorage
+ * * This function handles the creation and saving of new Exercises into localStorage
  */
 function saveNewExerciseToLocalStorage() {
      event.preventDefault();
@@ -88,12 +83,11 @@ function saveNewExerciseToLocalStorage() {
 
      // Store user's input
      const exerciseName = document.getElementById("new-exercise-input").value;
-     // const exerciseName = toTitleCase(document.getElementById("new-exercise-input").value);
 
      // Only create a new Exercise if its name isn't an empty string and it doesn't already exist
      if (exerciseName.trim().length > 0 && checkIfAlreadyExistsInLocalStorage(existingExerciseData, exerciseName) === false) {
-          // Create a new Exercise Object and pushes it into the existing exercise data. Afterwards, save existing data with the new exercise to localStorage
-          const newExercise = new Exercise(exerciseName, 0, "");
+          // Create a new Exercise Object and pushes it into the existing exercise data. Afterwards, save existing data with the new Exercise to localStorage
+          const newExercise = new Exercise(exerciseName, 0);
           existingExerciseData.push(newExercise);
           localStorage.setItem("exerciseDataKey", JSON.stringify(existingExerciseData));
 
@@ -105,11 +99,11 @@ function saveNewExerciseToLocalStorage() {
      document.getElementById("new-exercise-input").value = "";
 
      // ! for testing area, remove later
-     testDisplayExercises();
+     testDisplay();
 }
 
 /**
- * The following three functions work together
+ * * The following three functions work together
  * refreshExerciseCards() couples the two following functions together
  * clearExerciseCards() which clears all existing exercise cards
  * renderExerciseCards() which renders all the exercise cards anew
@@ -145,10 +139,23 @@ function renderExerciseCards() {
 
      // Add Event Listeners to to all exercise buttons
      addEventListenerToExerciseButtons();
+
+     // Add Event Listeners to all add buttons
+     addEventListenerToAddButtons();
 }
 
 // TODO: Ready for feedback from Vince
 
+/**
+ * * This function creates an exercise "card", which consists of:
+ * 1) A div container (parent)
+ * 2) A button displaying the exercise's name (child)
+ * 3) A label for the input below
+ * 4) A number input for the exercise duration
+ * 5) A button that allows the user to add the exercise & duration to a temporary array which will pushed into the Routine object later
+ *
+ * @param {*} name Retrieves name of exercise(s) from localStorage key/value pair exerciseDataKey
+ */
 function createNewExerciseCard(name) {
      // This is just so that if an exercise name is two words, like "jumping jacks", we won't get class/id/etc as "class="jumping jacks" but rather "class="jumping-jacks"
      // ! This is probably bad?
@@ -179,15 +186,21 @@ function createNewExerciseCard(name) {
      newDurationInput.id = `input-${nameHyphenated}`;
      newDurationInput.type = "number";
      newDurationInput.name = `input-${nameHyphenated}`;
+     newDurationInput.value = 60; // default value
      newButtonInputContainer.append(newDurationInput);
 
      // Create another button and append it to the parent container. This one is for submitting
-     const newAddButton = document.createElement("button"); // TODO
+     const newAddButton = document.createElement("button");
      newAddButton.textContent = "Add";
      newAddButton.classList.add("button-add");
      newButtonInputContainer.append(newAddButton);
 }
 
+/**
+ * * This function gives all exercise buttons an Event Listener
+ * On click of a button, it will unhide/"expand" the exercise card associated with  it and hide/"close" previous expanded cards
+ * Also stores the id of the currently expanded button in global variable currentSelectedExerciseButtonId
+ */
 function addEventListenerToExerciseButtons() {
      const exerciseButtons = document.querySelectorAll(".button-exercise");
 
@@ -211,32 +224,55 @@ function addEventListenerToExerciseButtons() {
                currentContainer.querySelector(".button-add").style.display = "block";
 
                // Stores id of current exerciseButton selected/"expanded" in global variable to keep track of which is selected/"expanded"
-               currentlySelectedExerciseButton = currentButton.id;
+               currentlySelectedExerciseButtonId = currentButton.id;
           });
      });
 }
 
-// TODO: Figuring out how to create new Routine objects
+/**
+ * * This function allows the user to use the exercise cards to add exercises into a temporary array which will then be used as a property of new Routines
+ * Paired with it is the Event Listener that assigns the function to ALL [Add] buttons
+ */
+function addToTempExerciseList() {
+     const exerciseDuration = document.getElementById(`input-${currentlySelectedExerciseButtonId}`).value;
 
-// * Routine constructor. it requires the properties name and a list. (list is an array that stores Exercise objects that have a name + duration properties)
-// Up top of the page
+     const newExercise = new Exercise(currentlySelectedExerciseButtonId, exerciseDuration);
+     tempExerciseArray.push(newExercise); // tempExerciseArray in global variables
 
+     console.log(tempExerciseArray);
+}
+
+function addEventListenerToAddButtons() {
+     const addButtons = document.querySelectorAll(".button-add");
+
+     addButtons.forEach(function (currentButton) {
+          currentButton.addEventListener("click", function () {
+               addToTempExerciseList();
+          });
+     });
+}
+
+/**
+ * * This function handles the creation and saving of new Routines into localStorage
+ * Paired with it is the Event Listener that assigns the function to the [Save New Routine] button
+ */
 function saveNewRoutineToLocalStorage() {
-     // Storing Routine name and list of Exercises
+     // Store name of new Routine from input
      const routineName = document.getElementById("new-routine-input").value;
 
-     // Populate Exercise array
-     const exerciseArray = [];
-     const newExercise = new Exercise(currentlySelectedExerciseButton);
-     console.log(newExercise);
+     // Only create a new Routine if its name isn't an empty string
+     if (routineName.trim().length > 0) {
+          const newRoutine = new Routine(routineName, tempExerciseArray);
+          localStorage.setItem("routineDataKey", JSON.stringify(newRoutine));
+     }
 
-     // Create new Routine
-     const newRoutine = new Routine(routineName, exerciseArray);
-     // console.log(newRoutine);
+     // Always resets the input field to be empty
+     document.getElementById("new-routine-input").value = "";
+
+     // ! testing only, remove later
+     testDisplay();
 }
 
 document.getElementById("button-save-routine").addEventListener("click", function () {
      saveNewRoutineToLocalStorage();
 });
-
-// TODO: line 185
