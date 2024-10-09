@@ -16,7 +16,6 @@
     </header>
 
     <main>
-
         <div class="test-area">
             <h2>Testing Area</h2>
             <br>
@@ -24,8 +23,34 @@
             <br>
         </div>
 
+        <!-- ! Currently Loaded Workout Section -->
+        <section class="section-styling" id="section-currently-loaded-routine">
+
+            <h2>Currently Routine</h2>
+            <p id="currently-loaded-routine-name">No Routine loaded</p>
+            <h3>Exercise List:</h3>
+            <div id="exercise-details"></div>
+
+        </section>
+
+        <!-- ! Timer Section -->
+        <section class="section-styling" id="section-timer">
+
+            <!-- <button class="button-selection" id="button-workout" onclick="toggleViewOnAndOff('div-workout')">
+                Workout
+            </button>
+
+            <div class="div-toggle-view" id="div-timer">
+                <p>Timer</p>
+            </div> -->
+
+            <div class="timer" id="timer">Timer</div>
+
+        </section>
+
         <!-- ! New Exercise Section -->
-        <section id="section-new-exercise">
+        <section class="section-styling" id="section-new-exercise">
+
             <button class="button-selection" id="button-new-exercise" onclick="toggleViewOnAndOff('div-new-exercise')">
                 New Exercise
             </button>
@@ -33,20 +58,22 @@
             <div class="div-toggle-view" id="div-new-exercise">
                 <form onsubmit="saveNewExerciseToLocalStorage()">
                     <label for="exercise-name">Enter Exercise Name</label>
-                    <input type="text" id="new-exercise-input" name="exercise-name">
+                    <input type="text" id="new-exercise-input" name="exercise-name" />
                 </form>
             </div>
+
         </section>
 
         <!--! New Routine Section -->
-        <section id="section-new-routine">
+        <section class="section-styling" id="section-new-routine">
+
             <button class="button-selection" id="button-new-routine" onclick="toggleViewOnAndOff('div-new-routine')">
                 New Routine
             </button>
 
             <div class="div-toggle-view" id="div-new-routine">
                 <div id="creation-routine-instructions">
-                    <p>INSTRUCTIONS</p>
+                    <h3>Instructions</h3>
                     <ol>
                         <li>Enter a name</li>
                         <li>Select an exercise and enter a duration, then press [Add Exercise]</li>
@@ -56,25 +83,13 @@
 
                 <div>
                     <label for="routine-name">Routine Name</label>
-                    <input type="text" id="new-routine-input" name="routine-name">
+                    <input type="text" id="new-routine-input" name="routine-name" />
+                    <button id="button-save-routine">Save New Routine</button>
                 </div>
 
-                <button id="button-save-routine">Save New Routine</button>
-
-                <div class="exercise-cards-container" id="exercise-cards-container">
-                </div>
+                <div class="exercise-cards-container" id="exercise-cards-container"></div>
             </div>
-        </section>
 
-        <!-- ! Workout Section -->
-        <section id="section-workout">
-            <button class="button-selection" id="button-workout" onclick="toggleViewOnAndOff('div-workout')">
-                Workout
-            </button>
-
-            <div class="div-toggle-view" id="div-workout">
-                <p>workout</p>
-            </div>
         </section>
     </main>
 </body>

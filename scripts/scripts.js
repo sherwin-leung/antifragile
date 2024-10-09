@@ -32,6 +32,7 @@ window.onload = pageLoad();
 function pageLoad() {
      testDisplay(); // ! testing only, remove later
      refreshExerciseCards();
+     displayCurrentlyLoadedRoutine();
 }
 
 /**
@@ -243,6 +244,7 @@ function addToTempExerciseList() {
      tempExerciseArray.push(newExercise); // tempExerciseArray in global variables
 }
 
+// Paired with above
 function addEventListenerToAddButtons() {
      const addButtons = document.querySelectorAll(".button-add");
 
@@ -267,13 +269,43 @@ function saveNewRoutineToLocalStorage() {
           localStorage.setItem("routineDataKey", JSON.stringify(newRoutine));
      }
 
+     // ! still developing this function
+     // Displays to the user the currently loaded Routine
+     displayCurrentlyLoadedRoutine();
+
      // Always resets the input field to be empty
      document.getElementById("new-routine-input").value = "";
+
+     // Empties out the temporary array
+     tempExerciseArray = [];
 
      // ! testing only, remove later
      testDisplay();
 }
 
+// Paired with above
 document.getElementById("button-save-routine").addEventListener("click", function () {
      saveNewRoutineToLocalStorage();
 });
+
+// TODO:
+
+function displayCurrentlyLoadedRoutine() {
+     // Grab the saved Routine from localStorage
+     const currentlyLoadedRoutine = JSON.parse(localStorage.getItem("routineDataKey"));
+
+     // Displaying the Routine's name
+     const currentlyLoadedRoutineName = document.getElementById("currently-loaded-routine-name");
+     currentlyLoadedRoutineName.textContent = currentlyLoadedRoutine.name;
+
+     // Displaying the exercise list in the Routine
+     const exerciseDetails = document.getElementById("exercise-details");
+
+     let exerciseDetailsHTML = "<ol>";
+     for (i = 0; i < currentlyLoadedRoutine.exerciseList.length; i++) {
+          exerciseDetailsHTML += `<li>${currentlyLoadedRoutine.exerciseList[i].name} - ${currentlyLoadedRoutine.exerciseList[i].duration} seconds</li>`;
+     }
+     exerciseDetailsHTML += "</ol>";
+
+     exerciseDetails.innerHTML = exerciseDetailsHTML;
+}

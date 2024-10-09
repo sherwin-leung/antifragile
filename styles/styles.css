@@ -18,6 +18,20 @@
 
     /* End resets */
 
+    /* * START HTML ELEMENTS */
+
+    /* Because otherwise, can't see the list item decorations */
+    ol {
+        padding-left: 1rem;
+    }
+
+    label,
+    input {
+        display: flex;
+    }
+
+    /* End HTML elements */
+
     /* ! Can delete later */
     .test-area {
         border: 5px solid pink;
@@ -27,34 +41,48 @@
 
     /* Sections are hidden on page load */
     .div-toggle-view {
-        /* display   : none; */
-        /* padding: 1rem; */
+        /* display: none; */
     }
 
     #div-new-exercise {
-        border: 5px solid rgb(233, 81, 81);
+        border: 5px solid rgb(255, 155, 155);
     }
 
     #div-new-routine {
-        border: 5px solid rgb(73, 163, 73);
+        border: 5px solid rgba(10, 190, 79, 0.521);
     }
 
-    #div-workout {
-        border: 5px solid rgb(67, 67, 230);
+    /* * START SECTION STYLING */
+    .section-styling {
+        padding: 1rem;
+    }
+
+    /* * START TIMER SECTION */
+    #section-timer {
+        border: 5px solid blue;
     }
 
     /* End div toggle view */
 
-    /* * START LABEL AND INPUT */
+    /* * START CURRENTLY LOADED WORKOUT */
 
-    label,
-    input {
-        display: flex;
+    #section-currently-loaded-routine {
+        border: 5px solid goldenrod;
     }
 
-    /* End label and input */
+    /* End currently loaded workout */
 
-    /* * START NEW-ROUTINE SECTION */
+    /* * START NEW EXERCISE SECTION */
+
+    #section-new-exercise {
+        border: 5px solid red;
+    }
+
+    /* * START NEW ROUTINE SECTION */
+
+    #section-new-routine {
+        border: 5px solid green;
+    }
 
     .exercise-cards-container {
         display              : grid;
@@ -63,7 +91,8 @@
     }
 
     .button-exercise,
-    .input-duration {
+    .input-duration,
+    .button-add {
         width  : 100%;
         padding: 0.5rem;
     }
@@ -74,6 +103,4 @@
         display: none;
     }
 
-    ol {
-        padding: 1rem;
-    }
+    /* End new routine section */
