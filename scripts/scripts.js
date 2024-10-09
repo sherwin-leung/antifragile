@@ -37,8 +37,15 @@ function pageLoad() {
 
 /**
  * * Helper Functions
+ *
  * checkIfAlreadyExistsInLocalStorage() checks if an exercise or routine already exists in localStorage
+ *
  * convertToTitleCase(str) takes a string and returns it As Title Case (capitalizes the first letter of each word in a string)
+ *
+ * hideShowNewRoutineButton() hides the [Save New Routine] button in the New Routine section
+ *
+ * showShowNewRoutineButton() show the [Save New Routine] button in the New Routine section
+ *
  */
 
 // ! for testing area, remove later
@@ -64,6 +71,16 @@ function checkIfAlreadyExistsInLocalStorage(arrayToCheck, name) {
 // Helper function
 function convertToTitleCase(str) {
      return str.toLowerCase().replace(/\b\w/g, (s) => s.toUpperCase());
+}
+
+// Helper function
+function hideSaveNewRoutineButton() {
+     document.getElementById("button-save-routine").style.display = "none";
+}
+
+// Helper function
+function showSaveNewRoutineButton() {
+     document.getElementById("button-save-routine").style.display = "block";
 }
 
 /**
@@ -244,13 +261,16 @@ function addToTempExerciseList() {
      tempExerciseArray.push(newExercise); // tempExerciseArray in global variables
 }
 
-// Paired with above
+// Paired with above and below
 function addEventListenerToAddButtons() {
      const addButtons = document.querySelectorAll(".button-add");
 
      addButtons.forEach(function (currentButton) {
           currentButton.addEventListener("click", function () {
                addToTempExerciseList();
+
+               // Shows button to allow user to save the Routine
+               showSaveNewRoutineButton();
           });
      });
 }
@@ -267,20 +287,23 @@ function saveNewRoutineToLocalStorage() {
      if (routineName.trim().length > 0) {
           const newRoutine = new Routine(routineName, tempExerciseArray);
           localStorage.setItem("routineDataKey", JSON.stringify(newRoutine));
+
+          // ! still developing this function
+          // Displays to the user the currently loaded Routine
+          displayCurrentlyLoadedRoutine();
+
+          // Always resets the input field to be empty
+          document.getElementById("new-routine-input").value = "";
+
+          // Empties out the temporary array
+          tempExerciseArray = [];
+
+          // Hides the [Save New Routine] button for next time
+          hideSaveNewRoutineButton();
+
+          // ! testing only, remove later
+          testDisplay();
      }
-
-     // ! still developing this function
-     // Displays to the user the currently loaded Routine
-     displayCurrentlyLoadedRoutine();
-
-     // Always resets the input field to be empty
-     document.getElementById("new-routine-input").value = "";
-
-     // Empties out the temporary array
-     tempExerciseArray = [];
-
-     // ! testing only, remove later
-     testDisplay();
 }
 
 // Paired with above
@@ -288,24 +311,29 @@ document.getElementById("button-save-routine").addEventListener("click", functio
      saveNewRoutineToLocalStorage();
 });
 
-// TODO:
-
+/**
+ * * This function displays the currently loaded Routine to the user. It persists on page load and refreshes when user saves a new Routine
+ */
 function displayCurrentlyLoadedRoutine() {
      // Grab the saved Routine from localStorage
      const currentlyLoadedRoutine = JSON.parse(localStorage.getItem("routineDataKey"));
 
-     // Displaying the Routine's name
-     const currentlyLoadedRoutineName = document.getElementById("currently-loaded-routine-name");
-     currentlyLoadedRoutineName.textContent = currentlyLoadedRoutine.name;
+     if (currentlyLoadedRoutine !== null) {
+          // Displaying the Routine's name
+          const currentlyLoadedRoutineName = document.getElementById("currently-loaded-routine-name");
+          currentlyLoadedRoutineName.textContent = currentlyLoadedRoutine.name;
 
-     // Displaying the exercise list in the Routine
-     const exerciseDetails = document.getElementById("exercise-details");
+          // Displaying the exercise list in the Routine
+          const exerciseDetails = document.getElementById("exercise-details");
 
-     let exerciseDetailsHTML = "<ol>";
-     for (i = 0; i < currentlyLoadedRoutine.exerciseList.length; i++) {
-          exerciseDetailsHTML += `<li>${currentlyLoadedRoutine.exerciseList[i].name} - ${currentlyLoadedRoutine.exerciseList[i].duration} seconds</li>`;
+          let exerciseDetailsHTML = "<ol>";
+          for (i = 0; i < currentlyLoadedRoutine.exerciseList.length; i++) {
+               exerciseDetailsHTML += `<li>${currentlyLoadedRoutine.exerciseList[i].name} - ${currentlyLoadedRoutine.exerciseList[i].duration} seconds</li>`;
+          }
+          exerciseDetailsHTML += "</ol>";
+
+          exerciseDetails.innerHTML = exerciseDetailsHTML;
      }
-     exerciseDetailsHTML += "</ol>";
-
-     exerciseDetails.innerHTML = exerciseDetailsHTML;
 }
+
+// TODO:

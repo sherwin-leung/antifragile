@@ -84,6 +84,10 @@
         border: 5px solid green;
     }
 
+    #button-save-routine {
+        display: none;
+    }
+
     .exercise-cards-container {
         display              : grid;
         grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
