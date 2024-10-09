@@ -37,6 +37,7 @@ function pageLoad() {
 /**
  * * Helper Functions
  * checkIfAlreadyExistsInLocalStorage() checks if an exercise or routine already exists in localStorage
+ * convertToTitleCase(str) takes a string and returns it As Title Case (capitalizes the first letter of each word in a string)
  */
 
 // ! for testing area, remove later
@@ -49,6 +50,7 @@ function testDisplay() {
      document.getElementById("testing-area").innerHTML += `<br><br>Here are the routines:<br>${routines}`;
 }
 
+// Helper function
 function checkIfAlreadyExistsInLocalStorage(arrayToCheck, name) {
      for (i = 0; i < arrayToCheck.length; i++) {
           if (arrayToCheck[i].name === name) {
@@ -56,6 +58,11 @@ function checkIfAlreadyExistsInLocalStorage(arrayToCheck, name) {
           }
      }
      return false;
+}
+
+// Helper function
+function convertToTitleCase(str) {
+     return str.toLowerCase().replace(/\b\w/g, (s) => s.toUpperCase());
 }
 
 /**
@@ -144,8 +151,6 @@ function renderExerciseCards() {
      addEventListenerToAddButtons();
 }
 
-// TODO: Ready for feedback from Vince
-
 /**
  * * This function creates an exercise "card", which consists of:
  * 1) A div container (parent)
@@ -158,7 +163,6 @@ function renderExerciseCards() {
  */
 function createNewExerciseCard(name) {
      // This is just so that if an exercise name is two words, like "jumping jacks", we won't get class/id/etc as "class="jumping jacks" but rather "class="jumping-jacks"
-     // ! This is probably bad?
      const nameHyphenated = name.split(" ").join("-");
 
      // Create a new div which acts as as the card container
@@ -220,7 +224,6 @@ function addEventListenerToExerciseButtons() {
                // Select the label, input, and add button within the same container and unhide them
                currentContainer.querySelector("label").style.display = "block";
                currentContainer.querySelector("input").style.display = "block";
-               ("block");
                currentContainer.querySelector(".button-add").style.display = "block";
 
                // Stores id of current exerciseButton selected/"expanded" in global variable to keep track of which is selected/"expanded"
@@ -238,8 +241,6 @@ function addToTempExerciseList() {
 
      const newExercise = new Exercise(currentlySelectedExerciseButtonId, exerciseDuration);
      tempExerciseArray.push(newExercise); // tempExerciseArray in global variables
-
-     console.log(tempExerciseArray);
 }
 
 function addEventListenerToAddButtons() {
