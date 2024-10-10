@@ -36,20 +36,9 @@ function pageLoad() {
 
 /**
  * * Helper Functions
- *
- * checkIfAlreadyExistsInLocalStorage() checks if an exercise or routine already exists in localStorage
- *
- * convertToTitleCase(str) takes a string and returns it As Title Case (capitalizes the first letter of each word in a string)
- *
- * hideShowNewRoutineButton() hides the [Save New Routine] button in the New Routine section
- *
- * showShowNewRoutineButton() show the [Save New Routine] button in the New Routine section
- *
- * sanitize() sanitizes a string by replacing special characters with their HTML entity equivalents to prevent XSS attacks
- *
  */
 
-// Helper function
+// Helper function - sanitize() sanitizes a string by replacing special characters with their HTML entity equivalents to prevent XSS attacks
 function sanitize(string) {
      const map = {
           "&": "&amp;",
@@ -63,7 +52,7 @@ function sanitize(string) {
      return string.replace(reg, (match) => map[match]);
 }
 
-// Helper function
+// Helper function - checkIfAlreadyExistsInLocalStorage() checks if an exercise or routine already exists in localStorage
 function checkIfAlreadyExistsInLocalStorage(arrayToCheck, name) {
      for (i = 0; i < arrayToCheck.length; i++) {
           if (arrayToCheck[i].name === name) {
@@ -73,17 +62,17 @@ function checkIfAlreadyExistsInLocalStorage(arrayToCheck, name) {
      return false;
 }
 
-// Helper function
+// Helper function - convertToTitleCase(str) takes a string and returns it As Title Case (capitalizes the first letter of each word in a string)
 function convertToTitleCase(str) {
      return str.toLowerCase().replace(/\b\w/g, (s) => s.toUpperCase());
 }
 
-// Helper function
+// Helper function - hideShowNewRoutineButton() hides the [Save New Routine] button in the New Routine section
 function hideSaveNewRoutineButton() {
      document.getElementById("button-save-routine").style.display = "none";
 }
 
-// Helper function
+// Helper function - showShowNewRoutineButton() show the [Save New Routine] button in the New Routine section
 function showSaveNewRoutineButton() {
      document.getElementById("button-save-routine").style.display = "block";
 }
@@ -158,9 +147,9 @@ function saveNewExerciseToLocalStorage() {
 
 /**
  * * The following three functions work together
- * refreshExerciseCards() couples the two following functions together
- * clearExerciseCards() which clears all existing exercise cards
- * renderExerciseCards() which renders all the exercise cards anew
+ * 1) refreshExerciseCards() couples the two following functions together
+ * 2) clearExerciseCards() which clears all existing exercise cards
+ * 3) renderExerciseCards() which renders all the exercise cards anew
  */
 function refreshExerciseCards() {
      clearExerciseCards();
@@ -169,11 +158,11 @@ function refreshExerciseCards() {
 
 function clearExerciseCards() {
      const parentExerciseCardsContainer = document.getElementById("exercise-cards-container");
-     let childButton = parentExerciseCardsContainer.firstElementChild;
+     let exerciseCard = parentExerciseCardsContainer.firstElementChild;
 
-     while (childButton) {
-          parentExerciseCardsContainer.removeChild(childButton);
-          childButton = parentExerciseCardsContainer.firstElementChild;
+     while (exerciseCard) {
+          parentExerciseCardsContainer.removeChild(exerciseCard);
+          exerciseCard = parentExerciseCardsContainer.firstElementChild;
      }
 }
 
@@ -249,15 +238,28 @@ function createNewExerciseCard(name) {
 
 /**
  * * This function gives all exercise buttons an Event Listener
- * On click of a button, it will unhide/"expand" the exercise card associated with  it and hide/"close" previous expanded cards
- * Also stores the id of the currently expanded button in global variable currentSelectedExerciseButtonId
+ * 1) On click of a button, it will unhide/"expand" the exercise card associated with  it and hide/"close" previous expanded cards
+ * 2) The user clicks on the a button that has its card expanded, it will hide it
+ * 3) Also stores the id of the currently expanded button in global variable currentSelectedExerciseButtonId
  */
 function addEventListenerToExerciseButtons() {
      const exerciseButtons = document.querySelectorAll(".button-exercise");
 
      exerciseButtons.forEach(function (currentButton) {
           currentButton.addEventListener("click", function () {
-               // Hide all labels, inputs, and add buttons first
+               // Find the parent container of the current button
+               const currentParentContainer = currentButton.closest(".exercise-card");
+
+               // Storing the current label, input, and [Add] button's *display*. Call it a "cluster"
+               const currentLabel = currentParentContainer.querySelector("label");
+               const currentInput = currentParentContainer.querySelector("input");
+               const currentAddButton = currentParentContainer.querySelector(".button-add");
+
+               // Check the visibility of current cluster. This acts as the toggle switch
+               const isCurrentClusterVisible =
+                    currentLabel.style.display === "block" && currentInput.style.display === "block" && currentAddButton.style.display === "block";
+
+               // Hide all labels, inputs, and [Add] buttons
                const allContainers = document.querySelectorAll(".exercise-card");
                allContainers.forEach(function (container) {
                     container.querySelector("label").style.display = "none";
@@ -265,13 +267,12 @@ function addEventListenerToExerciseButtons() {
                     container.querySelector(".button-add").style.display = "none";
                });
 
-               // Find the parent container of the button
-               const currentContainer = currentButton.closest(".exercise-card");
-
-               // Select the label, input, and add button within the same container and unhide them
-               currentContainer.querySelector("label").style.display = "block";
-               currentContainer.querySelector("input").style.display = "block";
-               currentContainer.querySelector(".button-add").style.display = "block";
+               // If the current cluster is hidden, show it
+               if (isCurrentClusterVisible === false) {
+                    currentLabel.style.display = "block";
+                    currentInput.style.display = "block";
+                    currentAddButton.style.display = "block";
+               }
 
                // Stores id of current exerciseButton selected/"expanded" in global variable to keep track of which is selected/"expanded"
                currentlySelectedExerciseButtonId = currentButton.id;
