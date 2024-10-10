@@ -45,7 +45,23 @@ function pageLoad() {
  *
  * showShowNewRoutineButton() show the [Save New Routine] button in the New Routine section
  *
+ * sanitize() sanitizes a string by replacing special characters with their HTML entity equivalents to prevent XSS attacks
+ *
  */
+
+// Helper function
+function sanitize(string) {
+     const map = {
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#x27;",
+          "/": "&#x2F;",
+     };
+     const reg = /[&<>"'/]/gi;
+     return string.replace(reg, (match) => map[match]);
+}
 
 // Helper function
 function checkIfAlreadyExistsInLocalStorage(arrayToCheck, name) {
@@ -123,7 +139,7 @@ function saveNewExerciseToLocalStorage() {
      const existingExerciseData = JSON.parse(localStorage.getItem("exerciseDataKey")) || [];
 
      // Store user's input
-     const exerciseName = document.getElementById("new-exercise-input").value;
+     const exerciseName = sanitize(document.getElementById("new-exercise-input").value);
 
      // Only create a new Exercise if its name isn't an empty string and it doesn't already exist
      if (exerciseName.trim().length > 0 && checkIfAlreadyExistsInLocalStorage(existingExerciseData, exerciseName) === false) {
@@ -163,7 +179,7 @@ function clearExerciseCards() {
 
 function renderExerciseCards() {
      // Create the Add Rest button which is always at the beginning
-     createNewExerciseCard("rest");
+     createNewExerciseCard("Rest");
 
      // Grabs existing exercises data from localStorage and converts it into an array
      const existingExerciseDataInStringForm = localStorage.getItem("exerciseDataKey");
@@ -268,7 +284,7 @@ function addEventListenerToExerciseButtons() {
  * Paired with it is the Event Listener that assigns the function to ALL [Add] buttons
  */
 function addToTempExerciseList() {
-     const exerciseDuration = document.getElementById(`input-${currentlySelectedExerciseButtonId}`).value;
+     const exerciseDuration = sanitize(document.getElementById(`input-${currentlySelectedExerciseButtonId}`).value);
 
      const newExercise = new Exercise(currentlySelectedExerciseButtonId, exerciseDuration);
      tempExerciseArray.push(newExercise); // tempExerciseArray in global variables
@@ -313,7 +329,7 @@ function displayRoutineBeingBuiltDetails() {
  */
 function saveNewRoutineToLocalStorage() {
      // Store name of new Routine from input
-     const routineName = document.getElementById("new-routine-input").value;
+     const routineName = sanitize(document.getElementById("new-routine-input").value);
 
      // Only create a new Routine if its name isn't an empty string
      if (routineName.trim().length > 0) {
