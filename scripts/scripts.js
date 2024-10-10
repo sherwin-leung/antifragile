@@ -69,12 +69,12 @@ function convertToTitleCase(str) {
 
 // Helper function - hideShowNewRoutineButton() hides the [Save New Routine] button in the New Routine section
 function hideSaveNewRoutineButton() {
-     document.getElementById("button-save-routine").style.display = "none";
+     document.getElementById("button-save-new-routine").style.display = "none";
 }
 
 // Helper function - showShowNewRoutineButton() show the [Save New Routine] button in the New Routine section
 function showSaveNewRoutineButton() {
-     document.getElementById("button-save-routine").style.display = "block";
+     document.getElementById("button-save-new-routine").style.display = "block";
 }
 
 /**
@@ -120,6 +120,7 @@ function displayCurrentlyLoadedRoutine() {
 
 /**
  * * This function handles the creation and saving of new Exercises into localStorage
+ * Paired with EventListener below that assigns it to the button [Save Exercise]
  */
 function saveNewExerciseToLocalStorage() {
      event.preventDefault();
@@ -145,17 +146,25 @@ function saveNewExerciseToLocalStorage() {
      document.getElementById("new-exercise-input").value = "";
 }
 
+// Paired with above
+document.getElementById("button-save-new-exercise").addEventListener("click", function () {
+     saveNewExerciseToLocalStorage();
+});
+
 /**
- * * The following three functions work together
+ * * The following THREE functions work together
  * 1) refreshExerciseCards() couples the two following functions together
  * 2) clearExerciseCards() which clears all existing exercise cards
  * 3) renderExerciseCards() which renders all the exercise cards anew
  */
+
+// 1
 function refreshExerciseCards() {
      clearExerciseCards();
      renderExerciseCards();
 }
 
+// 2
 function clearExerciseCards() {
      const parentExerciseCardsContainer = document.getElementById("exercise-cards-container");
      let exerciseCard = parentExerciseCardsContainer.firstElementChild;
@@ -166,6 +175,7 @@ function clearExerciseCards() {
      }
 }
 
+// 3
 function renderExerciseCards() {
      // Create the Add Rest button which is always at the beginning
      createNewExerciseCard("Rest");
@@ -308,11 +318,21 @@ function addEventListenerToAddButtons() {
 }
 
 /**
- * * This function shows users the list of exercise for the current Routine that they're building
+ * * The following FOUR functions work together
+ * 1) displayRoutineBeingBuiltDetails() shows users the list of exercise for the current Routine that they're building
+ * 2) createTempExerciseList() builds a string from tempExerciseArray and returns it
+ * 3) createClearButton() creates the button to be assigned to the clearRoutineBeingBuilt() function
+ * 4) clearRoutineBeingBuiltDetails() clears out the list of exercises the user currently is building for a new Routine for if the user wants to restart selection process
  */
-function displayRoutineBeingBuiltDetails() {
-     const routineBeingBuiltDetails = document.getElementById("routine-being-built-details");
 
+// 1
+function displayRoutineBeingBuiltDetails() {
+     document.getElementById("routine-being-built-details").innerHTML = createTempExerciseList();
+     createClearButton();
+}
+
+// 2
+function createTempExerciseList() {
      htmlString = "<h4>Exercises To Add</h4>";
 
      htmlString += "<ol>";
@@ -321,7 +341,27 @@ function displayRoutineBeingBuiltDetails() {
      }
      htmlString += "</ol>";
 
-     routineBeingBuiltDetails.innerHTML = htmlString;
+     return htmlString;
+}
+
+// 3
+function createClearButton() {
+     const clearButton = document.createElement("button");
+     clearButton.textContent = "Clear";
+     clearButton.id = "button-clear";
+     document.getElementById("routine-being-built-details").append(clearButton);
+
+     document.getElementById("button-clear").addEventListener("click", function () {
+          clearRoutineBeingBuiltDetails();
+     });
+}
+
+// 4
+function clearRoutineBeingBuiltDetails() {
+     tempExerciseArray = [];
+     displayRoutineBeingBuiltDetails();
+
+     document.getElementById("routine-being-built-details").textContent = "";
 }
 
 /**
@@ -355,7 +395,7 @@ function saveNewRoutineToLocalStorage() {
 }
 
 // Paired with above
-document.getElementById("button-save-routine").addEventListener("click", function () {
+document.getElementById("button-save-new-routine").addEventListener("click", function () {
      saveNewRoutineToLocalStorage();
 });
 

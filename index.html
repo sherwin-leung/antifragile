@@ -48,10 +48,13 @@
             </button>
 
             <div class="div-toggle-view" id="div-new-exercise">
-                <form onsubmit="saveNewExerciseToLocalStorage()">
+
+                <div class="new-exercise-cluster">
                     <label for="exercise-name">Enter Exercise Name</label>
                     <input type="text" id="new-exercise-input" name="exercise-name" />
-                </form>
+                    <button id="button-save-new-exercise">Save New Exercise</button>
+                </div>
+
             </div>
 
         </section>
@@ -73,13 +76,17 @@
                     </ol>
                 </div>
 
-                <div>
+                <div class="new-routine-cluster">
                     <label for="routine-name">Routine Name</label>
                     <input type="text" id="new-routine-input" name="routine-name" />
-                    <button id="button-save-routine">Save New Routine</button>
+                    <button id="button-save-new-routine">Save New Routine</button>
                 </div>
 
+
                 <div id="routine-being-built-details"></div>
+                <!-- <button id="button-clear">Clear</button> -->
+
+
 
                 <div class="exercise-cards-container" id="exercise-cards-container"></div>
             </div>
