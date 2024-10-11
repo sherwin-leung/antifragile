@@ -8,9 +8,10 @@ let tempExerciseArray = [];
  * * Constructors for various Objects
  */
 class Exercise {
-     constructor(name, duration) {
+     constructor(name, durationMinutes, durationSeconds) {
           this.name = name;
-          this.duration = duration;
+          this.durationMinutes = durationMinutes;
+          this.durationSeconds = durationSeconds;
      }
 }
 
@@ -110,7 +111,7 @@ function displayCurrentlyLoadedRoutine() {
 
           htmlString += "<ol>";
           for (i = 0; i < currentlyLoadedRoutine.exerciseList.length; i++) {
-               htmlString += `<li>${currentlyLoadedRoutine.exerciseList[i].name} - ${currentlyLoadedRoutine.exerciseList[i].duration} seconds</li>`;
+               htmlString += `<li>${currentlyLoadedRoutine.exerciseList[i].name} - ${currentlyLoadedRoutine.exerciseList[i].durationMinutes}m:${currentlyLoadedRoutine.exerciseList[i].durationSeconds}s</li>`;
           }
           htmlString += "</ol>";
 
@@ -134,7 +135,7 @@ function saveNewExerciseToLocalStorage() {
      // Only create a new Exercise if its name isn't an empty string and it doesn't already exist
      if (exerciseName.trim().length > 0 && checkIfAlreadyExistsInLocalStorage(existingExerciseData, exerciseName) === false) {
           // Create a new Exercise Object and pushes it into the existing exercise data. Afterwards, save existing data with the new Exercise to localStorage
-          const newExercise = new Exercise(exerciseName, 0);
+          const newExercise = new Exercise(exerciseName, 0, 0);
           existingExerciseData.push(newExercise);
           localStorage.setItem("exerciseDataKey", JSON.stringify(existingExerciseData));
 
@@ -242,6 +243,7 @@ function createNewExerciseCard(name) {
      newInputMinutesDuration.type = "number";
      newInputMinutesDuration.name = `input-minutes-${nameHyphenated}`;
      newInputMinutesDuration.value = 5; // default value
+     newInputMinutesDuration.min = 0;
      newCard.append(newInputMinutesDuration);
 
      // Create a new seconds label and append it to the parent container for SECONDS
@@ -258,6 +260,8 @@ function createNewExerciseCard(name) {
      newInputSecondsDuration.type = "number";
      newInputSecondsDuration.name = `input-seconds-${nameHyphenated}`;
      newInputSecondsDuration.value = 5; // default value
+     newInputSecondsDuration.min = 0;
+     newInputSecondsDuration.max = 59;
      newCard.append(newInputSecondsDuration);
 
      // Create another button and append it to the parent container. This one is for submitting
@@ -336,13 +340,15 @@ function addEventListenerToExerciseButtons() {
  * Paired with it is the Event Listener that assigns the function to ALL [Add] buttons
  */
 function addToTempExerciseList() {
-     const exerciseDuration = sanitize(document.getElementById(`input-${currentlySelectedExerciseButtonId}`).value);
+     // Converts value from string to int
+     const minutes = parseInt(document.getElementById(`input-minutes-${currentlySelectedExerciseButtonId}`).value);
+     const seconds = parseInt(document.getElementById(`input-seconds-${currentlySelectedExerciseButtonId}`).value);
 
      // currentlySelectedExerciseButtonId may have a hyphen, ie "thai-sit-ups", but we want it to be "thai sit ups" when we form the list
      const stringWithHyphensArray = currentlySelectedExerciseButtonId.split("-");
      const newStringWithWhiteSpace = stringWithHyphensArray.join(" ");
 
-     const newExercise = new Exercise(newStringWithWhiteSpace, exerciseDuration);
+     const newExercise = new Exercise(newStringWithWhiteSpace, minutes, seconds);
      tempExerciseArray.push(newExercise); // tempExerciseArray in global variables
 }
 
@@ -382,7 +388,7 @@ function createTempExerciseList() {
 
      htmlString += "<ol>";
      for (i = 0; i < tempExerciseArray.length; i++) {
-          htmlString += `<li>${tempExerciseArray[i].name} - ${tempExerciseArray[i].duration}</li>`;
+          htmlString += `<li>${tempExerciseArray[i].name} - ${tempExerciseArray[i].durationMinutes}m:${tempExerciseArray[i].durationSeconds}s</li>`;
      }
      htmlString += "</ol>";
 
@@ -452,11 +458,10 @@ document.getElementById("button-save-new-routine").addEventListener("click", fun
 
 function startExerciseTimerCountdown() {
      const currentlyLoadedRoutine = JSON.parse(localStorage.getItem("routineDataKey"));
-     const currentExerciseDuration = `${currentlyLoadedRoutine.exerciseList[0].name}: ${currentlyLoadedRoutine.exerciseList[0].duration} seconds`;
-     console.log(currentExerciseDuration);
+     const currentExerciseDetails = `${currentlyLoadedRoutine.exerciseList[0].name}: ${currentlyLoadedRoutine.exerciseList[0].durationMinutes}m:${currentlyLoadedRoutine.exerciseList[0].durationSeconds}s`;
 
      const countdown = document.getElementById("countdown");
-     countdown.textContent = currentExerciseDuration;
+     countdown.textContent = currentExerciseDetails;
 }
 
 startExerciseTimerCountdown();
