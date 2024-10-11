@@ -4,39 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exercise Timer</title>
+    <title>TIME:R</title>
 
     <link rel="stylesheet" href="styles/styles.css">
     <script src="scripts/scripts.js" defer></script>
 </head>
 
-<body>
-    <header>
-        <h1>Here is the Header</h1>
-    </header>
+<header>
+    <h1>TIME:R</h1>
+</header>
 
+<body>
     <main>
+        <!-- ! Timer Section -->
+        <section class="section-styling" id="section-timer">
+
+            <div class="timer" id="timer">
+                <p id="countdown"></p>
+            </div>
+            <button>Start</button>
+
+        </section>
+
         <!-- ! Currently Loaded Workout Section -->
         <section class="section-styling" id="section-currently-loaded-routine">
 
             <h2>Current Routine</h2>
             <p id="currently-loaded-routine-name">No routine loaded</p>
             <div id="exercise-details"></div>
-
-        </section>
-
-        <!-- ! Timer Section -->
-        <section class="section-styling" id="section-timer">
-
-            <!-- <button class="button-selection" id="button-workout" onclick="toggleViewOnAndOff('div-workout')">
-                Workout
-            </button>
-
-            <div class="div-toggle-view" id="div-timer">
-                <p>Timer</p>
-            </div> -->
-
-            <div class="timer" id="timer">Timer</div>
 
         </section>
 
@@ -71,8 +66,8 @@
                     <h3>Instructions</h3>
                     <ol>
                         <li>Enter a name</li>
-                        <li>Select an exercise and enter a duration, then press [Add Exercise]</li>
-                        <li>Press [Save New Routine] button to save</li>
+                        <li>Select an exercise and enter a duration, then press [Add]</li>
+                        <li>Press [Save] button to save</li>
                     </ol>
                 </div>
 
@@ -84,9 +79,6 @@
 
 
                 <div id="routine-being-built-details"></div>
-                <!-- <button id="button-clear">Clear</button> -->
-
-
 
                 <div class="exercise-cards-container" id="exercise-cards-container"></div>
             </div>

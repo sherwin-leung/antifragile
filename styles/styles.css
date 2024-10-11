@@ -30,6 +30,16 @@
         display: flex;
     }
 
+    button {
+        border-radius         : 5px;
+        padding               : 0.5rem;
+        /* box-shadow         : inset; */
+    }
+
+    button:hover {
+        background-color: goldenrod;
+    }
+
     /* End HTML elements */
 
     /* ! Can delete later */

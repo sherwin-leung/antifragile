@@ -129,7 +129,7 @@ function saveNewExerciseToLocalStorage() {
      const existingExerciseData = JSON.parse(localStorage.getItem("exerciseDataKey")) || [];
 
      // Store user's input
-     const exerciseName = sanitize(document.getElementById("new-exercise-input").value);
+     const exerciseName = sanitize(convertToTitleCase(document.getElementById("new-exercise-input").value));
 
      // Only create a new Exercise if its name isn't an empty string and it doesn't already exist
      if (exerciseName.trim().length > 0 && checkIfAlreadyExistsInLocalStorage(existingExerciseData, exerciseName) === false) {
@@ -236,7 +236,7 @@ function createNewExerciseCard(name) {
      newDurationInput.id = `input-${nameHyphenated}`;
      newDurationInput.type = "number";
      newDurationInput.name = `input-${nameHyphenated}`;
-     newDurationInput.value = 60; // default value
+     newDurationInput.value = 5; // default value
      newButtonInputContainer.append(newDurationInput);
 
      // Create another button and append it to the parent container. This one is for submitting
@@ -374,7 +374,7 @@ function clearRoutineBeingBuiltDetails() {
  */
 function saveNewRoutineToLocalStorage() {
      // Store name of new Routine from input
-     const routineName = sanitize(document.getElementById("new-routine-input").value);
+     const routineName = sanitize(convertToTitleCase(document.getElementById("new-routine-input").value));
 
      // Only create a new Routine if its name isn't an empty string
      if (routineName.trim().length > 0) {
@@ -395,6 +395,10 @@ function saveNewRoutineToLocalStorage() {
 
           // Displays to the user the currently loaded Routine
           displayCurrentlyLoadedRoutine();
+
+          // ! NOT DONE
+          // TODO
+          // startExerciseTimerCountdown();
      }
 }
 
@@ -403,4 +407,15 @@ document.getElementById("button-save-new-routine").addEventListener("click", fun
      saveNewRoutineToLocalStorage();
 });
 
-// TODO:
+// TODO
+
+function startExerciseTimerCountdown() {
+     const currentlyLoadedRoutine = JSON.parse(localStorage.getItem("routineDataKey"));
+     const currentExerciseDuration = `${currentlyLoadedRoutine.exerciseList[0].name}: ${currentlyLoadedRoutine.exerciseList[0].duration} seconds`;
+     console.log(currentExerciseDuration);
+
+     const countdown = document.getElementById("countdown");
+     countdown.textContent = currentExerciseDuration;
+}
+
+startExerciseTimerCountdown();
