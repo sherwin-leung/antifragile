@@ -297,7 +297,11 @@ function addEventListenerToExerciseButtons() {
 function addToTempExerciseList() {
      const exerciseDuration = sanitize(document.getElementById(`input-${currentlySelectedExerciseButtonId}`).value);
 
-     const newExercise = new Exercise(currentlySelectedExerciseButtonId, exerciseDuration);
+     // currentlySelectedExerciseButtonId may have a hyphen, ie "thai-sit-ups", but we want it to be "thai sit ups" when we form the list
+     const stringWithHyphensArray = currentlySelectedExerciseButtonId.split("-");
+     const newStringWithWhiteSpace = stringWithHyphensArray.join(" ");
+
+     const newExercise = new Exercise(newStringWithWhiteSpace, exerciseDuration);
      tempExerciseArray.push(newExercise); // tempExerciseArray in global variables
 }
 
