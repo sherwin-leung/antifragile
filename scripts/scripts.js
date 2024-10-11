@@ -211,46 +211,70 @@ function createNewExerciseCard(name) {
      // This is just so that if an exercise name is two words, like "jumping jacks", we won't get class/id/etc as "class="jumping jacks" but rather "class="jumping-jacks"
      const nameHyphenated = name.split(" ").join("-");
 
-     // Create a new div which acts as as the card container
-     const newButtonInputContainer = document.createElement("div");
-     newButtonInputContainer.classList.add("exercise-card");
-     document.getElementById("exercise-cards-container").append(newButtonInputContainer);
+     // Create a new div which acts as as the CARD container
+     const newCard = document.createElement("div");
+     newCard.classList.add("exercise-card");
+     document.getElementById("exercise-cards-container").append(newCard);
 
      // Create a button then append it to the parent container
-     const newExerciseButton = document.createElement("button");
-     newExerciseButton.textContent = name; // ! We do NOT want to force hyphenation here
-     newExerciseButton.classList.add("button-exercise");
-     newExerciseButton.id = `${nameHyphenated}`;
-     newButtonInputContainer.append(newExerciseButton);
+     const newButtonExercise = document.createElement("button");
+     newButtonExercise.textContent = name; // ! We do NOT want to force hyphenation here
+     newButtonExercise.classList.add("button-exercise");
+     newButtonExercise.id = `${nameHyphenated}`;
+     newCard.append(newButtonExercise);
 
-     // Create a new label and append it to the parent container
-     const newDurationLabel = document.createElement("label");
-     newDurationLabel.textContent = "Duration (in seconds)";
-     newDurationLabel.classList.add("label-duration");
-     newDurationLabel.htmlFor = `input-${nameHyphenated}`; // Setting for
-     newButtonInputContainer.append(newDurationLabel);
+     // // Create a new div which acts as as the INPUTS container
+     // const newInputContainer = document.createElement("div");
+     // newInputContainer.classList.add("input-container");
+     // newCard.append(newInputContainer);
 
-     // Create a new input and append it to the parent container
-     const newDurationInput = document.createElement("input");
-     newDurationInput.classList.add("input-duration");
-     newDurationInput.id = `input-${nameHyphenated}`;
-     newDurationInput.type = "number";
-     newDurationInput.name = `input-${nameHyphenated}`;
-     newDurationInput.value = 5; // default value
-     newButtonInputContainer.append(newDurationInput);
+     // Create a new label and append it to the parent container for MINUTES
+     const newLabelMinutesDuration = document.createElement("label");
+     newLabelMinutesDuration.textContent = "Minutes";
+     newLabelMinutesDuration.classList.add("label-minutes-duration");
+     newLabelMinutesDuration.htmlFor = `input-minutes-${nameHyphenated}`; // Setting for
+     newCard.append(newLabelMinutesDuration);
+
+     // Create a new input and append it to the parent container for MINUTES
+     const newInputMinutesDuration = document.createElement("input");
+     newInputMinutesDuration.classList.add("input-minutes-duration");
+     newInputMinutesDuration.id = `input-minutes-${nameHyphenated}`;
+     newInputMinutesDuration.type = "number";
+     newInputMinutesDuration.name = `input-minutes-${nameHyphenated}`;
+     newInputMinutesDuration.value = 5; // default value
+     newCard.append(newInputMinutesDuration);
+
+     // Create a new seconds label and append it to the parent container for SECONDS
+     const newLabelSecondsDuration = document.createElement("label");
+     newLabelSecondsDuration.textContent = "Seconds";
+     newLabelSecondsDuration.classList.add("label-seconds-duration");
+     newLabelSecondsDuration.htmlFor = `input-seconds-${nameHyphenated}`; // Setting for
+     newCard.append(newLabelSecondsDuration);
+
+     // Create a new seconds input and append it to the parent container for SECONDS
+     const newInputSecondsDuration = document.createElement("input");
+     newInputSecondsDuration.classList.add("input-seconds-duration");
+     newInputSecondsDuration.id = `input-seconds-${nameHyphenated}`;
+     newInputSecondsDuration.type = "number";
+     newInputSecondsDuration.name = `input-seconds-${nameHyphenated}`;
+     newInputSecondsDuration.value = 5; // default value
+     newCard.append(newInputSecondsDuration);
 
      // Create another button and append it to the parent container. This one is for submitting
      const newAddButton = document.createElement("button");
      newAddButton.textContent = "Add";
      newAddButton.classList.add("button-add");
-     newButtonInputContainer.append(newAddButton);
+     newCard.append(newAddButton);
 }
 
 /**
  * * This function gives all exercise buttons an Event Listener
+ *
  * 1) On click of a button, it will unhide/"expand" the exercise card associated with  it and hide/"close" previous expanded cards
  * 2) The user clicks on the a button that has its card expanded, it will hide it
  * 3) Also stores the id of the currently expanded button in global variable currentSelectedExerciseButtonId
+ *
+ * TODO: If there's time: efactor this  function to have all these labels and inputs in a div and simply toggle the div on and off
  */
 function addEventListenerToExerciseButtons() {
      const exerciseButtons = document.querySelectorAll(".button-exercise");
@@ -261,27 +285,44 @@ function addEventListenerToExerciseButtons() {
                const currentParentContainer = currentButton.closest(".exercise-card");
 
                // Storing the current label, input, and [Add] button's *display*. Call it a "cluster"
-               const currentLabel = currentParentContainer.querySelector("label");
-               const currentInput = currentParentContainer.querySelector("input");
-               const currentAddButton = currentParentContainer.querySelector(".button-add");
+               const minutesLabel = currentParentContainer.querySelector("label");
+               const minutesInput = currentParentContainer.querySelector("input");
+
+               const secondsLabel = currentParentContainer.querySelector(".label-seconds-duration");
+               const secondsInput = currentParentContainer.querySelector(".input-seconds-duration");
+
+               const addButton = currentParentContainer.querySelector(".button-add");
 
                // Check the visibility of current cluster. This acts as the toggle switch
+               // Could just check one element's display for less written code, but to be safe, check all
                const isCurrentClusterVisible =
-                    currentLabel.style.display === "block" && currentInput.style.display === "block" && currentAddButton.style.display === "block";
+                    minutesLabel.style.display === "block" &&
+                    minutesInput.style.display === "block" &&
+                    secondsLabel.style.display === "block" &&
+                    secondsInput.style.display === "block" &&
+                    addButton.style.display === "block";
 
                // Hide all labels, inputs, and [Add] buttons
                const allContainers = document.querySelectorAll(".exercise-card");
                allContainers.forEach(function (container) {
                     container.querySelector("label").style.display = "none";
                     container.querySelector("input").style.display = "none";
+
+                    container.querySelector(".label-seconds-duration").style.display = "none";
+                    container.querySelector(".input-seconds-duration").style.display = "none";
+
                     container.querySelector(".button-add").style.display = "none";
                });
 
                // If the current cluster is hidden, show it
                if (isCurrentClusterVisible === false) {
-                    currentLabel.style.display = "block";
-                    currentInput.style.display = "block";
-                    currentAddButton.style.display = "block";
+                    minutesLabel.style.display = "block";
+                    minutesInput.style.display = "block";
+
+                    secondsLabel.style.display = "block";
+                    secondsInput.style.display = "block";
+
+                    addButton.style.display = "block";
                }
 
                // Stores id of current exerciseButton selected/"expanded" in global variable to keep track of which is selected/"expanded"

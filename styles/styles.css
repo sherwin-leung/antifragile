@@ -105,16 +105,24 @@
     }
 
     .button-exercise,
-    .input-duration,
+    .input-minutes-duration,
+    .input-seconds-duration,
     .button-add {
         width  : 100%;
         padding: 0.5rem;
     }
 
-    .label-duration,
-    .input-duration,
+    .label-minutes-duration,
+    .input-minutes-duration,
+    .label-seconds-duration,
+    .input-seconds-duration,
     .button-add {
         display: none;
+    }
+
+    .input-container {
+        border    : 2px solid red;
+        /* display: none; */
     }
 
     /* End new routine section */
