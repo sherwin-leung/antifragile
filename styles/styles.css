@@ -1,128 +1,136 @@
-    /* * START RESETS */
+/* * GOOGLE FONTS */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-    *,
-    *:before,
-    *:after {
-        box-sizing: border-box;
-    }
+/* * START RESETS */
 
-    * {
-        margin : 0;
-        padding: 0;
-    }
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
 
-    img {
-        max-width: 100%;
-        display  : block;
-    }
+* {
+    margin : 0;
+    padding: 0;
+}
 
-    /* End resets */
+img {
+    max-width: 100%;
+    display  : block;
+}
 
-    /* * START HTML ELEMENTS */
+/* End resets */
 
-    /* Because otherwise, can't see the list item decorations */
-    ol {
-        padding-left: 1rem;
-    }
+/* * START HTML ELEMENTS */
 
-    label,
-    input {
-        display: flex;
-    }
+html {
+    font-family: "Inter", sans-serif;
+}
 
-    button {
-        border-radius         : 5px;
-        padding               : 0.5rem;
-        /* box-shadow         : inset; */
-    }
+/* Because otherwise, can't see the list item decorations */
+ol {
+    padding-left: 1rem;
+}
 
-    button:hover {
-        background-color: goldenrod;
-    }
+label,
+input {
+    display: flex;
+}
 
-    /* End HTML elements */
+button {
+    border-radius         : 5px;
+    padding               : 0.5rem;
+    /* box-shadow         : inset; */
+}
 
-    /* ! Can delete later */
-    .test-area {
-        border: 5px solid pink;
-    }
+button:hover {
+    background-color: goldenrod;
+}
 
-    /* * START DIV TOGGLE VIEW */
+/* End HTML elements */
 
-    /* Sections are hidden on page load */
-    .div-toggle-view {
-        /* display: none; */
-    }
+/* ! Can delete later */
+.test-area {
+    border: 5px solid pink;
+}
 
-    #div-new-exercise {
-        border: 5px solid rgb(255, 155, 155);
-    }
+/* * START DIV TOGGLE VIEW */
 
-    #div-new-routine {
-        border: 5px solid rgba(10, 190, 79, 0.521);
-    }
+/* Sections are hidden on page load */
+.div-toggle-view {
+    /* display: none; */
+}
 
-    /* * START SECTION STYLING */
-    .section-styling {
-        padding: 1rem;
-    }
+#div-new-exercise {
+    border: 5px solid rgb(255, 155, 155);
+}
 
-    /* * START TIMER SECTION */
-    #section-timer {
-        border: 5px solid blue;
-    }
+#div-new-routine {
+    border: 5px solid rgba(10, 190, 79, 0.521);
+}
 
-    /* End div toggle view */
+/* * START SECTION STYLING */
+.section-styling {
+    padding: 1rem;
+}
 
-    /* * START CURRENTLY LOADED WORKOUT */
+/* * START TIMER SECTION */
+#section-timer {
+    border: 5px solid blue;
+}
 
-    #section-currently-loaded-routine {
-        border: 5px solid goldenrod;
-    }
+/* End div toggle view */
 
-    /* End currently loaded workout */
+/* * START CURRENTLY LOADED WORKOUT */
 
-    /* * START NEW EXERCISE SECTION */
+#section-currently-loaded-routine {
+    border: 5px solid goldenrod;
+}
 
-    #section-new-exercise {
-        border: 5px solid red;
-    }
+/* End currently loaded workout */
 
-    /* * START NEW ROUTINE SECTION */
+/* * START NEW EXERCISE SECTION */
 
-    #section-new-routine {
-        border: 5px solid green;
-    }
+#section-new-exercise {
+    border: 5px solid red;
+}
 
-    #button-save-new-routine {
-        display: none;
-    }
+/* * START NEW ROUTINE SECTION */
 
-    .exercise-cards-container {
-        display              : grid;
-        grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-        gap                  : 0.5rem;
-    }
+#section-new-routine {
+    border: 5px solid green;
+}
 
-    .button-exercise,
-    .input-minutes-duration,
-    .input-seconds-duration,
-    .button-add {
-        width  : 100%;
-        padding: 0.5rem;
-    }
+#button-save-new-routine {
+    display: none;
+}
 
-    .label-minutes-duration,
-    .input-minutes-duration,
-    .label-seconds-duration,
-    .input-seconds-duration,
-    .button-add {
-        display: none;
-    }
+.exercise-cards-container {
+    display              : grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap                  : 0.5rem;
+}
 
-    .input-container {
-        border    : 2px solid red;
-        /* display: none; */
-    }
+.button-exercise,
+.input-minutes-duration,
+.input-seconds-duration,
+.button-add {
+    width  : 100%;
+    padding: 0.5rem;
+}
 
-    /* End new routine section */
+.label-minutes-duration,
+.input-minutes-duration,
+.label-seconds-duration,
+.input-seconds-duration,
+.button-add {
+    display: none;
+}
+
+.input-container {
+    border    : 2px solid red;
+    /* display: none; */
+}
+
+/* End new routine section */
