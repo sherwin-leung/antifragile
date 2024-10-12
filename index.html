@@ -21,13 +21,13 @@
         <!-- ! Timer Section -->
         <section class="section-styling" id="section-timer">
 
-            <div class="timer" id="timer">
+            <div id="timer">
                 <h2 id="timer-display-routine-name">No Routine Loaded</h2>
                 <h3 id="timer-display-exercise-name"></h3>
                 <p id="timer-display-countdown"></p>
             </div>
 
-            <div class="div-control-buttons" id="div-control-buttons">
+            <div id="div-control-buttons">
                 <button class="button-control" id="button-start">Start</button>
                 <button class="button-control" id="button-pause">Pause</button>
                 <button class="button-control" id="button-stop">Stop</button>
@@ -40,12 +40,13 @@
         <!-- ! New Exercise Section -->
         <section class="section-styling" id="section-new-exercise">
 
-            <button class="button-selection" id="button-new-exercise" onclick="toggleViewOnAndOff('div-new-exercise')">
+            <button class="button-toggle-view" id="button-new-exercise"
+                onclick="toggleViewOnAndOff('div-new-exercise')">
                 New Exercise
             </button>
 
             <div class="div-toggle-view" id="div-new-exercise">
-                <div class="new-exercise-cluster">
+                <div id="new-exercise-cluster">
                     <label for="exercise-name">Exercise Name</label>
                     <input type="text" id="new-exercise-input" name="exercise-name" />
                     <button id="button-save-new-exercise">Save</button>
@@ -57,7 +58,7 @@
         <!--! New Routine Section -->
         <section class="section-styling" id="section-new-routine">
 
-            <button class="button-selection" id="button-new-routine" onclick="toggleViewOnAndOff('div-new-routine')">
+            <button class="button-toggle-view" id="button-new-routine" onclick="toggleViewOnAndOff('div-new-routine')">
                 New Routine
             </button>
 
@@ -65,13 +66,14 @@
                 <div id="creation-routine-instructions">
                     <h3>Instructions</h3>
                     <ol>
-                        <li>Enter a name</li>
-                        <li>Select an exercise and enter a duration, then press [Add]</li>
-                        <li>Press [Save] button to save</li>
+                        <li>Enter a routine name</li>
+                        <li>Select an exercise and enter duration</li>
+                        <li>Press [Add] to add to routine</li>
+                        <li>Press [Save] to save routine</li>
                     </ol>
                 </div>
 
-                <div class="new-routine-cluster">
+                <div id="new-routine-cluster">
                     <label for="routine-name">Routine Name</label>
                     <input type="text" id="new-routine-input" name="routine-name" />
                     <button id="button-save-new-routine">Save</button>
@@ -79,7 +81,7 @@
 
                 <div id="routine-being-built-details"></div>
 
-                <div class="exercise-cards-container" id="exercise-cards-container"></div>
+                <div id="exercise-cards-container"></div>
             </div>
 
         </section>

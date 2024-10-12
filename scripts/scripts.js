@@ -100,6 +100,7 @@ function toggleViewOnAndOff(divId) {
 
 /**
  * * This function displays the currently loaded Routine to the user. It persists on page load and refreshes when user saves a new Routine
+ * It creates a button and that button is paired with the Event Listener below. It allows the user to toggle the view of the loaded exercise list
  */
 function displayCurrentlyLoadedRoutine() {
      // Grab the saved Routine from localStorage
@@ -109,9 +110,9 @@ function displayCurrentlyLoadedRoutine() {
           // Displaying the exercise list in the Routine
           const exerciseDetails = document.getElementById("exercise-details");
 
-          let htmlString = "<h4>Show Exercise List:</h4>";
+          let htmlString = "<button id='button-toggle-exercise-list'>Hide Exercise List</button>";
 
-          htmlString += "<ol>";
+          htmlString += "<ol id='ol-currently-loaded-routine'>";
           for (i = 0; i < currentlyLoadedRoutine.exerciseList.length; i++) {
                htmlString += `<li>${currentlyLoadedRoutine.exerciseList[i].name} - ${convertToStringAndPad2(
                     currentlyLoadedRoutine.exerciseList[i].durationMinutes
@@ -122,6 +123,21 @@ function displayCurrentlyLoadedRoutine() {
           exerciseDetails.innerHTML = htmlString;
      }
 }
+
+// Paired with above
+const exerciseListToggleButton = document.getElementById("button-toggle-exercise-list");
+
+exerciseListToggleButton.addEventListener("click", function () {
+     const olRoutine = document.getElementById("ol-currently-loaded-routine");
+
+     if (olRoutine.style.display === "none") {
+          olRoutine.style.display = "block";
+          exerciseListToggleButton.textContent = "Hide Exercise List";
+     } else {
+          olRoutine.style.display = "none";
+          exerciseListToggleButton.textContent = "Show Exercise List";
+     }
+});
 
 /**
  * * This function handles the creation and saving of new Exercises into localStorage
