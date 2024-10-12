@@ -2,6 +2,7 @@
  * * Global Variables
  */
 let currentlySelectedExerciseButtonId;
+
 let tempExerciseArray = [];
 
 /**
@@ -266,7 +267,7 @@ function createNewExerciseCard(name) {
      newInputSecondsDuration.id = `input-seconds-${nameHyphenated}`;
      newInputSecondsDuration.type = "number";
      newInputSecondsDuration.name = `input-seconds-${nameHyphenated}`;
-     newInputSecondsDuration.value = 5; // default value
+     newInputSecondsDuration.value = 3; // default value
      newInputSecondsDuration.min = 0;
      newInputSecondsDuration.max = 59;
      newCard.append(newInputSecondsDuration);
@@ -463,7 +464,15 @@ document.getElementById("button-save-new-routine").addEventListener("click", fun
 });
 
 /**
- * *
+ * * The following THREE functions work together along with the Event Listener to start and display the countdown timer
+ * Event Listener - Assigns function to startButton and disables button when the function is running
+ * createTempArraysForTimer() grabs Routine data and stores the name & duration of each Exercise in the Routine's exerciseList in global temporary arrays
+ *
+ * ? These two functions call each other
+ * startExerciseCountdown() starts the countdown for the current Exercise (based on the index). Fires up updateCountdown and then tells it to run every 1 second. If there are no Exercises left in the exercise list, it performs clean up and stops the timer
+ *
+ * updateCountdown() in charge of displaying  to the user the countdown timer. If the seconds reach -1 (the duration is over), it stops the timer, increments the index by 1, and tells startExerciseCountdown() to run for the next Exercise if there is one
+ *
  */
 
 let timerIntervalId;
@@ -479,11 +488,19 @@ const timerDisplayCountdown = document.getElementById("timer-display-countdown")
 
 const startButton = document.getElementById("button-start"); // So users cannot click the button multiple times when it's already running
 
-document.getElementById("button-start").addEventListener("click", function () {
-     // Disable the button to prevent multiple clicks
+// Event Listener
+startButton.addEventListener("click", function () {
      startButton.disabled = true;
 
-     // Grab the starting time outside of the updateCountdown() function
+     createTempArraysForTimer();
+
+     // Start the countdown for the first exercise
+     currentExerciseIndex = 0;
+     startExerciseCountdown();
+});
+
+// 1
+function createTempArraysForTimer() {
      const currentlyLoadedRoutine = JSON.parse(localStorage.getItem("routineDataKey"));
 
      // Grab each exercise's name & duration and put them into their own separate temporary arrays
@@ -498,42 +515,42 @@ document.getElementById("button-start").addEventListener("click", function () {
           const totalTimeInSeconds = startingMinutes * 60 + startingSeconds;
           tempArrayOfDurations.push(totalTimeInSeconds);
      }
+}
 
-     // Start the countdown for the first exercise
-     currentExerciseIndex = 0; // Starting from the first exercise
-     startExerciseCountdown();
-});
-
+// 2
 function startExerciseCountdown() {
      // If there are no more exercises, stop the timer from running
      if (currentExerciseIndex === tempArrayOfDurations.length) {
           timerDisplayExerciseName.textContent = "All done!";
-          timerDisplayCountdown.textContent = "00:00";
-
-          // So users can't click the [Start] button if it's already running
-          startButton.disabled = false;
 
           // Empty out the temp arrays
           tempArrayOfNames = [];
           tempArrayOfDurations = [];
 
-          clearInterval(timerIntervalId);
+          startButton.disabled = false;
+
+          clearInterval(timerIntervalId); // Trigger stop
+
           return;
      }
 
      totalCountdownTimeInSeconds = tempArrayOfDurations[currentExerciseIndex];
-     updateCountdown(); // Call the update function once to display the initial time
-     timerIntervalId = setInterval(updateCountdown, 1000); // then call the function every second
+     updateCountdown(); // Call the update function once to display the initial time..
+     timerIntervalId = setInterval(updateCountdown, 1000); // ..then call the function every second
 }
 
+// 3
 function updateCountdown() {
      // Stop the countdown when time is up for the current exercise
      if (totalCountdownTimeInSeconds < 0) {
-          clearInterval(timerIntervalId);
+          clearInterval(timerIntervalId); // Triger stop
 
           // Move on to the next exercise
           currentExerciseIndex++;
-          startExerciseCountdown(); // Start the countdown for the next exercise
+
+          // Start the countdown for the next exercise
+          startExerciseCountdown();
+
           return;
      }
 
@@ -551,17 +568,22 @@ function updateCountdown() {
      totalCountdownTimeInSeconds--;
 }
 
-// TODO
-
 /**
- * * Populating Timer Section on page load
+ * * Populating Timer Section with the currently loaded Routine's name, first Exercise name & duration in its exerciseList
  */
+function populateTimerDetailsOnLoad() {
+     const routineName = document.getElementById("timer-display-routine-name");
+     routineName.textContent = `Routine: ${JSON.parse(localStorage.getItem("routineDataKey")).name}`;
 
-const timerDisplayRoutineName = document.getElementById("timer-display-routine-name");
-timerDisplayRoutineName.textContent = `Routine: ${JSON.parse(localStorage.getItem("routineDataKey")).name}`;
+     const exerciseName = document.getElementById("timer-display-exercise-name");
+     exerciseName.textContent = JSON.parse(localStorage.getItem("routineDataKey")).exerciseList[0].name;
 
-timerDisplayExerciseName.textContent = `Exercise: ${JSON.parse(localStorage.getItem("routineDataKey")).exerciseList[0].name}`;
+     const minutes = `${JSON.parse(localStorage.getItem("routineDataKey")).exerciseList[0].durationMinutes}`;
+     const seconds = `${JSON.parse(localStorage.getItem("routineDataKey")).exerciseList[0].durationSeconds}`;
 
-const minutes = `${JSON.parse(localStorage.getItem("routineDataKey")).exerciseList[0].durationMinutes}`;
-const seconds = `${JSON.parse(localStorage.getItem("routineDataKey")).exerciseList[0].durationSeconds}`;
-timerDisplayCountdown.textContent = `${convertToStringAndPad2(minutes)}:${convertToStringAndPad2(seconds)}`;
+     const countdown = document.getElementById("timer-display-countdown");
+     countdown.textContent = `${convertToStringAndPad2(minutes)}:${convertToStringAndPad2(seconds)}`;
+}
+
+// Always calls this upon page load or refresh, but isn't in pageLoad() because it causes an error being able to save Exercises/Routines when there isn't already a Routine in localStorage
+populateTimerDetailsOnLoad();
