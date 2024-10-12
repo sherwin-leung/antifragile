@@ -242,7 +242,7 @@ function createNewExerciseCard(name) {
      newInputMinutesDuration.id = `input-minutes-${nameHyphenated}`;
      newInputMinutesDuration.type = "number";
      newInputMinutesDuration.name = `input-minutes-${nameHyphenated}`;
-     newInputMinutesDuration.value = 5; // default value
+     newInputMinutesDuration.value = 0; // default value
      newInputMinutesDuration.min = 0;
      newCard.append(newInputMinutesDuration);
 
@@ -456,12 +456,41 @@ document.getElementById("button-save-new-routine").addEventListener("click", fun
 
 // TODO
 
-function startExerciseTimerCountdown() {
+const startButton = document.getElementById("button-start");
+const countdownDisplay = document.getElementById("countdown-display");
+
+startButton.addEventListener("click", function () {
      const currentlyLoadedRoutine = JSON.parse(localStorage.getItem("routineDataKey"));
-     const currentExerciseDetails = `${currentlyLoadedRoutine.exerciseList[0].name}: ${currentlyLoadedRoutine.exerciseList[0].durationMinutes}m:${currentlyLoadedRoutine.exerciseList[0].durationSeconds}s`;
 
-     const countdown = document.getElementById("countdown");
-     countdown.textContent = currentExerciseDetails;
-}
+     const startingMinutes = currentlyLoadedRoutine.exerciseList[0].durationMinutes;
+     const startingSeconds = currentlyLoadedRoutine.exerciseList[0].durationSeconds;
+     let totalTimeInSeconds = startingMinutes * 60 + startingSeconds;
+     console.log(`Current total time in seconds: ${totalTimeInSeconds}`);
+     console.log(typeof totalTimeInSeconds);
 
-startExerciseTimerCountdown();
+     function updateCountdown() {
+          console.log("in function");
+          console.log(`Current total time in seconds: ${totalTimeInSeconds}`);
+
+          // Once time is up, stops the countdown, sets the display back to 00:00 and stops the function
+          if (totalTimeInSeconds < 0) {
+               clearInterval(intervalId);
+               countdownDisplay.textContent = "Working on this part";
+               console.log("before return");
+               return;
+          }
+
+          console.log("after return");
+          const displayMinutes = Math.floor(totalTimeInSeconds / 60);
+          const displaySeconds = totalTimeInSeconds % 60;
+
+          // padStart is so that the minutes and seconds always have two digits by adding a leading zero if needed (ie. :9 becomes :09)
+          countdownDisplay.textContent = `${String(displayMinutes).padStart(2, "0")}:${String(displaySeconds).padStart(2, "0")}`;
+
+          totalTimeInSeconds--;
+     }
+
+     let intervalId = setInterval(updateCountdown, 1000);
+     console.log(typeof intervalId);
+     updateCountdown();
+});
