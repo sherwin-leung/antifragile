@@ -125,19 +125,21 @@ function displayCurrentlyLoadedRoutine() {
 }
 
 // Paired with above
-const exerciseListToggleButton = document.getElementById("button-toggle-exercise-list");
+const exerciseListToggleButton = document.getElementById("button-toggle-exercise-list") || null;
 
-exerciseListToggleButton.addEventListener("click", function () {
-     const olRoutine = document.getElementById("ol-currently-loaded-routine");
+if (exerciseListToggleButton !== null) {
+     exerciseListToggleButton.addEventListener("click", function () {
+          const olRoutine = document.getElementById("ol-currently-loaded-routine");
 
-     if (olRoutine.style.display === "none") {
-          olRoutine.style.display = "block";
-          exerciseListToggleButton.textContent = "Hide Exercise List";
-     } else {
-          olRoutine.style.display = "none";
-          exerciseListToggleButton.textContent = "Show Exercise List";
-     }
-});
+          if (olRoutine.style.display === "none") {
+               olRoutine.style.display = "block";
+               exerciseListToggleButton.textContent = "Hide Exercise List";
+          } else {
+               olRoutine.style.display = "none";
+               exerciseListToggleButton.textContent = "Show Exercise List";
+          }
+     });
+}
 
 /**
  * * This function handles the creation and saving of new Exercises into localStorage
@@ -597,5 +599,5 @@ function populateTimerDetailsOnLoad() {
      countdown.textContent = `${convertToStringAndPad2(minutes)}:${convertToStringAndPad2(seconds)}`;
 }
 
-// Always calls this upon page load or refresh, but isn't in pageLoad() because it causes an error being able to save Exercises/Routines when there isn't already a Routine in localStorage
+// Always calls this upon page load or refresh, but isn't in pageLoad() because it causes an error being able to save Exercises/Routines when there isn't already a Routine in localStorage. When a new Routine is stored in localStorage, the page refreshes, and this function works properly and shouldn't throw an Uncaught TypeError in the console anymore
 populateTimerDetailsOnLoad();
