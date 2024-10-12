@@ -101,17 +101,19 @@ function displayCurrentlyLoadedRoutine() {
 
      if (currentlyLoadedRoutine !== null) {
           // Displaying the Routine's name
-          const currentlyLoadedRoutineName = document.getElementById("currently-loaded-routine-name");
-          currentlyLoadedRoutineName.textContent = currentlyLoadedRoutine.name;
+          // const currentlyLoadedRoutineName = document.getElementById("currently-loaded-routine-name");
+          // currentlyLoadedRoutineName.textContent = currentlyLoadedRoutine.name;
 
           // Displaying the exercise list in the Routine
           const exerciseDetails = document.getElementById("exercise-details");
 
-          let htmlString = "<h3>Exercise List:</h3>";
+          let htmlString = "<h4>Exercise List:</h4>";
 
           htmlString += "<ol>";
           for (i = 0; i < currentlyLoadedRoutine.exerciseList.length; i++) {
-               htmlString += `<li>${currentlyLoadedRoutine.exerciseList[i].name} - ${currentlyLoadedRoutine.exerciseList[i].durationMinutes}m:${currentlyLoadedRoutine.exerciseList[i].durationSeconds}s</li>`;
+               htmlString += `<li>${currentlyLoadedRoutine.exerciseList[i].name} - ${String(
+                    currentlyLoadedRoutine.exerciseList[i].durationMinutes
+               ).padStart(2, "0")}m:${String(currentlyLoadedRoutine.exerciseList[i].durationSeconds).padStart(2, "0")}s</li>`;
           }
           htmlString += "</ol>";
 
@@ -337,7 +339,7 @@ function addEventListenerToExerciseButtons() {
 
 /**
  * * This function allows the user to use the exercise cards to add exercises into a temporary array which will then be used as a property of new Routines
- * Paired with it is the Event Listener that assigns the function to ALL [Add] buttons
+ * Paired with it is the Event Listener function that assigns the function to ALL [Add] buttons
  */
 function addToTempExerciseList() {
      // Converts value from string to int
@@ -388,7 +390,9 @@ function createTempExerciseList() {
 
      htmlString += "<ol>";
      for (i = 0; i < tempExerciseArray.length; i++) {
-          htmlString += `<li>${tempExerciseArray[i].name} - ${tempExerciseArray[i].durationMinutes}m:${tempExerciseArray[i].durationSeconds}s</li>`;
+          htmlString += `<li>${tempExerciseArray[i].name} - ${String(tempExerciseArray[i].durationMinutes).padStart(2, "0")}m:${String(
+               tempExerciseArray[i].durationSeconds
+          ).padStart(2, "0")}s</li>`;
      }
      htmlString += "</ol>";
 
@@ -443,9 +447,8 @@ function saveNewRoutineToLocalStorage() {
           // Displays to the user the currently loaded Routine
           displayCurrentlyLoadedRoutine();
 
-          // ! NOT DONE
-          // TODO
-          // startExerciseTimerCountdown();
+          // Refresh the page so that the timer section gets populated with the new Routine's info
+          location.reload();
      }
 }
 
@@ -454,43 +457,102 @@ document.getElementById("button-save-new-routine").addEventListener("click", fun
      saveNewRoutineToLocalStorage();
 });
 
-// TODO
+let timerIntervalId;
+let totalCountdownTimeInSeconds;
 
-const startButton = document.getElementById("button-start");
-const countdownDisplay = document.getElementById("countdown-display");
+let tempArrayOfNames = [];
+let tempArrayOfDurations = [];
 
-startButton.addEventListener("click", function () {
+let currentExerciseIndex = 0; // To keep track of the current exercise that's being timed
+
+const timerDisplayExerciseName = document.getElementById("timer-display-exercise-name");
+const timerDisplayCountdown = document.getElementById("timer-display-countdown");
+
+const startButton = document.getElementById("button-start"); // So users cannot click the button multiple times when it's already running
+
+document.getElementById("button-start").addEventListener("click", function () {
+     // Disable the button to prevent multiple clicks
+     startButton.disabled = true;
+
+     // Grab the starting time outside of the updateCountdown() function
      const currentlyLoadedRoutine = JSON.parse(localStorage.getItem("routineDataKey"));
 
-     const startingMinutes = currentlyLoadedRoutine.exerciseList[0].durationMinutes;
-     const startingSeconds = currentlyLoadedRoutine.exerciseList[0].durationSeconds;
-     let totalTimeInSeconds = startingMinutes * 60 + startingSeconds;
-     console.log(`Current total time in seconds: ${totalTimeInSeconds}`);
-     console.log(typeof totalTimeInSeconds);
+     // Grab each exercise's name & duration and put them into their own separate temporary arrays
+     for (let i = 0; i < currentlyLoadedRoutine.exerciseList.length; i++) {
+          // Names
+          const exerciseName = currentlyLoadedRoutine.exerciseList[i].name;
+          tempArrayOfNames.push(exerciseName);
 
-     function updateCountdown() {
-          console.log("in function");
-          console.log(`Current total time in seconds: ${totalTimeInSeconds}`);
-
-          // Once time is up, stops the countdown, sets the display back to 00:00 and stops the function
-          if (totalTimeInSeconds < 0) {
-               clearInterval(intervalId);
-               countdownDisplay.textContent = "Working on this part";
-               console.log("before return");
-               return;
-          }
-
-          console.log("after return");
-          const displayMinutes = Math.floor(totalTimeInSeconds / 60);
-          const displaySeconds = totalTimeInSeconds % 60;
-
-          // padStart is so that the minutes and seconds always have two digits by adding a leading zero if needed (ie. :9 becomes :09)
-          countdownDisplay.textContent = `${String(displayMinutes).padStart(2, "0")}:${String(displaySeconds).padStart(2, "0")}`;
-
-          totalTimeInSeconds--;
+          // Full durations in seconds
+          const startingMinutes = currentlyLoadedRoutine.exerciseList[i].durationMinutes;
+          const startingSeconds = currentlyLoadedRoutine.exerciseList[i].durationSeconds;
+          const totalTimeInSeconds = startingMinutes * 60 + startingSeconds;
+          tempArrayOfDurations.push(totalTimeInSeconds);
      }
 
-     let intervalId = setInterval(updateCountdown, 1000);
-     console.log(typeof intervalId);
-     updateCountdown();
+     // Start the countdown for the first exercise
+     currentExerciseIndex = 0; // Starting from the first exercise
+     startExerciseCountdown();
 });
+
+function startExerciseCountdown() {
+     // If there are no more exercises, stop the timer from running
+     if (currentExerciseIndex === tempArrayOfDurations.length) {
+          timerDisplayExerciseName.textContent = "All done!";
+          timerDisplayCountdown.textContent = "00:00";
+
+          // So users can't click the [Start] button if it's already running
+          startButton.disabled = false;
+
+          // Empty out the temp arrays
+          tempArrayOfNames = [];
+          tempArrayOfDurations = [];
+
+          clearInterval(timerIntervalId);
+          return;
+     }
+
+     totalCountdownTimeInSeconds = tempArrayOfDurations[currentExerciseIndex];
+     updateCountdown(); // Call the update function once to display the initial time
+     timerIntervalId = setInterval(updateCountdown, 1000); // then call the function every second
+}
+
+function updateCountdown() {
+     // Stop the countdown when time is up for the current exercise
+     if (totalCountdownTimeInSeconds < 0) {
+          clearInterval(timerIntervalId);
+
+          // Move on to the next exercise
+          currentExerciseIndex++;
+          startExerciseCountdown(); // Start the countdown for the next exercise
+          return;
+     }
+
+     // Calculate minutes and seconds for the current exercise
+     const displayMinutes = Math.floor(totalCountdownTimeInSeconds / 60);
+     const displaySeconds = totalCountdownTimeInSeconds % 60;
+
+     // Update display with the current exercise name
+     timerDisplayExerciseName.textContent = tempArrayOfNames[currentExerciseIndex];
+
+     // Update the display with the current exercise time
+     timerDisplayCountdown.textContent = `${String(displayMinutes).padStart(2, "0")}:${String(displaySeconds).padStart(2, "0")}`;
+
+     // Decrement the time for the current exercise
+     totalCountdownTimeInSeconds--;
+}
+
+// TODO
+
+/**
+ * * Populating Timer Section on page load
+ */
+
+const timerDisplayRoutineName = document.getElementById("timer-display-routine-name");
+timerDisplayRoutineName.textContent = `Routine: ${JSON.parse(localStorage.getItem("routineDataKey")).name}`;
+
+timerDisplayExerciseName.textContent = `Exercise: ${JSON.parse(localStorage.getItem("routineDataKey")).exerciseList[0].name}`;
+
+const minutes = `${JSON.parse(localStorage.getItem("routineDataKey")).exerciseList[0].durationMinutes}`;
+const seconds = `${JSON.parse(localStorage.getItem("routineDataKey")).exerciseList[0].durationSeconds}`;
+timerDisplayCountdown.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;

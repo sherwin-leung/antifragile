@@ -59,7 +59,7 @@ button:hover {
 
 /* Sections are hidden on page load */
 .div-toggle-view {
-    /* display: none; */
+    display: none;
 }
 
 #div-new-exercise {
@@ -81,14 +81,6 @@ button:hover {
 }
 
 /* End div toggle view */
-
-/* * START CURRENTLY LOADED WORKOUT */
-
-#section-currently-loaded-routine {
-    border: 5px solid goldenrod;
-}
-
-/* End currently loaded workout */
 
 /* * START NEW EXERCISE SECTION */
 
