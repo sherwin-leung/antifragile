@@ -78,6 +78,11 @@ function showSaveNewRoutineButton() {
      document.getElementById("button-save-new-routine").style.display = "block";
 }
 
+// Helper function - convertToStringAndPad2() converts the parameter into a String and then pads it with 0 in front if it is less than two chars
+function convertToStringAndPad2(x) {
+     return String(x).padStart(2, "0");
+}
+
 /**
  * * This function handles toggling on and off the view of certain contents when the main three buttons are clicked/tapped
  * @param divId indicates which div to toggle on and off
@@ -111,9 +116,9 @@ function displayCurrentlyLoadedRoutine() {
 
           htmlString += "<ol>";
           for (i = 0; i < currentlyLoadedRoutine.exerciseList.length; i++) {
-               htmlString += `<li>${currentlyLoadedRoutine.exerciseList[i].name} - ${String(
+               htmlString += `<li>${currentlyLoadedRoutine.exerciseList[i].name} - ${convertToStringAndPad2(
                     currentlyLoadedRoutine.exerciseList[i].durationMinutes
-               ).padStart(2, "0")}m:${String(currentlyLoadedRoutine.exerciseList[i].durationSeconds).padStart(2, "0")}s</li>`;
+               )}m:${convertToStringAndPad2(currentlyLoadedRoutine.exerciseList[i].durationSeconds)}s</li>`;
           }
           htmlString += "</ol>";
 
@@ -390,9 +395,9 @@ function createTempExerciseList() {
 
      htmlString += "<ol>";
      for (i = 0; i < tempExerciseArray.length; i++) {
-          htmlString += `<li>${tempExerciseArray[i].name} - ${String(tempExerciseArray[i].durationMinutes).padStart(2, "0")}m:${String(
+          htmlString += `<li>${tempExerciseArray[i].name} - ${convertToStringAndPad2(tempExerciseArray[i].durationMinutes)}m:${convertToStringAndPad2(
                tempExerciseArray[i].durationSeconds
-          ).padStart(2, "0")}s</li>`;
+          )}s</li>`;
      }
      htmlString += "</ol>";
 
@@ -456,6 +461,10 @@ function saveNewRoutineToLocalStorage() {
 document.getElementById("button-save-new-routine").addEventListener("click", function () {
      saveNewRoutineToLocalStorage();
 });
+
+/**
+ * *
+ */
 
 let timerIntervalId;
 let totalCountdownTimeInSeconds;
@@ -536,7 +545,7 @@ function updateCountdown() {
      timerDisplayExerciseName.textContent = tempArrayOfNames[currentExerciseIndex];
 
      // Update the display with the current exercise time
-     timerDisplayCountdown.textContent = `${String(displayMinutes).padStart(2, "0")}:${String(displaySeconds).padStart(2, "0")}`;
+     timerDisplayCountdown.textContent = `${convertToStringAndPad2(displayMinutes)}:${convertToStringAndPad2(displaySeconds)}`;
 
      // Decrement the time for the current exercise
      totalCountdownTimeInSeconds--;
@@ -555,4 +564,4 @@ timerDisplayExerciseName.textContent = `Exercise: ${JSON.parse(localStorage.getI
 
 const minutes = `${JSON.parse(localStorage.getItem("routineDataKey")).exerciseList[0].durationMinutes}`;
 const seconds = `${JSON.parse(localStorage.getItem("routineDataKey")).exerciseList[0].durationSeconds}`;
-timerDisplayCountdown.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+timerDisplayCountdown.textContent = `${convertToStringAndPad2(minutes)}:${convertToStringAndPad2(seconds)}`;

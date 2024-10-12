@@ -59,7 +59,7 @@ button:hover {
 
 /* Sections are hidden on page load */
 .div-toggle-view {
-    display: none;
+    /* display: none; */
 }
 
 #div-new-exercise {
