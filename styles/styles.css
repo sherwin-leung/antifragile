@@ -24,8 +24,10 @@ img {
 
 /* * START HTML ELEMENTS */
 
-html {
-    font-family: "Inter", sans-serif;
+body {
+    font-family        : "Inter", sans-serif;
+    /* background-color: #353535; */
+    /* color           : whitesmoke; */
 }
 
 /* Because otherwise, can't see the list item decorations */
@@ -39,36 +41,26 @@ input {
 }
 
 button {
-    border-radius         : 5px;
-    padding               : 0.5rem;
-    /* box-shadow         : inset; */
+    border-radius   : 5px;
+    padding         : 0.5rem;
+    /* box-shadow   : inset; */
 }
 
 button:hover {
+    cursor          : pointer;
     background-color: goldenrod;
 }
 
 /* End HTML elements */
 
-/* ! Can delete later */
-.test-area {
-    border: 5px solid pink;
-}
-
 /* * START DIV TOGGLE VIEW */
 
 /* Sections are hidden on page load */
 .div-toggle-view {
-    /* display: none; */
+    display: none;
 }
 
-#div-new-exercise {
-    border: 5px solid rgb(255, 155, 155);
-}
-
-#div-new-routine {
-    border: 5px solid rgba(10, 190, 79, 0.521);
-}
+/* End div toggle view */
 
 /* * START SECTION STYLING */
 .section-styling {
@@ -76,23 +68,15 @@ button:hover {
 }
 
 /* * START TIMER SECTION */
+
 #section-timer {
     border: 5px solid blue;
+
 }
 
-/* End div toggle view */
-
-/* * START NEW EXERCISE SECTION */
-
-#section-new-exercise {
-    border: 5px solid red;
-}
+/* End timer section */
 
 /* * START NEW ROUTINE SECTION */
-
-#section-new-routine {
-    border: 5px solid green;
-}
 
 #button-save-new-routine {
     display: none;
@@ -120,9 +104,14 @@ button:hover {
     display: none;
 }
 
-.input-container {
-    border    : 2px solid red;
-    /* display: none; */
+/* End new routine section */
+
+
+/* ! Coloring */
+#section-new-exercise {
+    border: 5px solid red;
 }
 
-/* End new routine section */
+#section-new-routine {
+    border: 5px solid green;
+}

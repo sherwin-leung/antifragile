@@ -106,14 +106,10 @@ function displayCurrentlyLoadedRoutine() {
      const currentlyLoadedRoutine = JSON.parse(localStorage.getItem("routineDataKey"));
 
      if (currentlyLoadedRoutine !== null) {
-          // Displaying the Routine's name
-          // const currentlyLoadedRoutineName = document.getElementById("currently-loaded-routine-name");
-          // currentlyLoadedRoutineName.textContent = currentlyLoadedRoutine.name;
-
           // Displaying the exercise list in the Routine
           const exerciseDetails = document.getElementById("exercise-details");
 
-          let htmlString = "<h4>Exercise List:</h4>";
+          let htmlString = "<h4>Show Exercise List:</h4>";
 
           htmlString += "<ol>";
           for (i = 0; i < currentlyLoadedRoutine.exerciseList.length; i++) {
@@ -232,7 +228,7 @@ function createNewExerciseCard(name) {
      newButtonExercise.id = `${nameHyphenated}`;
      newCard.append(newButtonExercise);
 
-     // // Create a new div which acts as as the INPUTS container
+     // TODO: Create a new div which acts as as the INPUTS container
      // const newInputContainer = document.createElement("div");
      // newInputContainer.classList.add("input-container");
      // newCard.append(newInputContainer);
@@ -286,7 +282,7 @@ function createNewExerciseCard(name) {
  * 2) The user clicks on the a button that has its card expanded, it will hide it
  * 3) Also stores the id of the currently expanded button in global variable currentSelectedExerciseButtonId
  *
- * TODO: If there's time: efactor this  function to have all these labels and inputs in a div and simply toggle the div on and off
+ * TODO: If there's time: refactor this  function to have all these labels and inputs in a div and simply toggle the div on and off
  */
 function addEventListenerToExerciseButtons() {
      const exerciseButtons = document.querySelectorAll(".button-exercise");
@@ -431,7 +427,7 @@ function clearRoutineBeingBuiltDetails() {
  */
 function saveNewRoutineToLocalStorage() {
      // Store name of new Routine from input
-     const routineName = sanitize(convertToTitleCase(document.getElementById("new-routine-input").value));
+     const routineName = sanitize(document.getElementById("new-routine-input").value);
 
      // Only create a new Routine if its name isn't an empty string
      if (routineName.trim().length > 0) {

@@ -10,11 +10,13 @@
     <script src="scripts/scripts.js" defer></script>
 </head>
 
-<header>
-    <h1>FLUTTER</h1>
-</header>
+
 
 <body>
+    <header>
+        <h1>FLUTTER</h1>
+    </header>
+
     <main>
         <!-- ! Timer Section -->
         <section class="section-styling" id="section-timer">
@@ -25,9 +27,12 @@
                 <p id="timer-display-countdown"></p>
             </div>
 
-            <button class="button-start" id="button-start">Start</button>
+            <div class="div-control-buttons" id="div-control-buttons">
+                <button class="button-control" id="button-start">Start</button>
+                <button class="button-control" id="button-pause">Pause</button>
+                <button class="button-control" id="button-stop">Stop</button>
+            </div>
 
-            <!-- <p id="currently-loaded-routine-name">No routine loaded</p> -->
             <div id="exercise-details"></div>
 
         </section>
@@ -40,13 +45,11 @@
             </button>
 
             <div class="div-toggle-view" id="div-new-exercise">
-
                 <div class="new-exercise-cluster">
                     <label for="exercise-name">Exercise Name</label>
                     <input type="text" id="new-exercise-input" name="exercise-name" />
                     <button id="button-save-new-exercise">Save</button>
                 </div>
-
             </div>
 
         </section>
