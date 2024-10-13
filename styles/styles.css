@@ -27,21 +27,16 @@ img {
 /* * START HTML ELEMENTS */
 
 body {
-    font-family   : "Nunito", sans-serif;
-    height        : 100vh;
-    /* background : rgb(251, 187, 215); */
-    /* background : linear-gradient(180deg, rgba(251, 187, 215, 1) 5%, rgba(143, 194, 255, 1) 95%); */
-
-    button {
-        font-family: "Nunito", sans-serif;
-    }
-
+    font-family: "Nunito", sans-serif;
+    height     : 100vh;
+    text-align : center;
 }
 
 button {
-    border-radius            : 5px;
-    padding                  : 0.5rem;
-    /* box-shadow            : inset; */
+    font-family     : "Nunito", sans-serif;
+    border-radius   : 0.5rem;
+    padding         : 0.5rem;
+    /* border       : none; */
 }
 
 
@@ -50,9 +45,8 @@ button:hover {
     background-color: violet;
 }
 
-ol {
-    /* Because otherwise, can't see the list item decorations */
-    padding-left: 1rem;
+li {
+    list-style-position: inside;
 }
 
 label,
@@ -87,9 +81,9 @@ input {
     text-align     : center;
 
     /* The slide-left  effect */
-    animation      : slide-left 0.075s ease-out forwards;
-    /* ! comment out line below when styling the main-content */
-    animation-delay: 1.575s;
+    animation         : slide-left 0.075s ease-out forwards;
+    /* ! DISABLE/ENABLE FOR TESTING */
+    /* animation-delay: 1.575s; */
 }
 
 @keyframes slide-left {
@@ -189,18 +183,23 @@ input {
     }
 }
 
-/* * START MAIN CONTENT */
+/* * START HEADER */
 
+.header-content {
+    padding: 1rem;
+}
 
 
 /* * START DIV TOGGLE VIEW */
 
 /* Sections are hidden on page load */
 .div-toggle-view {
+    /* ! DISABLE/ENABLE FOR TESTING */
     /* display: none; */
 }
 
 /* * START BUTTON TOGGLE LISTS */
+/* For Hide/Show Exercise List / Show/Hide Instructions */
 
 .button-toggle-lists {
     padding        : 0;
@@ -223,6 +222,23 @@ input {
 }
 
 /* * START TIMER SECTION */
+
+#section-timer {
+    border: 5px solid green;
+}
+
+#timer-display {
+    border : 5px solid blue;
+    padding: 1rem 1rem 0.5rem 1rem;
+}
+
+#div-control-buttons {
+    border: 5px solid orange;
+
+    button {
+        margin: 0.5rem 0.25rem;
+    }
+}
 
 
 /* * START NEW ROUTINE SECTION */
@@ -258,10 +274,7 @@ input {
 
 /* ! Coloring */
 
-#section-timer {
-    border: 2px solid green;
 
-}
 
 #section-new-exercise {
     /* border: 5px solid green; */

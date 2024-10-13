@@ -98,7 +98,7 @@ setTimeout(function () {
 }, 1580);
 
 /**
- * * This functions handles generating a random phrase each time the page is reloaded
+ * * This functions handles generating a random phrase each time the page is loaded/reloaded
  */
 function generateOverlayPhrase() {
      const arrayOfPhrases = ["a timer app", "time to work"];
@@ -490,8 +490,9 @@ function saveNewRoutineToLocalStorage() {
           // Displays to the user the currently loaded Routine
           displayCurrentlyLoadedRoutine();
 
-          // Refresh the page so that the timer section gets populated with the new Routine's info
-          location.reload();
+          // Timer section gets populated with the new Routine's info
+          populateTimerDetailsOnLoad();
+          displayCurrentlyLoadedRoutine();
      }
 }
 
@@ -550,9 +551,13 @@ const timerDisplayCountdown = document.getElementById("timer-display-countdown")
 const startButton = document.getElementById("button-start");
 const stopButton = document.getElementById("button-stop");
 
+// * [Stop] starts off disabled
+stopButton.disabled = true;
+
 // Event Listener 1 [Start]
 startButton.addEventListener("click", function () {
      startButton.disabled = true;
+     stopButton.disabled = false;
 
      createTempArraysForTimer();
 
@@ -604,6 +609,7 @@ function startExerciseCountdown() {
 function stopCountdown() {
      clearInterval(timerIntervalId);
      startButton.disabled = false;
+     stopButton.disabled = true;
 
      // Empties out temp arrays to ensure previous instances of countdowns are erased
      tempArrayOfNames = [];
