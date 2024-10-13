@@ -502,15 +502,13 @@ buttonToggleInstructions.addEventListener("click", function () {
  * * The following FOUR functions, TWO Event Listeners, and variables work together to start/stop and display the countdown timer
  * Event Listeners - Assigns function to startButton/stopButton and disables/enables startButton when certain functions are running/stopped
  *
- * createTempArraysForTimer() grabs Routine data and stores the name & duration of each Exercise in the Routine's exerciseList in global temporary arrays
+ * 1) createTempArraysForTimer() grabs Routine data and stores the name & duration of each Exercise in the Routine's exerciseList in global temporary arrays
  *
- * ? The following two functions call each other
- * startExerciseCountdown() starts the countdown for the current Exercise (based on the index). Fires up updateCountdown and then tells it to run every 1 second. If there are no Exercises left in the exercise list, it performs clean up and stops the timer
+ * 2) startExerciseCountdown() starts the countdown for the current Exercise (based on the index). Fires up updateCountdown and then tells it to run every 1 second. If there are no Exercises left in the exercise list, it performs clean up and stops the countdown
  *
- * updateCountdown() in charge of displaying  to the user the countdown timer. If the seconds reach -1 (the duration is over), it stops the timer, increments the index by 1, and tells startExerciseCountdown() to run for the next Exercise if there is one
- * ? end
+ * 3) stopCountdown() stops the countdown. If the user presses [Start] again, it restarts the countdown from the beginning of the list
  *
- * stopCountdown() stops the countdown. If the user presses [Start] again, it restarts from the beginning of the list
+ * 4) updateCountdown() in charge of displaying  to the user the countdown timer. If the seconds reach -1 (the duration is over), it stops the countdown, increments the index by 1, and tells startExerciseCountdown() to run for the next Exercise if there is one
  *
  * TODO: Implement a [Pause]
  */
@@ -529,7 +527,7 @@ const timerDisplayCountdown = document.getElementById("timer-display-countdown")
 const startButton = document.getElementById("button-start");
 const stopButton = document.getElementById("button-stop");
 
-// Event Listener 1
+// Event Listener 1 [Start]
 startButton.addEventListener("click", function () {
      startButton.disabled = true;
 
@@ -538,6 +536,13 @@ startButton.addEventListener("click", function () {
      // Start the countdown for the first exercise
      currentExerciseIndex = 0;
      startExerciseCountdown();
+});
+
+// Event Listener 2 [Stop]
+stopButton.addEventListener("click", function () {
+     stopCountdown();
+     timerDisplayExerciseName.textContent = "Timer Stopped";
+     timerDisplayCountdown.textContent = "00:00";
 });
 
 // 1
@@ -563,15 +568,7 @@ function startExerciseCountdown() {
      // If there are no more exercises, stop the timer from running
      if (currentExerciseIndex === tempArrayOfDurations.length) {
           timerDisplayExerciseName.textContent = "All done!";
-
-          // Empty out the temp arrays
-          tempArrayOfNames = [];
-          tempArrayOfDurations = [];
-
-          startButton.disabled = false;
-
-          clearInterval(timerIntervalId); // Trigger stop
-
+          stopCountdown();
           return;
      }
 
@@ -581,6 +578,16 @@ function startExerciseCountdown() {
 }
 
 // 3
+function stopCountdown() {
+     clearInterval(timerIntervalId);
+     startButton.disabled = false;
+
+     // Empties out temp arrays to ensure previous instances of countdowns are erased
+     tempArrayOfNames = [];
+     tempArrayOfDurations = [];
+}
+
+// 4
 function updateCountdown() {
      // Stop the countdown when time is up for the current exercise
      if (totalCountdownTimeInSeconds < 0) {
@@ -608,19 +615,6 @@ function updateCountdown() {
      // Decrement the time for the current exercise
      totalCountdownTimeInSeconds--;
 }
-
-// 4
-function stopCountdown() {
-     clearInterval(timerIntervalId);
-     timerDisplayExerciseName.textContent = "Timer Stopped";
-     timerDisplayCountdown.textContent = "00:00";
-}
-
-// Event Listener 2
-stopButton.addEventListener("click", function () {
-     startButton.disabled = false;
-     stopCountdown();
-});
 
 /**
  * * Populating Timer Section with the currently loaded Routine's name, first Exercise name & duration in its exerciseList
