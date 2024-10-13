@@ -510,19 +510,20 @@ document.getElementById("button-save-new-routine").addEventListener("click", fun
 
 function toggleInstructionsView() {
      const instructions = document.getElementById("ol-instructions");
+     const showInstructionsLabel = document.getElementById("button-toggle-instructions");
 
      if (instructions.style.display === "block") {
           instructions.style.display = "none";
+          showInstructionsLabel.textContent = "Show Instructions";
      } else {
           instructions.style.display = "block";
+          showInstructionsLabel.textContent = "Hide Instructions";
      }
 }
 
 // Paired with above
-const buttonToggleInstructions = document.getElementById("button-toggle-instructions");
-buttonToggleInstructions.addEventListener("click", function () {
+document.getElementById("button-toggle-instructions").addEventListener("click", function () {
      toggleInstructionsView();
-     buttonToggleInstructions.textContent = "Hide Instructions";
 });
 
 /**
@@ -652,8 +653,11 @@ function updateCountdown() {
  * * Populating Timer Section with the currently loaded Routine's name, first Exercise name & duration in its exerciseList
  */
 function populateTimerDetailsOnLoad() {
+     const routineLabel = document.getElementById("timer-display-routine-label");
+     routineLabel.textContent = "Routine";
+
      const routineName = document.getElementById("timer-display-routine-name");
-     routineName.textContent = `ROUTINE: ${JSON.parse(localStorage.getItem("routineDataKey")).name}`;
+     routineName.textContent = JSON.parse(localStorage.getItem("routineDataKey")).name;
 
      const currentExerciseText = document.getElementById("timer-display-current-exercise-label");
      currentExerciseText.textContent = "Current Exercise";

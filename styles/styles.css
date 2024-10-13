@@ -27,24 +27,22 @@ img {
 /* * START HTML ELEMENTS */
 
 body {
-    font-family     : "Nunito", sans-serif;
-    height          : 100vh;
-    text-align      : center;
-    background-color: #181818;
-    color           : whitesmoke;
+    font-family           : "Nunito", sans-serif;
+    min-height            : 100vh;
+    text-align            : center;
+    /* background-color   : #020d15; */
+    background-image      : linear-gradient(to bottom, #000000, #040103, #070307, #08050d, #060811, #060c14, #060f17, #061219, #08151c, #0b1720, #0c1a23, #0d1c27);
+    color                 : whitesmoke;
 }
 
 button {
-    font-family     : "Nunito", sans-serif;
-    border-radius   : 0.5rem;
-    padding         : 0.5rem;
-    /* border       : none; */
+    font-family  : "Nunito", sans-serif;
+    outline-color: transparent;
 }
 
 
 button:hover {
-    cursor          : pointer;
-    background-color: violet;
+    cursor: pointer;
 }
 
 li {
@@ -69,23 +67,22 @@ input {
 }
 
 #popup-overlay {
-    position: absolute;
-    height  : 100vh;
-    width   : 100%;
-    z-index : 99;
-
-    background-color: #020d15;
-    color           : rgba(245, 245, 245, 0.867);
-
+    position       : absolute;
+    height         : 100vh;
+    width          : 100%;
+    z-index        : 99;
     display        : flex;
     flex-direction : column;
     justify-content: center;
     text-align     : center;
 
+    background-color: #020d15;
+    color           : rgba(245, 245, 245, 0.867);
+
     /* The slide-left  effect */
-    animation         : slide-left 0.2s ease-out forwards;
+    animation      : slide-left 0.2s ease-out forwards;
     /* ! DISABLE/ENABLE FOR TESTING */
-    /* animation-delay: 1.575s; */
+    animation-delay: 1.575s;
 }
 
 @keyframes slide-left {
@@ -188,9 +185,8 @@ input {
 /* * START HEADER */
 
 .header-content {
-    padding: 1rem;
+    padding-top: 2rem;
 }
-
 
 /* * START DIV TOGGLE VIEW */
 
@@ -211,11 +207,7 @@ input {
     font           : inherit;
     font-weight    : bolder;
     cursor         : pointer;
-    color          : whitesmoke;
-}
-
-.button-toggle-lists:hover {
-    background-color: transparent;
+    color          : pink;
 }
 
 /* * START SECTION STYLING */
@@ -227,40 +219,62 @@ input {
 /* * START TIMER SECTION */
 
 #section-timer {
-    border  : 2px solid red;
-    height  : 40vh;
-    position: relative;
-
+    /* border    : 3px solid green; */
+    min-height: 50vh;
+    padding   : 5rem 0 2rem;
 }
 
 #timer-container {
-    border   : 2px solid green;
-    position : absolute;
-    top      : 50%;
-    left     : 50%;
-    transform: translate(-50%, -50%);
-    width    : 100%;
+    width: 100%;
+}
+
+#timer-display-routine-label,
+#timer-display-current-exercise-label {
+    font-size    : 0.75rem;
+    margin-bottom: 0.25rem;
+    color        : rgb(189, 189, 189);
+}
+
+.timer-display-cluster {
+    padding: 1rem;
 }
 
 #timer-display-routine-name {
-    font-size: 2rem;
-}
-
-#timer-display-current-exercise-label {
-    font-size: 0.75rem;
+    font-size: 1.5rem;
 }
 
 #timer-display-current-exercise-name {
     font-size: 2rem;
 }
 
+#timer-display-countdown {
+    font-size: 4rem;
+    color    : white;
+}
+
 #container-control-buttons {
+
+    /* border        : 2px solid orange; */
+    padding-bottom: 2rem;
+
     button {
-        margin: 0.5rem 0.25rem;
+        margin          : 0 0.25rem;
+        border          : none;
+        background-color: #26384e;
+        color           : white;
+        border-radius   : 3rem;
+        width           : 6rem;
+        padding         : 0.75rem 1rem;
+        transition      : 300ms ease;
+
+    }
+
+    button:hover {
+        background-color: #192635;
     }
 }
 
-#exercise-details {
+.list-building-styles {
     font-size: 0.75rem;
 }
 
@@ -296,8 +310,6 @@ input {
 }
 
 /* ! Coloring */
-
-
 
 #section-new-exercise {
     /* border: 5px solid green; */

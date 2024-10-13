@@ -28,21 +28,24 @@
         <!-- ! Timer Section -->
         <section class="section-styling" id="section-timer">
 
-            <div id="timer-container">
-                <div id="timer-display">
-                    <h2 id="timer-display-routine-name">No Routines Saved</h2>
-                    <p id="timer-display-current-exercise-label"></p>
-                    <p id="timer-display-current-exercise-name"></p>
-                    <p id="timer-display-countdown"></p>
-                </div>
-
-                <div id="container-control-buttons">
-                    <button class="button-control" id="button-start">Start</button>
-                    <button class="button-control" id="button-stop">Stop</button>
-                </div>
-
-                <div id="exercise-details"></div>
+            <div class="timer-display-cluster">
+                <p id="timer-display-routine-label">No Routine Loaded</p>
+                <p id="timer-display-routine-name"></p>
             </div>
+
+            <div class="timer-display-cluster">
+                <p id="timer-display-current-exercise-label"></p>
+                <p id="timer-display-current-exercise-name"></p>
+                <p id="timer-display-countdown"></p>
+            </div>
+
+            <div id="container-control-buttons">
+                <button class="button-control" id="button-start">Start</button>
+                <button class="button-control" id="button-stop">Stop</button>
+            </div>
+
+            <div class="list-building-styles" id="exercise-details"></div>
+
 
         </section>
 
@@ -72,7 +75,7 @@
             </button>
 
             <div class="div-toggle-view" id="div-new-routine">
-                <div id="creation-routine-instructions">
+                <div class="list-building-styles" id="creation-routine-instructions">
                     <button class="button-toggle-lists" id="button-toggle-instructions">Show Instructions</button>
                     <ol id="ol-instructions">
                         <li>Enter a routine name</li>
@@ -88,7 +91,7 @@
                     <button id="button-save-new-routine">Save</button>
                 </div>
 
-                <div id="routine-being-built-details"></div>
+                <div class="list-building-styles" id="routine-being-built-details"></div>
 
                 <div id="exercise-cards-container"></div>
             </div>
