@@ -548,7 +548,7 @@ let tempArrayOfDurations = [];
 
 let currentExerciseIndex = 0; // To keep track of the current exercise that's being timed
 
-const timerDisplayExerciseName = document.getElementById("timer-display-exercise-name");
+const timerDisplayExerciseName = document.getElementById("timer-display-current-exercise-name");
 const timerDisplayCountdown = document.getElementById("timer-display-countdown");
 
 const startButton = document.getElementById("button-start");
@@ -653,10 +653,13 @@ function updateCountdown() {
  */
 function populateTimerDetailsOnLoad() {
      const routineName = document.getElementById("timer-display-routine-name");
-     routineName.textContent = `Routine: ${JSON.parse(localStorage.getItem("routineDataKey")).name}`;
+     routineName.textContent = `ROUTINE: ${JSON.parse(localStorage.getItem("routineDataKey")).name}`;
 
-     const exerciseName = document.getElementById("timer-display-exercise-name");
-     exerciseName.textContent = JSON.parse(localStorage.getItem("routineDataKey")).exerciseList[0].name;
+     const currentExerciseText = document.getElementById("timer-display-current-exercise-label");
+     currentExerciseText.textContent = "Current Exercise";
+
+     const exerciseName = document.getElementById("timer-display-current-exercise-name");
+     exerciseName.innerHTML = JSON.parse(localStorage.getItem("routineDataKey")).exerciseList[0].name;
 
      const minutes = `${JSON.parse(localStorage.getItem("routineDataKey")).exerciseList[0].durationMinutes}`;
      const seconds = `${JSON.parse(localStorage.getItem("routineDataKey")).exerciseList[0].durationSeconds}`;
