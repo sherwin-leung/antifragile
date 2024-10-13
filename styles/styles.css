@@ -211,18 +211,14 @@ input {
     color          : pink;
 }
 
-/* * START SECTION STYLING */
-
-.section-styling {
-    /* border: 2px solid black; */
-}
-
 /* * START TIMER SECTION */
 
+#container-control-buttons {
+    display: none;
+}
+
 #section-timer {
-    /* border    : 3px solid green; */
-    min-height: 50vh;
-    padding   : 3rem 0 2rem;
+    padding: 3rem 0 2rem;
 }
 
 #timer-container {

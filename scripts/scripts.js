@@ -573,7 +573,7 @@ startButton.addEventListener("click", function () {
 // Event Listener 2 [Stop]
 stopButton.addEventListener("click", function () {
      stopCountdown();
-     timerDisplayExerciseName.textContent = "Timer Stopped";
+     timerDisplayExerciseName.textContent = "Stopped";
      timerDisplayCountdown.textContent = "00:00";
 });
 
@@ -599,7 +599,7 @@ function createTempArraysForTimer() {
 function startExerciseCountdown() {
      // If there are no more exercises, stop the timer from running
      if (currentExerciseIndex === tempArrayOfDurations.length) {
-          timerDisplayExerciseName.textContent = "All done!";
+          timerDisplayExerciseName.textContent = "✨ All done! ✨";
           stopCountdown();
           return;
      }
@@ -653,11 +653,11 @@ function updateCountdown() {
  * * Populating Timer Section with the currently loaded Routine's name, first Exercise name & duration in its exerciseList
  */
 function populateTimerDetailsOnLoad() {
-     const routineLabel = document.getElementById("timer-display-routine-label");
-     routineLabel.textContent = "Routine";
-
      const routineName = document.getElementById("timer-display-routine-name");
      routineName.textContent = JSON.parse(localStorage.getItem("routineDataKey")).name;
+
+     const routineLabel = document.getElementById("timer-display-routine-label");
+     routineLabel.textContent = "Routine";
 
      const currentExerciseText = document.getElementById("timer-display-current-exercise-label");
      currentExerciseText.textContent = "Current Exercise";
@@ -670,6 +670,8 @@ function populateTimerDetailsOnLoad() {
 
      const countdown = document.getElementById("timer-display-countdown");
      countdown.textContent = `${convertToStringAndPad2(minutes)}:${convertToStringAndPad2(seconds)}`;
+
+     document.getElementById("container-control-buttons").style.display = "block";
 }
 
 // Always calls this upon page load or refresh, but isn't in pageLoad() because it causes an error being able to save Exercises/Routines when there isn't already a Routine in localStorage. When a new Routine is stored in localStorage, the page refreshes, and this function works properly and shouldn't throw an Uncaught TypeError in the console anymore
