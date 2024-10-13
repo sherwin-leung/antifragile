@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FLUTTER</title>
+    <title>Timer</title>
 
     <link rel="stylesheet" href="styles/styles.css">
     <script src="scripts/scripts.js" defer></script>
@@ -14,7 +14,7 @@
 
 <body>
     <header>
-        <h1>FLUTTER</h1>
+        <h1>LF> NAME PLS?</h1>
     </header>
 
     <main>
@@ -29,8 +29,7 @@
 
             <div id="div-control-buttons">
                 <button class="button-control" id="button-start">Start</button>
-                <button class="button-control" id="button-pause">Pause</button>
-                <button class="button-control" id="button-stop">Stop</button>
+                <button class="button-control" id="button-stop" onclick="stopCountdown()">Stop</button>
             </div>
 
             <div id="exercise-details"></div>
@@ -64,8 +63,8 @@
 
             <div class="div-toggle-view" id="div-new-routine">
                 <div id="creation-routine-instructions">
-                    <h3>Instructions</h3>
-                    <ol>
+                    <button class="button-toggle-lists" id="button-toggle-instructions">Show Instructions</button>
+                    <ol id="ol-instructions">
                         <li>Enter a routine name</li>
                         <li>Select an exercise and enter duration</li>
                         <li>Press [Add] to add to routine</li>

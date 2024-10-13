@@ -110,7 +110,7 @@ function displayCurrentlyLoadedRoutine() {
           // Displaying the exercise list in the Routine
           const exerciseDetails = document.getElementById("exercise-details");
 
-          let htmlString = "<button id='button-toggle-exercise-list'>Hide Exercise List</button>";
+          let htmlString = "<button class='button-toggle-lists' id='button-toggle-exercise-list'>Hide Exercise List</button>";
 
           htmlString += "<ol id='ol-currently-loaded-routine'>";
           for (i = 0; i < currentlyLoadedRoutine.exerciseList.length; i++) {
@@ -478,15 +478,41 @@ document.getElementById("button-save-new-routine").addEventListener("click", fun
 });
 
 /**
- * * The following THREE functions work together along with the Event Listener to start and display the countdown timer
- * Event Listener - Assigns function to startButton and disables button when the function is running
+ * * The following function and Event Listener work together to hide and show the instructions for creating and saving a new Routine
+ */
+
+function toggleInstructionsView() {
+     const instructions = document.getElementById("ol-instructions");
+
+     if (instructions.style.display === "block") {
+          instructions.style.display = "none";
+     } else {
+          instructions.style.display = "block";
+     }
+}
+
+// Paired with above
+const buttonToggleInstructions = document.getElementById("button-toggle-instructions");
+buttonToggleInstructions.addEventListener("click", function () {
+     toggleInstructionsView();
+     buttonToggleInstructions.textContent = "Hide Instructions";
+});
+
+/**
+ * * The following FOUR functions, TWO Event Listeners, and variables work together to start/stop and display the countdown timer
+ * Event Listeners - Assigns function to startButton/stopButton and disables/enables startButton when certain functions are running/stopped
+ *
  * createTempArraysForTimer() grabs Routine data and stores the name & duration of each Exercise in the Routine's exerciseList in global temporary arrays
  *
- * ? These two functions call each other
+ * ? The following two functions call each other
  * startExerciseCountdown() starts the countdown for the current Exercise (based on the index). Fires up updateCountdown and then tells it to run every 1 second. If there are no Exercises left in the exercise list, it performs clean up and stops the timer
  *
  * updateCountdown() in charge of displaying  to the user the countdown timer. If the seconds reach -1 (the duration is over), it stops the timer, increments the index by 1, and tells startExerciseCountdown() to run for the next Exercise if there is one
+ * ? end
  *
+ * stopCountdown() stops the countdown. If the user presses [Start] again, it restarts from the beginning of the list
+ *
+ * TODO: Implement a [Pause]
  */
 
 let timerIntervalId;
@@ -500,9 +526,10 @@ let currentExerciseIndex = 0; // To keep track of the current exercise that's be
 const timerDisplayExerciseName = document.getElementById("timer-display-exercise-name");
 const timerDisplayCountdown = document.getElementById("timer-display-countdown");
 
-const startButton = document.getElementById("button-start"); // So users cannot click the button multiple times when it's already running
+const startButton = document.getElementById("button-start");
+const stopButton = document.getElementById("button-stop");
 
-// Event Listener
+// Event Listener 1
 startButton.addEventListener("click", function () {
      startButton.disabled = true;
 
@@ -581,6 +608,19 @@ function updateCountdown() {
      // Decrement the time for the current exercise
      totalCountdownTimeInSeconds--;
 }
+
+// 4
+function stopCountdown() {
+     clearInterval(timerIntervalId);
+     timerDisplayExerciseName.textContent = "Timer Stopped";
+     timerDisplayCountdown.textContent = "00:00";
+}
+
+// Event Listener 2
+stopButton.addEventListener("click", function () {
+     startButton.disabled = false;
+     stopCountdown();
+});
 
 /**
  * * Populating Timer Section with the currently loaded Routine's name, first Exercise name & duration in its exerciseList
