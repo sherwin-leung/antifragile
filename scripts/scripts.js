@@ -32,6 +32,7 @@ window.onload = pageLoad();
  * This function is a collection of functions that need to be run upon the user loading the page
  */
 function pageLoad() {
+     generateOverlayPhrase();
      refreshExerciseCards();
      displayCurrentlyLoadedRoutine();
 }
@@ -82,6 +83,28 @@ function showSaveNewRoutineButton() {
 // Helper function - convertToStringAndPad2() converts the parameter into a String and then pads it with 0 in front if it is less than two chars
 function convertToStringAndPad2(x) {
      return String(x).padStart(2, "0");
+}
+
+/**
+ * * Disable scrolling while the overlay is showing in case that main content height is > 100vh, which is the overlay's height
+ */
+
+// Add no-scroll to entire page
+document.body.classList.add("no-scroll");
+
+// After the overlay animation (1.575s), enable scrolling again (add 5 millisecond buffer) by removing the no-scroll class
+setTimeout(function () {
+     document.body.classList.remove("no-scroll");
+}, 1580);
+
+/**
+ * * This functions handles generating a random phrase each time the page is reloaded
+ */
+function generateOverlayPhrase() {
+     const arrayOfPhrases = ["a timer app", "time to work"];
+     const randomIndex = Math.floor(Math.random() * arrayOfPhrases.length);
+
+     document.getElementById("overlay-phrase").textContent = arrayOfPhrases[randomIndex];
 }
 
 /**
