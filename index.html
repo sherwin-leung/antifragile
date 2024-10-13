@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Timer</title>
+    <title>antifragile.</title>
 
     <link rel="stylesheet" href="styles/styles.css">
     <script src="scripts/scripts.js" defer></script>
@@ -13,11 +13,15 @@
 
 
 <body>
-    <header>
-        <h1>LF> NAME PLS?</h1>
+    <header id="popup-overlay-anchor">
+        <div id="popup-overlay">
+            <h1 class="title tracking-in-expand">antifragile.</h1>
+            <p>a timer app</p>
+        </div>
     </header>
 
     <main>
+
         <!-- ! Timer Section -->
         <section class="section-styling" id="section-timer">
 
@@ -29,7 +33,7 @@
 
             <div id="div-control-buttons">
                 <button class="button-control" id="button-start">Start</button>
-                <button class="button-control" id="button-stop" onclick="stopCountdown()">Stop</button>
+                <button class="button-control" id="button-stop">Stop</button>
             </div>
 
             <div id="exercise-details"></div>
