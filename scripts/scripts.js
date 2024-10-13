@@ -122,8 +122,9 @@ function toggleViewOnAndOff(divId) {
 }
 
 /**
- * * This function displays the currently loaded Routine to the user. It persists on page load and refreshes when user saves a new Routine
- * It creates a button and that button is paired with the Event Listener below. It allows the user to toggle the view of the loaded exercise list
+ * * The following TWO functions work together *
+ * 1) displayCurrentlyLoadedRoutine () this function displays the currently loaded Routine to the user. It persists on page load and refreshes when user saves a new Routine
+ * 2) addToggleExerciseListViewFunctionToButton() - because a new button to toggle exercise list view is generated each time a new Routine is saved, it needs to be re-assigned the function enabling it to toggle views
  */
 function displayCurrentlyLoadedRoutine() {
      // Grab the saved Routine from localStorage
@@ -133,6 +134,7 @@ function displayCurrentlyLoadedRoutine() {
           // Displaying the exercise list in the Routine
           const exerciseDetails = document.getElementById("exercise-details");
 
+          // Creates button for toggling exercise list view
           let htmlString = "<button class='button-toggle-lists' id='button-toggle-exercise-list'>Hide Exercise List</button>";
 
           htmlString += "<ol id='ol-currently-loaded-routine'>";
@@ -144,13 +146,14 @@ function displayCurrentlyLoadedRoutine() {
           htmlString += "</ol>";
 
           exerciseDetails.innerHTML = htmlString;
+
+          addToggleExerciseListViewFunctionToButton();
      }
 }
 
 // Paired with above
-const exerciseListToggleButton = document.getElementById("button-toggle-exercise-list") || null;
-
-if (exerciseListToggleButton !== null) {
+function addToggleExerciseListViewFunctionToButton() {
+     const exerciseListToggleButton = document.getElementById("button-toggle-exercise-list");
      exerciseListToggleButton.addEventListener("click", function () {
           const olRoutine = document.getElementById("ol-currently-loaded-routine");
 
