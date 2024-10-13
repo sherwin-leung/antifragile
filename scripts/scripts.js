@@ -135,7 +135,7 @@ function displayCurrentlyLoadedRoutine() {
           const exerciseDetails = document.getElementById("exercise-details");
 
           // Creates button for toggling exercise list view
-          let htmlString = "<button class='button-toggle-lists' id='button-toggle-exercise-list'>Hide Exercise List</button>";
+          let htmlString = "<button class='button-toggle-lists' id='button-toggle-exercise-list'>Show Exercise List</button>";
 
           htmlString += "<ol id='ol-currently-loaded-routine'>";
           for (i = 0; i < currentlyLoadedRoutine.exerciseList.length; i++) {
@@ -157,12 +157,12 @@ function addToggleExerciseListViewFunctionToButton() {
      exerciseListToggleButton.addEventListener("click", function () {
           const olRoutine = document.getElementById("ol-currently-loaded-routine");
 
-          if (olRoutine.style.display === "none") {
-               olRoutine.style.display = "block";
-               exerciseListToggleButton.textContent = "Hide Exercise List";
-          } else {
+          if (olRoutine.style.display === "block") {
                olRoutine.style.display = "none";
                exerciseListToggleButton.textContent = "Show Exercise List";
+          } else {
+               olRoutine.style.display = "block";
+               exerciseListToggleButton.textContent = "Hide Exercise List";
           }
      });
 }
