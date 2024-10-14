@@ -9,16 +9,25 @@
 :root {
     /* Not used */
     --standard-size: 1rem;
-    --bgc-clr-blue : #4684b4;
+    --bgc-blue     : #5e96c2;
 
     /* Used */
     --slightly-smaller-font-size: 0.75em;
     --clr-light-grey            : rgb(193, 193, 193);
     --clr-light-grey-darker     : rgb(170, 170, 170);
-    --clr-lilac                 : #e7d1ff;
-    --clr-pastel-purple         : rgb(128, 140, 192);
-    --clr-pastel-purple-darker  : rgb(61, 80, 163);
-    --clr-pastel-purple-darkest : rgb(34, 52, 129);
+
+    --clr-pastel-yellow-lighter: #f5cc87;
+    --clr-pastel-yellow        : #ffcc74;
+
+    --clr-start-stop-btn-blue       : rgb(38, 56, 78);
+    --clr-start-stop-btn-blue-darker: rgb(25, 38, 53);
+
+    --clr-pastel-purple        : rgb(128, 140, 192);
+    --clr-pastel-purple-darker : rgb(61, 80, 163);
+    --clr-pastel-purple-darkest: rgb(41, 58, 134);
+
+    --clr-lilac       : rgb(231, 209, 255);
+    --clr-lilac-darker: rgb(200, 167, 236);
 }
 
 /* * START RESETS */
@@ -54,6 +63,7 @@ body {
 button {
     font-family  : "Nunito", sans-serif;
     outline-color: transparent;
+    transition   : 300ms ease;
 }
 
 
@@ -218,18 +228,25 @@ label {
 
 /* The buttons that are in charge of toggling the show/hide of above */
 .button-toggle-view {
-    background-color: var(--clr-pastel-purple-darker);
+    background-color: var(--clr-pastel-purple);
     border          : 0;
     color           : whitesmoke;
     border-radius   : 1.75rem;
     padding         : 1.25rem;
     font-size       : 1rem;
-    transition      : 300ms ease;
+    width           : 57%;
+
+    .fa-plus {
+        color: var(--clr-pastel-purple-darker);
+    }
 }
 
-.button-toggle-view:hover,
-.button-toggle-view:focus {
-    background-color: var(--clr-pastel-purple-darkest);
+.button-toggle-view:hover {
+    background-color: var(--clr-pastel-purple-darker);
+
+    .fa-plus {
+        color: var(--clr-pastel-purple);
+    }
 }
 
 /* * START BUTTON TOGGLE LISTS */
@@ -278,7 +295,6 @@ label {
 #timer-display-countdown {
     font-size: 4rem;
     color    : white;
-    color    : var(--clr-lilac);
 }
 
 #control-buttons-container {
@@ -286,19 +302,21 @@ label {
     display       : none;
     padding-bottom: 2rem;
 
-    button {
-        margin          : 0 0.25rem;
-        border          : none;
-        background-color: #26384e;
-        color           : white;
-        border-radius   : 3rem;
-        width           : 6rem;
-        padding         : 0.75rem 1rem;
-        transition      : 300ms ease;
+    .button-control {
+        margin             : 0 0.25rem;
+        border             : none;
+        background-color   : var(--clr-start-stop-btn-blue);
+        /* background-color: #434655; */
+        color              : whitesmoke;
+        border-radius      : 3rem;
+        width              : 6rem;
+        padding            : 0.75rem 1rem;
     }
 
-    button:hover {
-        background-color: #192635;
+    .button-control:hover {
+        background-color   : var(--clr-start-stop-btn-blue-darker);
+        /* background-color: #343747; */
+        color              : white;
     }
 }
 
@@ -329,8 +347,9 @@ label {
 
 /* This is for both Routine and Exercises' text inputs */
 .new-x-cluster {
-    /* border : 2px solid blue; */
-    padding: 1.5rem 6rem 0;
+    /* border: 2px solid blue; */
+    /* Margin makes it easier to see how wide the inputs lines will be than using padding */
+    margin: 1.5rem 5rem 0;
 
     label,
     input {
@@ -341,24 +360,28 @@ label {
         outline      : 0;
         outline-color: transparent;
         border       : 0;
-        border-right : 2px solid var(--clr-light-grey);
         border-bottom: 2px solid var(--clr-light-grey);
         background   : transparent;
-        color        : whitesmoke;
+        color        : var(--clr-light-grey);
     }
 
     input:hover,
     input:focus {
-        border-right : 2px solid var(--clr-pastel-purple);
-        border-bottom: 2px solid var(--clr-pastel-purple);
+        border-bottom: 2px solid var(--clr-lilac);
     }
 
     .button-save {
-        width           : 100%;
-        margin-top      : 0.5rem;
-        color           : whitesmoke;
-        background-color: var(--clr-pastel-purple);
-        border-radius   : 0.33rem;
+        width           : 60%;
+        margin          : 0 auto;
+        margin-top      : 1rem;
+        padding         : 0.6rem 0;
+        border-radius   : 2rem;
+        color           : rgb(31, 31, 31);
+        background-color: var(--clr-pastel-yellow-lighter);
+    }
+
+    .button-save:hover {
+        background-color: var(--clr-pastel-yellow);
     }
 }
 

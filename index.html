@@ -41,8 +41,9 @@
             </div>
 
             <div id="control-buttons-container">
-                <button class="button-control" id="button-start">Start</button>
-                <button class="button-control" id="button-stop">Stop</button>
+                <button class="button-control" id="button-start"><i class="fa-solid fa-play"></i></button>
+                <!-- <button class="button-control" id="button-pause"><i class="fa-solid fa-pause"></i></button> -->
+                <button class="button-control" id="button-stop"><i class="fa-solid fa-stop"></i></button>
             </div>
 
             <div class="list-building-styles" id="exercise-details"></div>
@@ -51,7 +52,7 @@
         <!--! New Routine Section -->
         <section id="section-new-routine">
             <button class="button-toggle-view" id="button-new-routine" onclick="toggleViewOnAndOff('div-new-routine')">
-                &#10133; Routine
+                <i class="fa-solid fa-plus"></i> Routine
             </button>
 
             <div class="div-toggle-view" id="div-new-routine">
@@ -68,7 +69,7 @@
                 </div>
 
                 <div class="new-x-cluster" id="new-routine-cluster">
-                    <label id="label-routine-name" for="routine-name">Routine Name</label>
+                    <label class="label-x-name" for="routine-name">Routine Name</label>
                     <input type="text" id="new-routine-input" name="routine-name" />
                     <button class="button-save" id="button-save-new-routine">Save</button>
                 </div>
@@ -83,13 +84,13 @@
         <section id="section-new-exercise">
             <button class="button-toggle-view" id="button-new-exercise"
                 onclick="toggleViewOnAndOff('div-new-exercise')">
-                &#10133; Exercise
+                <i class="fa-solid fa-plus"></i> Exercise
             </button>
 
             <div class="div-toggle-view" id="div-new-exercise">
                 <div class="new-x-cluster" id="new-exercise-cluster">
                     <div id="label-input-container">
-                        <label id="label-exercise-name" for="exercise-name">Exercise Name</label>
+                        <label class="label-x-name" for="exercise-name">Exercise Name</label>
                         <input type="text" id="new-exercise-input" name="exercise-name" />
                     </div>
                     <button class="button-save" id="button-save-new-exercise">Save</button>
