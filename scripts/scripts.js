@@ -85,6 +85,11 @@ function convertToStringAndPad2(x) {
      return String(x).padStart(2, "0");
 }
 
+// Helper function - resetTimerDisplayCurrentExerciseNameColor() does as its name says, in the event that a user completed one workout, had the Exercise name element changed to yellow, then created a new Routine
+function resetTimerDisplayCurrentExerciseNameColor() {
+     document.getElementById("timer-display-current-exercise-name").style.color = "whitesmoke";
+}
+
 /**
  * * Disable scrolling while the overlay is showing in case that main content height is > 100vh, which is the overlay's height
  */
@@ -479,31 +484,35 @@ function saveNewRoutineToLocalStorage() {
      if (routineName.trim().length > 0) {
           const newRoutine = new Routine(routineName, tempExerciseArray);
           localStorage.setItem("routineDataKey", JSON.stringify(newRoutine));
-
-          // Always resets the input field to be empty
-          document.getElementById("new-routine-input").value = "";
-
-          // Empties out the temporary array
-          tempExerciseArray = [];
-
-          // Clear the Routine being built's exercist list details
-          document.getElementById("routine-being-built-details").textContent = "";
-
-          // Hides the [Save New Routine] button for next time
-          hideSaveNewRoutineButton();
-
-          // Displays to the user the currently loaded Routine
-          displayCurrentlyLoadedRoutine();
-
-          // Timer section gets populated with the new Routine's info
-          populateTimerDetailsOnLoad();
-          displayCurrentlyLoadedRoutine();
      }
 }
 
 // Paired with above
 document.getElementById("button-save-new-routine").addEventListener("click", function () {
+     // Saves Routine to localStorage first
      saveNewRoutineToLocalStorage();
+
+     // Always resets the input field to be empty
+     document.getElementById("new-routine-input").value = "";
+
+     // Empties out the temporary array
+     tempExerciseArray = [];
+
+     // Clear the Routine being built's exercist list details
+     document.getElementById("routine-being-built-details").textContent = "";
+
+     // Hides the [Save New Routine] button for next time
+     hideSaveNewRoutineButton();
+
+     // Displays to the user the currently loaded Routine
+     displayCurrentlyLoadedRoutine();
+
+     // Timer section gets populated with the new Routine's info
+     populateTimerDetailsOnLoad();
+     displayCurrentlyLoadedRoutine();
+
+     // Resets the Exercise name's color to white in case it's been changed to yellow
+     resetTimerDisplayCurrentExerciseNameColor();
 });
 
 /**
