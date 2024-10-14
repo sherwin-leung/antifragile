@@ -11,6 +11,12 @@
     --standard-size: 1rem;
     --bgc-blue     : #5e96c2;
 
+    /* A variation of this is used */
+    --clr-lilac: rgb(231, 209, 255);
+
+    --clr-pastel-purple-darker: rgb(61, 80, 163);
+
+
     /* Used */
     --slightly-smaller-font-size: 0.75em;
     --clr-light-grey            : rgb(193, 193, 193);
@@ -25,10 +31,8 @@
     --clr-grey-blue-darker  : rgb(25, 38, 53);
 
     --clr-pastel-purple        : rgb(128, 140, 192);
-    --clr-pastel-purple-darker : rgb(61, 80, 163);
-    --clr-pastel-purple-darkest: rgb(41, 58, 134);
+    --clr-pastel-purple-darkest: rgb(24, 32, 70);
 
-    --clr-lilac       : rgb(231, 209, 255);
     --clr-lilac-darker: rgb(200, 167, 236);
 }
 
@@ -273,11 +277,7 @@ label {
 /* * START TIMER SECTION */
 
 #section-timer {
-    padding: 2rem 0;
-}
-
-#timer-container {
-    width: 100%;
+    padding: 2rem 0 3rem;
 }
 
 #timer-display-routine-text,
@@ -372,7 +372,7 @@ label {
 
     input:hover,
     input:focus {
-        border-bottom: 2px solid var(--clr-lilac);
+        border-bottom: 2px solid var(--clr-lilac-darker);
     }
 
     .button-save {
