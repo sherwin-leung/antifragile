@@ -432,7 +432,7 @@ function displayRoutineBeingBuiltDetails() {
 
 // 2
 function createTempExerciseList() {
-     htmlString = "<h4>Exercises To Add</h4>";
+     htmlString = "<p>Exercises To Add</p>";
 
      htmlString += "<ol>";
      for (i = 0; i < tempExerciseArray.length; i++) {
@@ -471,7 +471,7 @@ function clearRoutineBeingBuiltDetails() {
  */
 function saveNewRoutineToLocalStorage() {
      // Store name of new Routine from input
-     const routineName = sanitize(document.getElementById("new-routine-input").value);
+     const routineName = sanitize(convertToTitleCase(document.getElementById("new-routine-input").value));
 
      // Only create a new Routine if its name isn't an empty string
      if (routineName.trim().length > 0) {
@@ -599,11 +599,13 @@ function createTempArraysForTimer() {
 function startExerciseCountdown() {
      // If there are no more exercises, stop the timer from running
      if (currentExerciseIndex === tempArrayOfDurations.length) {
-          timerDisplayExerciseName.textContent = "✨ All done! ✨";
+          timerDisplayExerciseName.textContent = "✨ Finished! ✨";
+          timerDisplayExerciseName.style.color = "goldenrod";
           stopCountdown();
           return;
      }
 
+     timerDisplayExerciseName.style.color = "whitesmoke";
      totalCountdownTimeInSeconds = tempArrayOfDurations[currentExerciseIndex];
      updateCountdown(); // Call the update function once to display the initial time..
      timerIntervalId = setInterval(updateCountdown, 1000); // ..then call the function every second
@@ -671,7 +673,7 @@ function populateTimerDetailsOnLoad() {
      const countdown = document.getElementById("timer-display-countdown");
      countdown.textContent = `${convertToStringAndPad2(minutes)}:${convertToStringAndPad2(seconds)}`;
 
-     document.getElementById("container-control-buttons").style.display = "block";
+     document.getElementById("control-buttons-container").style.display = "block";
 }
 
 // Always calls this upon page load or refresh, but isn't in pageLoad() because it causes an error being able to save Exercises/Routines when there isn't already a Routine in localStorage. When a new Routine is stored in localStorage, the page refreshes, and this function works properly and shouldn't throw an Uncaught TypeError in the console anymore

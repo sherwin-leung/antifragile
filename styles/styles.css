@@ -81,9 +81,9 @@ input {
     color           : rgba(245, 245, 245, 0.867);
 
     /* The slide-left  effect */
-    animation      : slide-left 0.2s ease-out forwards;
+    animation         : slide-left 0.2s ease-out forwards;
     /* ! DISABLE/ENABLE FOR TESTING */
-    animation-delay: 1.575s;
+    /* animation-delay: 1.575s; */
 }
 
 @keyframes slide-left {
@@ -194,7 +194,23 @@ input {
 /* Sections are hidden on page load */
 .div-toggle-view {
     /* ! DISABLE/ENABLE FOR TESTING */
-    display: none;
+    /* display: none; */
+}
+
+/* The buttons that are in charge of toggling the show/hide of above */
+.button-toggle-view {
+    background-color      : #171717;
+    /* border             : none; */
+    /* box-shadow         : #020d15; */
+    color                 : whitesmoke;
+    border-radius         : 0.33rem;
+    padding               : 1.5rem;
+    font-size             : 1rem;
+    transition            : 300ms ease;
+}
+
+.button-toggle-view:hover {
+    background-color: #0c0c0c;
 }
 
 /* * START BUTTON TOGGLE LISTS */
@@ -213,12 +229,8 @@ input {
 
 /* * START TIMER SECTION */
 
-#container-control-buttons {
-    display: none;
-}
-
 #section-timer {
-    padding: 3rem 0 2rem;
+    padding: 2rem 0;
 }
 
 #timer-container {
@@ -249,9 +261,9 @@ input {
     color    : white;
 }
 
-#container-control-buttons {
-
-    /* border        : 2px solid orange; */
+#control-buttons-container {
+    /* Don't show buttons if there are no Routines loaded */
+    display       : none;
     padding-bottom: 2rem;
 
     button {
@@ -276,46 +288,79 @@ input {
 }
 
 #ol-currently-loaded-routine {
-    display: none;
+    display    : none;
+    padding-top: 0.5rem;
+}
+
+/* * START SECTION NEW EXERCISE */
+
+#section-new-exercise {
+    /* border : 2px solid green; */
+    padding: 1rem 0;
+}
+
+.new-x-cluster {
+    /* border : 2px solid blue; */
+    padding: 1rem 6rem 0;
+
+    label,
+    input {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+    }
 }
 
 /* * START NEW ROUTINE SECTION */
 
-#ol-instructions {
-    display: none;
+#section-new-routine {
+    /* border : 2px solid red; */
+    padding: 1rem 0 3rem;
+}
+
+#creation-routine-instructions {
+    padding-top: 1rem;
+
+    #ol-instructions {
+        display    : none;
+        padding-top: 0.5rem;
+    }
 }
 
 #button-save-new-routine {
     display: none;
 }
 
+#routine-being-built-details {
+    /* border : 2px solid green; */
+    padding: 1rem;
+
+    #button-clear {
+        margin-top: 0.5rem;
+    }
+}
+
 #exercise-cards-container {
+    /* border               : 2px solid cyan; */
+    padding              : 0 1rem;
     display              : grid;
-    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-    gap                  : 0.5rem;
-}
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap                  : 0.1rem;
 
-.button-exercise,
-.input-minutes-duration,
-.input-seconds-duration,
-.button-add {
-    width: 100%;
-}
+    .button-exercise,
+    .input-minutes-duration,
+    .input-seconds-duration,
+    .button-add {
+        width: 100%;
+    }
 
-.label-minutes-duration,
-.input-minutes-duration,
-.label-seconds-duration,
-.input-seconds-duration,
-.button-add {
-    display: none;
-}
-
-/* ! Coloring */
-
-#section-new-exercise {
-    /* border: 5px solid green; */
-}
-
-#section-new-routine {
-    /* border: 5px solid green; */
+    .label-minutes-duration,
+    .input-minutes-duration,
+    .label-seconds-duration,
+    .input-seconds-duration,
+    .button-add {
+        display: none;
+    }
 }
