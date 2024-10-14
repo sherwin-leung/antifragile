@@ -448,7 +448,7 @@ function createTempExerciseList() {
 // 3
 function createClearButton() {
      const clearButton = document.createElement("button");
-     clearButton.textContent = "Clear";
+     clearButton.textContent = "Clear List";
      clearButton.id = "button-clear";
      document.getElementById("routine-being-built-details").append(clearButton);
 

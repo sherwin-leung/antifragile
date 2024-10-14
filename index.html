@@ -27,7 +27,6 @@
 
         <!-- ! Timer Section -->
         <section class="hero-section" id="section-timer">
-
             <div class="timer-display-cluster">
                 <p id="timer-display-routine-label"></p>
                 <p id="timer-display-routine-name">No Routine Loaded</p>
@@ -45,35 +44,12 @@
             </div>
 
             <div class="list-building-styles" id="exercise-details"></div>
-
-
-        </section>
-
-        <!-- ! New Exercise Section -->
-        <section id="section-new-exercise">
-
-            <button class="button-toggle-view" id="button-new-exercise"
-                onclick="toggleViewOnAndOff('div-new-exercise')">
-                New Exercise
-            </button>
-
-            <div class="div-toggle-view" id="div-new-exercise">
-                <div class="new-x-cluster" id="new-exercise-cluster">
-                    <div id="label-input-container">
-                        <label for="exercise-name">Exercise Name</label>
-                        <input type="text" id="new-exercise-input" name="exercise-name" />
-                    </div>
-                    <button id="button-save-new-exercise">Save</button>
-                </div>
-            </div>
-
         </section>
 
         <!--! New Routine Section -->
         <section id="section-new-routine">
-
             <button class="button-toggle-view" id="button-new-routine" onclick="toggleViewOnAndOff('div-new-routine')">
-                New Routine
+                ➕ Routine
             </button>
 
             <div class="div-toggle-view" id="div-new-routine">
@@ -81,6 +57,7 @@
                     <button class="button-toggle-lists" id="button-toggle-instructions">Show Instructions</button>
                     <ol id="ol-instructions">
                         <li>Enter a routine name</li>
+                        <li><i>(Optional)</i> Create a new exercise below</li>
                         <li>Select an exercise and enter duration</li>
                         <li>Press [Add] to add it to routine<br>(add as many as you'd like)</li>
                         <li>Press [Save] to save routine</li>
@@ -90,15 +67,34 @@
                 <div class="new-x-cluster" id="new-routine-cluster">
                     <label for="routine-name">Routine Name</label>
                     <input type="text" id="new-routine-input" name="routine-name" />
-                    <button id="button-save-new-routine">Save</button>
+                    <button class="button-save" id="button-save-new-routine">Save</button>
                 </div>
 
                 <div class="list-building-styles" id="routine-being-built-details"></div>
 
                 <div id="exercise-cards-container"></div>
             </div>
-
         </section>
+
+        <!-- ! New Exercise Section -->
+        <section id="section-new-exercise">
+            <button class="button-toggle-view" id="button-new-exercise"
+                onclick="toggleViewOnAndOff('div-new-exercise')">
+                ➕ Exercise
+            </button>
+
+            <div class="div-toggle-view" id="div-new-exercise">
+                <div class="new-x-cluster" id="new-exercise-cluster">
+                    <div id="label-input-container">
+                        <label for="exercise-name">Exercise Name</label>
+                        <input type="text" id="new-exercise-input" name="exercise-name" />
+                    </div>
+                    <button class="button-save" id="button-save-new-exercise">Save</button>
+                </div>
+            </div>
+        </section>
+
+
     </main>
 </body>
 

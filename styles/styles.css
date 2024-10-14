@@ -4,6 +4,11 @@
 /* Nunito Sans */
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
+/* * GLOBAL VARIABLES */
+:root {
+    --standard-size: 1rem;
+}
+
 /* * START RESETS */
 
 *,
@@ -194,23 +199,22 @@ input {
 /* Sections are hidden on page load */
 .div-toggle-view {
     /* ! DISABLE/ENABLE FOR TESTING */
-    /* display: none; */
+    display: none;
 }
 
 /* The buttons that are in charge of toggling the show/hide of above */
 .button-toggle-view {
-    background-color      : #171717;
-    /* border             : none; */
-    /* box-shadow         : #020d15; */
-    color                 : whitesmoke;
-    border-radius         : 0.33rem;
-    padding               : 1.5rem;
-    font-size             : 1rem;
-    transition            : 300ms ease;
+    background-color: #17171783;
+    border          : 2.5px solid #3314668c;
+    color           : whitesmoke;
+    border-radius   : 1.75rem;
+    padding         : 1.25rem;
+    font-size       : 1rem;
+    transition      : 300ms ease;
 }
 
 .button-toggle-view:hover {
-    background-color: #0c0c0c;
+    background-color: #2f204dd2;
 }
 
 /* * START BUTTON TOGGLE LISTS */
@@ -292,32 +296,11 @@ input {
     padding-top: 0.5rem;
 }
 
-/* * START SECTION NEW EXERCISE */
-
-#section-new-exercise {
-    /* border : 2px solid green; */
-    padding: 1rem 0;
-}
-
-.new-x-cluster {
-    /* border : 2px solid blue; */
-    padding: 1rem 6rem 0;
-
-    label,
-    input {
-        width: 100%;
-    }
-
-    button {
-        width: 100%;
-    }
-}
-
 /* * START NEW ROUTINE SECTION */
 
 #section-new-routine {
     /* border : 2px solid red; */
-    padding: 1rem 0 3rem;
+    padding: 1rem 0;
 }
 
 #creation-routine-instructions {
@@ -362,5 +345,26 @@ input {
     .input-seconds-duration,
     .button-add {
         display: none;
+    }
+}
+
+/* * START SECTION NEW EXERCISE */
+
+#section-new-exercise {
+    /* border : 2px solid green; */
+    padding: 1rem 0 3rem;
+}
+
+.new-x-cluster {
+    /* border : 2px solid blue; */
+    padding: 1rem 6rem 0;
+
+    label,
+    input {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
     }
 }
