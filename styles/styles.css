@@ -222,7 +222,7 @@ input {
 
 .button-toggle-lists {
     padding        : 0;
-    text-decoration: underline;
+    text-decoration: none;
     background     : none;
     border         : none;
     font           : inherit;

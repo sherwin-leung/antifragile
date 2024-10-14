@@ -135,7 +135,7 @@ function displayCurrentlyLoadedRoutine() {
           const exerciseDetails = document.getElementById("exercise-details");
 
           // Creates button for toggling exercise list view
-          let htmlString = "<button class='button-toggle-lists' id='button-toggle-exercise-list'>Show Exercise List</button>";
+          let htmlString = `<button class='button-toggle-lists' id='button-toggle-exercise-list'><i class="fa-solid fa-angle-down"></i> Show Exercise List</button>`;
 
           htmlString += "<ol id='ol-currently-loaded-routine'>";
           for (i = 0; i < currentlyLoadedRoutine.exerciseList.length; i++) {
@@ -159,10 +159,11 @@ function addToggleExerciseListViewFunctionToButton() {
 
           if (olRoutine.style.display === "block") {
                olRoutine.style.display = "none";
-               exerciseListToggleButton.textContent = "Show Exercise List";
+               exerciseListToggleButton.innerHTML = `<i class="fa-solid fa-angle-down"></i> Show Exercise List`;
           } else {
                olRoutine.style.display = "block";
-               exerciseListToggleButton.textContent = "Hide Exercise List";
+               exerciseListToggleButton.innerHTML = `Hide Exercise List <i
+                            class="fa-solid fa-angle-up"></i>`;
           }
      });
 }
@@ -226,8 +227,9 @@ function clearExerciseCards() {
 
 // 3
 function renderExerciseCards() {
-     // Create the Add Rest button which is always at the beginning
+     // Create the Rest button which is always at the beginning
      createNewExerciseCard("Rest");
+     createNewExerciseCard("Stretch");
 
      // Grabs existing exercises data from localStorage and converts it into an array
      const existingExerciseDataInStringForm = localStorage.getItem("exerciseDataKey");
@@ -290,7 +292,8 @@ function createNewExerciseCard(name) {
      newInputMinutesDuration.id = `input-minutes-${nameHyphenated}`;
      newInputMinutesDuration.type = "number";
      newInputMinutesDuration.name = `input-minutes-${nameHyphenated}`;
-     newInputMinutesDuration.value = 0; // default value
+     newInputMinutesDuration.placeholder = 0;
+     newInputMinutesDuration.value = 0;
      newInputMinutesDuration.min = 0;
      newCard.append(newInputMinutesDuration);
 
@@ -307,7 +310,8 @@ function createNewExerciseCard(name) {
      newInputSecondsDuration.id = `input-seconds-${nameHyphenated}`;
      newInputSecondsDuration.type = "number";
      newInputSecondsDuration.name = `input-seconds-${nameHyphenated}`;
-     newInputSecondsDuration.value = 3; // default value
+     newInputSecondsDuration.placeholder = 0;
+     newInputSecondsDuration.value = 2;
      newInputSecondsDuration.min = 0;
      newInputSecondsDuration.max = 59;
      newCard.append(newInputSecondsDuration);
@@ -514,10 +518,10 @@ function toggleInstructionsView() {
 
      if (instructions.style.display === "block") {
           instructions.style.display = "none";
-          showInstructionsLabel.textContent = "Show Instructions";
+          showInstructionsLabel.innerHTML = `<i class="fa-solid fa-angle-down"></i> Show Instructions`;
      } else {
           instructions.style.display = "block";
-          showInstructionsLabel.textContent = "Hide Instructions";
+          showInstructionsLabel.innerHTML = `Hide Instructions <i class="fa-solid fa-angle-up"></i>`;
      }
 }
 

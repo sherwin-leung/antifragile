@@ -7,6 +7,8 @@
     <title>antifragile.</title>
 
     <link rel="stylesheet" href="styles/styles.css">
+
+    <script src="https://kit.fontawesome.com/f3a26e7ebd.js" crossorigin="anonymous" defer></script>
     <script src="scripts/scripts.js" defer></script>
 </head>
 
@@ -29,11 +31,11 @@
         <section class="hero-section" id="section-timer">
             <div class="timer-display-cluster">
                 <p id="timer-display-routine-label"></p>
-                <p id="timer-display-routine-name">No Routine Loaded</p>
+                <p id="timer-display-routine-name">No Routine</p>
             </div>
 
             <div class="timer-display-cluster">
-                <p id="timer-display-current-exercise-label">Use the buttons below to create one</p>
+                <p id="timer-display-current-exercise-label">Use the buttons below to create one! &#128071</p>
                 <p id="timer-display-current-exercise-name"></p>
                 <p id="timer-display-countdown"></p>
             </div>
@@ -49,12 +51,13 @@
         <!--! New Routine Section -->
         <section id="section-new-routine">
             <button class="button-toggle-view" id="button-new-routine" onclick="toggleViewOnAndOff('div-new-routine')">
-                ➕ Routine
+                &#10133; Routine
             </button>
 
             <div class="div-toggle-view" id="div-new-routine">
                 <div class="list-building-styles" id="creation-routine-instructions">
-                    <button class="button-toggle-lists" id="button-toggle-instructions">Show Instructions</button>
+                    <button class="button-toggle-lists" id="button-toggle-instructions"><i
+                            class="fa-solid fa-angle-down"></i> Show Instructions</button>
                     <ol id="ol-instructions">
                         <li>Enter a routine name</li>
                         <li><i>(Optional)</i> Create a new exercise below</li>
@@ -80,7 +83,7 @@
         <section id="section-new-exercise">
             <button class="button-toggle-view" id="button-new-exercise"
                 onclick="toggleViewOnAndOff('div-new-exercise')">
-                ➕ Exercise
+                &#10133; Exercise
             </button>
 
             <div class="div-toggle-view" id="div-new-exercise">
