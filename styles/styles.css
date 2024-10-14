@@ -13,12 +13,12 @@
 
     /* Used */
     --slightly-smaller-font-size: 0.75em;
-    --clr-light-grey            : rgb(200, 200, 200);
+    --clr-light-grey            : rgb(193, 193, 193);
+    --clr-light-grey-darker     : rgb(170, 170, 170);
     --clr-lilac                 : #e7d1ff;
     --clr-pastel-purple         : rgb(128, 140, 192);
-    --clr-pastel-purple-darker  : rgb(80, 97, 173);
-
-    --x-cluster-input-static: 2px solid rgb(200, 200, 200);
+    --clr-pastel-purple-darker  : rgb(61, 80, 163);
+    --clr-pastel-purple-darkest : rgb(34, 52, 129);
 }
 
 /* * START RESETS */
@@ -47,7 +47,7 @@ body {
     font-family     : "Nunito", sans-serif;
     min-height      : 100vh;
     text-align      : center;
-    background-image: linear-gradient(to top, #000000, #040103, #070307, #08050d, #060811, #060c14, #060f17, #061219, #08151c, #0b1720, #0c1a23, #0d1c27);
+    background-image: linear-gradient(to bottom, #000000, #040103, #070307, #08050d, #060811, #060c14, #060f17, #061219, #08151c, #0b1720, #0c1a23, #0d1c27);
     color           : whitesmoke;
 }
 
@@ -100,9 +100,9 @@ label {
     color           : rgba(245, 245, 245, 0.867);
 
     /* The slide-left  effect */
-    animation      : slide-left 0.2s ease-out forwards;
+    animation         : slide-left 0.2s ease-out forwards;
     /* ! DISABLE/ENABLE FOR TESTING */
-    animation-delay: 1.575s;
+    /* animation-delay: 1.575s; */
 }
 
 @keyframes slide-left {
@@ -218,7 +218,7 @@ label {
 
 /* The buttons that are in charge of toggling the show/hide of above */
 .button-toggle-view {
-    background-color: var(--clr-pastel-purple);
+    background-color: var(--clr-pastel-purple-darker);
     border          : 0;
     color           : whitesmoke;
     border-radius   : 1.75rem;
@@ -227,8 +227,9 @@ label {
     transition      : 300ms ease;
 }
 
-.button-toggle-view:hover {
-    background-color: var(--clr-pastel-purple-darker);
+.button-toggle-view:hover,
+.button-toggle-view:focus {
+    background-color: var(--clr-pastel-purple-darkest);
 }
 
 /* * START BUTTON TOGGLE LISTS */
@@ -242,7 +243,7 @@ label {
     font           : inherit;
     font-weight    : bolder;
     cursor         : pointer;
-    color          : var(--clr-light-grey);
+    color          : var(--clr-light-grey-darker);
 }
 
 /* * START TIMER SECTION */
@@ -271,12 +272,13 @@ label {
 }
 
 #timer-display-current-exercise-name {
-    font-size: 2rem;
+    font-size: 2.25rem;
 }
 
 #timer-display-countdown {
     font-size: 4rem;
     color    : white;
+    color    : var(--clr-lilac);
 }
 
 #control-buttons-container {
@@ -328,7 +330,7 @@ label {
 /* This is for both Routine and Exercises' text inputs */
 .new-x-cluster {
     /* border : 2px solid blue; */
-    padding: 1rem 6rem 0;
+    padding: 1.5rem 6rem 0;
 
     label,
     input {
@@ -339,16 +341,14 @@ label {
         outline      : 0;
         outline-color: transparent;
         border       : 0;
-        border-right : var(--x-cluster-input-static);
-        border-bottom: var(--x-cluster-input-static);
+        border-right : 2px solid var(--clr-light-grey);
+        border-bottom: 2px solid var(--clr-light-grey);
         background   : transparent;
         color        : whitesmoke;
     }
 
-    #new-routine-input:hover,
-    #new-routine-input:focus,
-    #new-exercise-input:hover,
-    #new-exercise-input:focus {
+    input:hover,
+    input:focus {
         border-right : 2px solid var(--clr-pastel-purple);
         border-bottom: 2px solid var(--clr-pastel-purple);
     }
@@ -357,7 +357,7 @@ label {
         width           : 100%;
         margin-top      : 0.5rem;
         color           : whitesmoke;
-        background-color: var(--clr-pastel-purple-darker);
+        background-color: var(--clr-pastel-purple);
         border-radius   : 0.33rem;
     }
 }
@@ -372,7 +372,7 @@ label {
 
     #p-exercise-to-add {
         font-weight: bold;
-        color      : var(--clr-light-grey);
+        color      : white;
     }
 
     ol {
