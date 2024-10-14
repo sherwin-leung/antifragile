@@ -604,7 +604,7 @@ function startExerciseCountdown() {
      // If there are no more exercises, stop the timer from running
      if (currentExerciseIndex === tempArrayOfDurations.length) {
           timerDisplayExerciseName.textContent = "✨Finished!✨";
-          timerDisplayExerciseName.style.color = "#f5c148";
+          timerDisplayExerciseName.style.color = "#ffcc74";
           stopCountdown();
           return;
      }

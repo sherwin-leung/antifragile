@@ -19,8 +19,10 @@
     --clr-pastel-yellow-lighter: #f5cc87;
     --clr-pastel-yellow        : #ffcc74;
 
-    --clr-start-stop-btn-blue       : rgb(38, 56, 78);
-    --clr-start-stop-btn-blue-darker: rgb(25, 38, 53);
+    --clr-grey-blue-lightest: rgb(86, 126, 172);
+    --clr-grey-blue-lighter : rgb(69, 101, 138);
+    --clr-grey-blue         : rgb(38, 56, 78);
+    --clr-grey-blue-darker  : rgb(25, 38, 53);
 
     --clr-pastel-purple        : rgb(128, 140, 192);
     --clr-pastel-purple-darker : rgb(61, 80, 163);
@@ -48,6 +50,12 @@ img {
     display  : block;
 }
 
+/* Mostly for aesthetics */
+button {
+    border       : 0;
+    outline-color: transparent;
+}
+
 /* End resets */
 
 /* * START HTML ELEMENTS */
@@ -63,6 +71,7 @@ body {
 button {
     font-family  : "Nunito", sans-serif;
     outline-color: transparent;
+    border       : 0;
     transition   : 300ms ease;
 }
 
@@ -228,8 +237,7 @@ label {
 
 /* The buttons that are in charge of toggling the show/hide of above */
 .button-toggle-view {
-    background-color: var(--clr-pastel-purple);
-    border          : 0;
+    background-color: var(--clr-grey-blue);
     color           : whitesmoke;
     border-radius   : 1.75rem;
     padding         : 1.25rem;
@@ -237,15 +245,15 @@ label {
     width           : 57%;
 
     .fa-plus {
-        color: var(--clr-pastel-purple-darker);
+        color: var(--clr-grey-blue-lighter);
     }
 }
 
 .button-toggle-view:hover {
-    background-color: var(--clr-pastel-purple-darker);
+    background-color: var(--clr-grey-blue-darker);
 
     .fa-plus {
-        color: var(--clr-pastel-purple);
+        color: var(--clr-grey-blue-lightest);
     }
 }
 
@@ -256,7 +264,6 @@ label {
     padding        : 0;
     text-decoration: none;
     background     : none;
-    border         : none;
     font           : inherit;
     font-weight    : bolder;
     cursor         : pointer;
@@ -290,6 +297,7 @@ label {
 
 #timer-display-current-exercise-name {
     font-size: 2.25rem;
+    color    : white;
 }
 
 #timer-display-countdown {
@@ -303,20 +311,17 @@ label {
     padding-bottom: 2rem;
 
     .button-control {
-        margin             : 0 0.25rem;
-        border             : none;
-        background-color   : var(--clr-start-stop-btn-blue);
-        /* background-color: #434655; */
-        color              : whitesmoke;
-        border-radius      : 3rem;
-        width              : 6rem;
-        padding            : 0.75rem 1rem;
+        margin          : 0 0.25rem;
+        background-color: var(--clr-pastel-purple);
+        color           : whitesmoke;
+        border-radius   : 3rem;
+        width           : 6rem;
+        padding         : 1rem;
     }
 
     .button-control:hover {
-        background-color   : var(--clr-start-stop-btn-blue-darker);
-        /* background-color: #343747; */
-        color              : white;
+        background-color: var(--clr-pastel-purple-darkest);
+        color           : white;
     }
 }
 
@@ -405,7 +410,6 @@ label {
     #button-clear {
         margin-top      : 0.5rem;
         padding         : 0 0.5rem;
-        border          : 0;
         border-radius   : 0.33rem;
         color           : rgb(184, 184, 184);
         background-color: #b2a7b867;
