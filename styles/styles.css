@@ -12,27 +12,26 @@
     --bgc-blue     : #5e96c2;
 
     /* A variation of this is used */
-    --clr-lilac: rgb(231, 209, 255);
-
     --clr-pastel-purple-darker: rgb(61, 80, 163);
 
-
     /* Used */
-    --slightly-smaller-font-size: 0.75em;
+    --slightly-smaller-font-size: 0.77em;
     --clr-light-grey            : rgb(193, 193, 193);
     --clr-light-grey-darker     : rgb(170, 170, 170);
 
     --clr-pastel-yellow-lighter: #f5cc87;
     --clr-pastel-yellow        : #ffcc74;
 
-    --clr-grey-blue-lightest: rgb(86, 126, 172);
+    --clr-grey-blue-lightest: rgb(182, 193, 249);
     --clr-grey-blue-lighter : rgb(69, 101, 138);
     --clr-grey-blue         : rgb(38, 56, 78);
     --clr-grey-blue-darker  : rgb(25, 38, 53);
 
+    --clr-pastel-purple-lighter: #b6c1f9;
     --clr-pastel-purple        : rgb(128, 140, 192);
     --clr-pastel-purple-darkest: rgb(24, 32, 70);
 
+    --clr-lilac       : rgb(231, 209, 255);
     --clr-lilac-darker: rgb(200, 167, 236);
 }
 
@@ -123,18 +122,20 @@ label {
     color           : rgba(245, 245, 245, 0.867);
 
     /* The slide-left  effect */
-    animation         : slide-left 0.2s ease-out forwards;
+    animation         : slide-left 0.1s ease-out forwards;
     /* ! DISABLE/ENABLE FOR TESTING */
     /* animation-delay: 1.575s; */
 }
 
 @keyframes slide-left {
     0% {
+        /* opacity     : 1; */
         transform: translateX(0);
     }
 
     100% {
-        transform: translateX(-100%);
+        /* opacity     : 0; */
+        transform: translateX(100%);
     }
 }
 
@@ -236,14 +237,14 @@ label {
 /* Sections are hidden on page load */
 .div-toggle-view {
     /* ! DISABLE/ENABLE FOR TESTING */
-    display: none;
+    /* display: none; */
 }
 
 /* The buttons that are in charge of toggling the show/hide of above */
 .button-toggle-view {
     background-color: var(--clr-grey-blue);
     color           : whitesmoke;
-    border-radius   : 1.75rem;
+    border-radius   : 3rem;
     padding         : 1.25rem;
     font-size       : 1rem;
     width           : 57%;
@@ -337,16 +338,27 @@ label {
 /* * START NEW ROUTINE SECTION */
 
 #section-new-routine {
-    /* border : 2px solid magenta; */
     padding: 1rem 0;
 }
 
 #creation-routine-instructions {
-    padding-top: 1rem;
+    padding-top: 1.5rem;
 
     #ol-instructions {
         display    : none;
         padding-top: 0.5rem;
+    }
+
+    .span-routine {
+        /* color: var(--clr-grey-blue-lightest); */
+    }
+
+    .span-exercise {
+        color: var(--clr-lilac);
+    }
+
+    .span-save {
+        color: var(--clr-pastel-yellow-lighter);
     }
 }
 
@@ -372,7 +384,7 @@ label {
 
     input:hover,
     input:focus {
-        border-bottom: 2px solid var(--clr-lilac-darker);
+        border-bottom: 2px solid var(--clr-grey-blue-lighter);
     }
 
     .button-save {
@@ -380,7 +392,7 @@ label {
         margin          : 0 auto;
         margin-top      : 1rem;
         padding         : 0.6rem 0;
-        border-radius   : 2rem;
+        border-radius   : 3rem;
         color           : rgb(31, 31, 31);
         background-color: var(--clr-pastel-yellow-lighter);
     }
@@ -409,30 +421,25 @@ label {
 
     #button-clear {
         margin-top      : 0.5rem;
-        padding         : 0 0.5rem;
+        padding         : 0.15rem 0.5rem;
         border-radius   : 0.33rem;
-        color           : rgb(184, 184, 184);
+        color           : rgb(235, 235, 235);
         background-color: #b2a7b867;
     }
 }
 
 #exercise-cards-container {
+    /* border               : 2px solid blue; */
     padding              : 0 1rem;
     display              : grid;
     grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
-    gap                  : 0.1rem;
+    gap                  : 0.2rem;
 
     label {
         font-size: var(--slightly-smaller-font-size);
     }
 
-    .button-exercise,
-    .input-minutes-duration,
-    .input-seconds-duration,
-    .button-add {
-        width: 100%;
-    }
-
+    /* Toggle for on and off view */
     .label-minutes-duration,
     .input-minutes-duration,
     .label-seconds-duration,
@@ -440,6 +447,41 @@ label {
     .button-add {
         display: none;
     }
+
+    .button-exercise,
+    .input-minutes-duration,
+    .input-seconds-duration,
+    .button-add {
+        width        : 100%;
+        border-radius: 0.4rem;
+        color        : rgb(36, 36, 36);
+    }
+
+    .button-exercise {
+        background-color: var(--clr-lilac);
+        padding         : 0.55rem 0;
+        margin-bottom   : 0.5rem;
+    }
+
+    .label-minutes-duration,
+    .label-seconds-duration {
+        text-align: left;
+    }
+
+    .input-minutes-duration,
+    .input-seconds-duration {
+        background-color: whitesmoke;
+        padding         : 0.35rem;
+        border          : 0;
+        outline-color   : transparent;
+    }
+
+    .button-add {
+        background-color: whitesmoke;
+        padding         : 0.3rem;
+        margin          : 0.5rem 0 1rem;
+    }
+
 }
 
 /* * START SECTION NEW EXERCISE */
