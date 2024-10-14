@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>antifragile.</title>
+    <title>antifragile. an exercise timer</title>
 
     <link rel="stylesheet" href="styles/styles.css">
 
@@ -30,12 +30,12 @@
         <!-- ! Timer Section -->
         <section class="hero-section" id="section-timer">
             <div class="timer-display-cluster">
-                <p id="timer-display-routine-label"></p>
+                <p id="timer-display-routine-text"></p>
                 <p id="timer-display-routine-name">No Routine</p>
             </div>
 
             <div class="timer-display-cluster">
-                <p id="timer-display-current-exercise-label">Use the buttons below to create one! &#128071</p>
+                <p id="timer-display-current-exercise-text">Use the buttons below to create one! &#128071</p>
                 <p id="timer-display-current-exercise-name"></p>
                 <p id="timer-display-countdown"></p>
             </div>
@@ -56,8 +56,8 @@
 
             <div class="div-toggle-view" id="div-new-routine">
                 <div class="list-building-styles" id="creation-routine-instructions">
-                    <button class="button-toggle-lists" id="button-toggle-instructions"><i
-                            class="fa-solid fa-angle-down"></i> Show Instructions</button>
+                    <button class="button-toggle-lists" id="button-toggle-instructions">
+                        <i class="fa-solid fa-angle-down"></i> Show Instructions</button>
                     <ol id="ol-instructions">
                         <li>Enter a routine name</li>
                         <li><i>(Optional)</i> Create a new exercise below</li>
@@ -68,7 +68,7 @@
                 </div>
 
                 <div class="new-x-cluster" id="new-routine-cluster">
-                    <label for="routine-name">Routine Name</label>
+                    <label id="label-routine-name" for="routine-name">Routine Name</label>
                     <input type="text" id="new-routine-input" name="routine-name" />
                     <button class="button-save" id="button-save-new-routine">Save</button>
                 </div>
@@ -89,7 +89,7 @@
             <div class="div-toggle-view" id="div-new-exercise">
                 <div class="new-x-cluster" id="new-exercise-cluster">
                     <div id="label-input-container">
-                        <label for="exercise-name">Exercise Name</label>
+                        <label id="label-exercise-name" for="exercise-name">Exercise Name</label>
                         <input type="text" id="new-exercise-input" name="exercise-name" />
                     </div>
                     <button class="button-save" id="button-save-new-exercise">Save</button>

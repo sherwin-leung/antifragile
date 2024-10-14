@@ -92,16 +92,16 @@ function convertToStringAndPad2(x) {
 // Add no-scroll to entire page
 document.body.classList.add("no-scroll");
 
-// After the overlay animation (1.575s), enable scrolling again (add 5 millisecond buffer) by removing the no-scroll class
+// After the overlay animation (1.575s), enable scrolling again (add 2 millisecond buffer) by removing the no-scroll class
 setTimeout(function () {
      document.body.classList.remove("no-scroll");
-}, 1580);
+}, 1577);
 
 /**
  * * This functions handles generating a random phrase each time the page is loaded/reloaded
  */
 function generateOverlayPhrase() {
-     const arrayOfPhrases = ["a timer app", "time to work"];
+     const arrayOfPhrases = ["an exercise timer", "time to work"];
      const randomIndex = Math.floor(Math.random() * arrayOfPhrases.length);
 
      document.getElementById("overlay-phrase").textContent = arrayOfPhrases[randomIndex];
@@ -436,7 +436,7 @@ function displayRoutineBeingBuiltDetails() {
 
 // 2
 function createTempExerciseList() {
-     htmlString = "<p>Exercises To Add</p>";
+     htmlString = `<p id="p-exercise-to-add">Exercises To Add</p>`;
 
      htmlString += "<ol>";
      for (i = 0; i < tempExerciseArray.length; i++) {
@@ -452,7 +452,7 @@ function createTempExerciseList() {
 // 3
 function createClearButton() {
      const clearButton = document.createElement("button");
-     clearButton.textContent = "Clear List";
+     clearButton.textContent = "Clear";
      clearButton.id = "button-clear";
      document.getElementById("routine-being-built-details").append(clearButton);
 
@@ -662,10 +662,10 @@ function populateTimerDetailsOnLoad() {
      const routineName = document.getElementById("timer-display-routine-name");
      routineName.textContent = JSON.parse(localStorage.getItem("routineDataKey")).name;
 
-     const routineLabel = document.getElementById("timer-display-routine-label");
-     routineLabel.textContent = "Routine";
+     const routineText = document.getElementById("timer-display-routine-text");
+     routineText.textContent = "Routine";
 
-     const currentExerciseText = document.getElementById("timer-display-current-exercise-label");
+     const currentExerciseText = document.getElementById("timer-display-current-exercise-text");
      currentExerciseText.textContent = "Current Exercise";
 
      const exerciseName = document.getElementById("timer-display-current-exercise-name");
