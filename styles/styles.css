@@ -349,8 +349,8 @@ label {
         padding-top: 0.5rem;
     }
 
-    .span-routine {
-        /* color: var(--clr-grey-blue-lightest); */
+    .span-new {
+        color: var(--clr-grey-blue-lightest);
     }
 
     .span-exercise {

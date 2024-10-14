@@ -297,7 +297,7 @@ function createNewExerciseCard(name) {
      newInputMinutesDuration.id = `input-minutes-${nameHyphenated}`;
      newInputMinutesDuration.type = "number";
      newInputMinutesDuration.name = `input-minutes-${nameHyphenated}`;
-     newInputMinutesDuration.placeholder = 0;
+     // newInputMinutesDuration.placeholder = 0;
      newInputMinutesDuration.min = 0;
      newCard.append(newInputMinutesDuration);
 
@@ -314,7 +314,7 @@ function createNewExerciseCard(name) {
      newInputSecondsDuration.id = `input-seconds-${nameHyphenated}`;
      newInputSecondsDuration.type = "number";
      newInputSecondsDuration.name = `input-seconds-${nameHyphenated}`;
-     newInputSecondsDuration.placeholder = 0;
+     // newInputSecondsDuration.placeholder = 0;
      newInputSecondsDuration.min = 0;
      newInputSecondsDuration.max = 59;
      newCard.append(newInputSecondsDuration);
