@@ -298,6 +298,7 @@ function createNewExerciseCard(name) {
      newInputMinutesDuration.type = "number";
      newInputMinutesDuration.name = `input-minutes-${nameHyphenated}`;
      // newInputMinutesDuration.placeholder = 0;
+     newInputMinutesDuration.value = 0;
      newInputMinutesDuration.min = 0;
      newCard.append(newInputMinutesDuration);
 
@@ -315,6 +316,7 @@ function createNewExerciseCard(name) {
      newInputSecondsDuration.type = "number";
      newInputSecondsDuration.name = `input-seconds-${nameHyphenated}`;
      // newInputSecondsDuration.placeholder = 0;
+     newInputSecondsDuration.value = 0;
      newInputSecondsDuration.min = 0;
      newInputSecondsDuration.max = 59;
      newCard.append(newInputSecondsDuration);
@@ -333,7 +335,7 @@ function createNewExerciseCard(name) {
  * 2) The user clicks on the a button that has its card expanded, it will hide it
  * 3) Also stores the id of the currently expanded button in global variable currentSelectedExerciseButtonId
  *
- * TODO: If there's time: refactor this  function to have all these labels and inputs in a div and simply toggle the div on and off
+ * TODO: If there's time: refactor this function to have all these labels and inputs in a div and simply toggle the div on and off
  */
 function addEventListenerToExerciseButtons() {
      const exerciseButtons = document.querySelectorAll(".button-exercise");
