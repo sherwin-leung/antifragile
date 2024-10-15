@@ -93,6 +93,15 @@ function resetTimerDisplayCurrentExerciseNameColor() {
      document.getElementById("timer-display-current-exercise-name").style.color = "whitesmoke";
 }
 
+// Helper function - hideRoutineAndExerciseSections() hides the Routine and Exercise sections
+function hideRoutineAndExerciseSections() {
+     const routineSectionView = document.getElementById("div-new-routine");
+     const exerciseSectionView = document.getElementById("div-new-exercise");
+
+     routineSectionView.style.display = "none";
+     exerciseSectionView.style.display = "none";
+}
+
 /**
  * * Disable scrolling while the overlay is showing in case that main content height is > 100vh, which is the overlay's height
  */
@@ -497,7 +506,7 @@ document.getElementById("button-save-new-routine").addEventListener("click", fun
      // Saves Routine to localStorage first
      saveNewRoutineToLocalStorage();
 
-     // Always resets the input field to be empty
+     // Resets the input field to be empty
      document.getElementById("new-routine-input").value = "";
 
      // Empties out the temporary array
@@ -508,6 +517,9 @@ document.getElementById("button-save-new-routine").addEventListener("click", fun
 
      // Hides the [Save New Routine] button for next time
      hideSaveNewRoutineButton();
+
+     // Closes Routine/Exercse sections so users can focus on the timer section
+     hideRoutineAndExerciseSections();
 
      // Displays to the user the currently loaded Routine
      displayCurrentlyLoadedRoutine();
