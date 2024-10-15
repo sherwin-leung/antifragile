@@ -140,7 +140,7 @@ function displayCurrentlyLoadedRoutine() {
           const exerciseDetails = document.getElementById("exercise-details");
 
           // Creates button for toggling exercise list view
-          let htmlString = `<button class='button-toggle-lists' id='button-toggle-exercise-list'><i class="fa-solid fa-angle-down"></i> Show Exercise List</button>`;
+          let htmlString = `<button class='button-toggle-lists' id='button-toggle-exercise-list'><i class="fa-solid fa-angle-down"></i> Show Exercise List <i class="fa-solid fa-angle-down"></i></button>`;
 
           htmlString += "<ol id='ol-currently-loaded-routine'>";
           for (i = 0; i < currentlyLoadedRoutine.exerciseList.length; i++) {
@@ -164,10 +164,10 @@ function addToggleExerciseListViewFunctionToButton() {
 
           if (olRoutine.style.display === "block") {
                olRoutine.style.display = "none";
-               exerciseListToggleButton.innerHTML = `<i class="fa-solid fa-angle-down"></i> Show Exercise List`;
+               exerciseListToggleButton.innerHTML = `<i class="fa-solid fa-angle-down"></i> Show Exercise List <i class="fa-solid fa-angle-down"></i>`;
           } else {
                olRoutine.style.display = "block";
-               exerciseListToggleButton.innerHTML = `Hide Exercise List <i
+               exerciseListToggleButton.innerHTML = `<i class="fa-solid fa-angle-up"></i> Hide Exercise List <i
                             class="fa-solid fa-angle-up"></i>`;
           }
      });
@@ -527,10 +527,10 @@ function toggleInstructionsView() {
 
      if (instructions.style.display === "block") {
           instructions.style.display = "none";
-          showInstructionsLabel.innerHTML = `<i class="fa-solid fa-angle-down"></i> Show Instructions`;
+          showInstructionsLabel.innerHTML = `<i class="fa-solid fa-angle-down"></i> Show Instructions <i class="fa-solid fa-angle-down"></i>`;
      } else {
           instructions.style.display = "block";
-          showInstructionsLabel.innerHTML = `Hide Instructions <i class="fa-solid fa-angle-up"></i>`;
+          showInstructionsLabel.innerHTML = `<i class="fa-solid fa-angle-up"></i> Hide Instructions <i class="fa-solid fa-angle-up"></i>`;
      }
 }
 

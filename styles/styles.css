@@ -15,12 +15,11 @@
     --clr-pastel-purple-darker: rgb(61, 80, 163);
 
     /* Used */
-    --slightly-smaller-font-size: 0.77em;
-    --clr-light-grey            : rgb(193, 193, 193);
-    --clr-light-grey-darker     : rgb(170, 170, 170);
+    --clr-light-grey       : rgb(193, 193, 193);
+    --clr-light-grey-darker: rgb(170, 170, 170);
 
     --clr-pastel-yellow-lighter: #f5cc87;
-    --clr-pastel-yellow        : #ffcc74;
+    --clr-pastel-yellow        : #fac66d;
 
     --clr-grey-blue-lightest: rgb(182, 193, 249);
     --clr-grey-blue-lighter : rgb(69, 101, 138);
@@ -33,6 +32,12 @@
 
     --clr-lilac       : rgb(231, 209, 255);
     --clr-lilac-darker: rgb(200, 167, 236);
+
+
+    --title-font-size               : 3rem;
+    --slightly-smaller-font-size    : 0.77em;
+    --btn-toggle-view-original-width: 15rem;
+    --btn-save-original-width       : 10rem;
 }
 
 /* * START RESETS */
@@ -142,8 +147,7 @@ label {
     background             : linear-gradient(180deg, rgba(251, 187, 215, 1) 5%, rgba(143, 194, 255, 1) 95%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-
-    font-size: 3rem;
+    font-size              : var(--title-font-size);
 }
 
 /* ----------------------------------------------
@@ -230,6 +234,12 @@ label {
     padding-top: 2rem;
 }
 
+/* * START MAIN CONTENT */
+.main-content {
+    /* margin : 0;
+    padding: 0; */
+}
+
 /* * START DIV TOGGLE VIEW */
 
 /* Sections are hidden on page load */
@@ -245,7 +255,7 @@ label {
     border-radius   : 3rem;
     padding         : 1.25rem;
     font-size       : 1rem;
-    width           : 57%;
+    width           : var(--btn-toggle-view-original-width);
 
     .fa-plus {
         color: var(--clr-grey-blue-lighter);
@@ -310,12 +320,21 @@ label {
     padding-bottom: 2rem;
 
     .button-control {
+        /* This is pill shaped*/
         margin          : 0 0.25rem;
         background-color: var(--clr-pastel-purple);
         color           : whitesmoke;
         border-radius   : 3rem;
         width           : 6rem;
-        padding         : 1rem;
+        padding         : 1.2rem 1rem;
+
+        /* This is circle shaped */
+        /* margin          : 0 0.25rem;
+        background-color: var(--clr-pastel-purple);
+        color           : whitesmoke;
+        border-radius   : 50%;
+        width           : 4rem;
+        height          : 4rem; */
     }
 
     .button-control:hover {
@@ -362,7 +381,6 @@ label {
 
 /* This is for both Routine and Exercises' text inputs */
 .new-x-cluster {
-    /* border: 2px solid blue; */
     /* Margin makes it easier to see how wide the inputs lines will be than using padding */
     margin: 1.5rem 5rem 0;
 
@@ -386,10 +404,10 @@ label {
     }
 
     .button-save {
-        width           : 60%;
+        width           : var(--btn-save-original-width);
         margin          : 0 auto;
         margin-top      : 1rem;
-        padding         : 0.6rem 0;
+        padding         : 1rem 0;
         border-radius   : 3rem;
         color           : rgb(31, 31, 31);
         background-color: var(--clr-pastel-yellow-lighter);
@@ -400,12 +418,12 @@ label {
     }
 }
 
+
 #button-save-new-routine {
     display: none;
 }
 
 #routine-being-built-details {
-    /* border : 2px solid green; */
     padding: 1rem;
 
     #p-exercise-to-add {
@@ -428,10 +446,9 @@ label {
 }
 
 #exercise-cards-container {
-    /* border               : 2px solid blue; */
     padding              : 0 1rem;
     display              : grid;
-    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
     gap                  : 0.3rem;
 
     label {
@@ -461,6 +478,10 @@ label {
         padding         : 0.55rem 0;
     }
 
+    .button-exercise:hover {
+        background-color: var(--clr-lilac-darker);
+    }
+
     .label-minutes-duration,
     .label-seconds-duration {
         text-align: left;
@@ -469,14 +490,14 @@ label {
 
     .input-minutes-duration,
     .input-seconds-duration {
-        background-color: whitesmoke;
+        background-color: white;
         padding         : 0.35rem;
         border          : 0;
         outline-color   : transparent;
     }
 
     .button-add {
-        background-color: whitesmoke;
+        background-color: white;
         padding         : 0.3rem;
         margin          : 0.5rem 0 1rem;
     }
@@ -486,6 +507,115 @@ label {
 /* * START SECTION NEW EXERCISE */
 
 #section-new-exercise {
-    /* border : 2px solid green; */
     padding: 1rem 0 3rem;
+}
+
+/* * START MEDIA QUERIES */
+
+/* Small tablets or really large phones */
+@media (min-width: 490px) {
+    .main-content {
+        padding: 0 1rem;
+    }
+}
+
+/* Tablets */
+@media (min-width: 750px) {
+    .main-content {
+        padding: 0 3rem;
+    }
+
+    .new-x-cluster {
+        .button-save {
+            width: calc(var(--btn-save-original-width)*1.2);
+        }
+    }
+}
+
+/* Small laptops */
+@media (min-width: 1300px) {
+    .main-content {
+        padding: 0 7rem;
+    }
+
+    .title {
+        font-size: calc(var(--title-font-size) * 1.1);
+    }
+
+    .header-content {
+        padding-top: 3rem;
+    }
+
+    .button-toggle-view {
+        width: calc(var(--btn-toggle-view-original-width) * 1.2);
+    }
+
+    .new-x-cluster {
+        .button-save {
+            width: calc(var(--btn-save-original-width)*1.4);
+        }
+    }
+}
+
+/* Most common desktop screens */
+@media (min-width: 1800px) {
+    .main-content {
+        padding: 0 20rem;
+    }
+
+    .title {
+        font-size: calc(var(--title-font-size) * 1.3);
+    }
+
+    .header-content {
+        padding-top: 4rem;
+    }
+
+    #timer-display-routine-name {
+        font-size: calc(1.5rem*1.5);
+    }
+
+    #timer-display-current-exercise-name {
+        font-size: calc(2.25rem*1.5);
+    }
+
+    #timer-display-countdown {
+        font-size: calc(4rem*1.5);
+    }
+
+    #control-buttons-container {
+        .button-control {}
+    }
+
+
+    .button-toggle-view {
+        width: calc(var(--btn-toggle-view-original-width) * 1.35);
+    }
+
+    .new-x-cluster {
+        .button-save {
+            width: calc(var(--btn-save-original-width)*1.5);
+        }
+    }
+}
+
+@media (min-width: 2400px) {
+    .main-content {
+        padding: 0 25rem;
+    }
+
+    .title {
+        font-size: calc(var(--title-font-size) * 1.5);
+    }
+
+    .header-content {
+        padding-top   : 4.5rem;
+        padding-bottom: 0.7rem;
+    }
+
+    .new-x-cluster {
+        .button-save {
+            width: calc(var(--btn-save-original-width)*1.65);
+        }
+    }
 }
