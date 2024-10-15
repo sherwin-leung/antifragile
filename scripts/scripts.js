@@ -93,13 +93,17 @@ function resetTimerDisplayCurrentExerciseNameColor() {
      document.getElementById("timer-display-current-exercise-name").style.color = "whitesmoke";
 }
 
-// Helper function - hideRoutineAndExerciseSections() hides the Routine and Exercise sections
-function hideRoutineAndExerciseSections() {
+// Helper function - hideRoutineAndExerciseSectionsAndResetTheirButtons() hides the Routine and Exercise sections and resets their buttons to show + (plus)
+function hideRoutineAndExerciseSectionsAndResetTheirButtons() {
      const routineSectionView = document.getElementById("div-new-routine");
      const exerciseSectionView = document.getElementById("div-new-exercise");
 
      routineSectionView.style.display = "none";
      exerciseSectionView.style.display = "none";
+
+     // Sets the buttons to have +
+     document.getElementById("button-new-routine").innerHTML = `<i class="fa-solid fa-plus"></i> Routine`;
+     document.getElementById("button-new-exercise").innerHTML = `<i class="fa-solid fa-plus"></i> Exercise`;
 }
 
 /**
@@ -128,13 +132,26 @@ function generateOverlayPhrase() {
  * * This function handles toggling on and off the view of certain contents when the main three buttons are clicked/tapped
  * @param divId indicates which div to toggle on and off
  */
-function toggleViewOnAndOff(divId) {
-     const view = document.getElementById(divId);
 
-     if (view.style.display === "block") {
-          view.style.display = "none";
+// TODO clean up and split up this function's code into two separate functions
+function toggleViewOnAndOff(divId) {
+     const sectionId = document.getElementById(divId);
+
+     if (sectionId.style.display === "block") {
+          sectionId.style.display = "none";
+
+          if (sectionId.id === "div-new-routine") {
+               document.getElementById("button-new-routine").innerHTML = `<i class="fa-solid fa-plus"></i> Routine`;
+          } else {
+               document.getElementById("button-new-exercise").innerHTML = `<i class="fa-solid fa-plus"></i> Exercise`;
+          }
      } else {
-          view.style.display = "block";
+          sectionId.style.display = "block";
+          if (sectionId.id === "div-new-routine") {
+               document.getElementById("button-new-routine").innerHTML = `<i class="fa-solid fa-minus"></i> Routine`;
+          } else {
+               document.getElementById("button-new-exercise").innerHTML = `<i class="fa-solid fa-minus"></i> Exercise`;
+          }
      }
 }
 
@@ -518,8 +535,8 @@ document.getElementById("button-save-new-routine").addEventListener("click", fun
      // Hides the [Save New Routine] button for next time
      hideSaveNewRoutineButton();
 
-     // Closes Routine/Exercse sections so users can focus on the timer section
-     hideRoutineAndExerciseSections();
+     // Closes Routine/Exercse sections so users can focus on the timer section. Reset the buttons to show + (plus)
+     hideRoutineAndExerciseSectionsAndResetTheirButtons();
 
      // Displays to the user the currently loaded Routine
      displayCurrentlyLoadedRoutine();
