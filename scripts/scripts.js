@@ -2,7 +2,6 @@
  * * Global Variables
  */
 let currentlySelectedExerciseButtonId;
-
 let tempExerciseArray = [];
 
 /**
@@ -82,6 +81,10 @@ function showSaveNewRoutineButton() {
 
 // Helper function - convertToStringAndPad2() converts the parameter into a String and then pads it with 0 in front if it is less than two chars
 function convertToStringAndPad2(x) {
+     if (isNaN(parseInt(x))) {
+          return "".padStart(2, "0");
+     }
+
      return String(x).padStart(2, "0");
 }
 
@@ -106,7 +109,7 @@ setTimeout(function () {
  * * This functions handles generating a random phrase each time the page is loaded/reloaded
  */
 function generateOverlayPhrase() {
-     const arrayOfPhrases = ["an exercise timer", "time to work"];
+     const arrayOfPhrases = ["an exercise timer"];
      const randomIndex = Math.floor(Math.random() * arrayOfPhrases.length);
 
      document.getElementById("overlay-phrase").textContent = arrayOfPhrases[randomIndex];
@@ -133,9 +136,11 @@ function toggleViewOnAndOff(divId) {
  */
 function displayCurrentlyLoadedRoutine() {
      // Grab the saved Routine from localStorage
-     const currentlyLoadedRoutine = JSON.parse(localStorage.getItem("routineDataKey"));
+     const grabbedData = localStorage.getItem("routineDataKey");
 
-     if (currentlyLoadedRoutine !== null) {
+     if (grabbedData !== null) {
+          const currentlyLoadedRoutine = JSON.parse(grabbedData);
+
           // Displaying the exercise list in the Routine
           const exerciseDetails = document.getElementById("exercise-details");
 
@@ -298,7 +303,6 @@ function createNewExerciseCard(name) {
      newInputMinutesDuration.type = "number";
      newInputMinutesDuration.name = `input-minutes-${nameHyphenated}`;
      // newInputMinutesDuration.placeholder = 0;
-     newInputMinutesDuration.value = 0;
      newInputMinutesDuration.min = 0;
      newCard.append(newInputMinutesDuration);
 
@@ -316,7 +320,6 @@ function createNewExerciseCard(name) {
      newInputSecondsDuration.type = "number";
      newInputSecondsDuration.name = `input-seconds-${nameHyphenated}`;
      // newInputSecondsDuration.placeholder = 0;
-     newInputSecondsDuration.value = 0;
      newInputSecondsDuration.min = 0;
      newInputSecondsDuration.max = 59;
      newCard.append(newInputSecondsDuration);
