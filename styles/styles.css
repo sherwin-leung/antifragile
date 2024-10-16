@@ -128,9 +128,9 @@ label {
     color           : rgba(245, 245, 245, 0.867);
 
     /* The slide-left  effect */
-    animation         : slide-left 0.2s ease-out forwards;
+    animation      : slide-left 0.2s ease-out forwards;
     /* ! DISABLE/ENABLE FOR TESTING */
-    /* animation-delay: 1.575s; */
+    animation-delay: 1.575s;
 
     img {
         /* width: 100%; */
@@ -643,14 +643,14 @@ label {
 /* * START MEDIA QUERIES */
 
 /* Small tablets or really large phones */
-@media (min-width: 490px) {
+@media (width >=490px) {
     .main-content {
         padding: 0 1rem;
     }
 }
 
 /* Tablets */
-@media (min-width: 750px) {
+@media (width >=750px) {
     .main-content {
         padding: 0 3rem;
     }
@@ -671,7 +671,7 @@ label {
 }
 
 /* Small laptops */
-@media (min-width: 1300px) {
+@media (width >=1300px) {
     .main-content {
         padding: 0 7rem;
     }
@@ -704,7 +704,7 @@ label {
 }
 
 /* Most common desktop screens */
-@media (min-width: 1800px) {
+@media (width >=1800px) {
     .main-content {
         padding: 0 25rem;
     }
@@ -744,7 +744,7 @@ label {
     }
 }
 
-@media (min-width: 2400px) {
+@media (width >=2400px) {
     .main-content {
         padding: 0 30rem;
     }

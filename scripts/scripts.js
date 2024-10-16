@@ -33,7 +33,8 @@ window.onload = pageLoad();
 function pageLoad() {
      generateOverlayPhrase();
      refreshExerciseCards();
-     displayCurrentlyLoadedRoutine();
+     populateTimerDetailsOnLoad();
+     populateExerciseList();
 }
 
 /**
@@ -133,58 +134,73 @@ function generateOverlayPhrase() {
  * @param divId indicates which div to toggle on and off
  */
 
-// TODO clean up and split up this function's code into two separate functions
 function toggleViewOnAndOff(divId) {
      const sectionId = document.getElementById(divId);
 
      if (sectionId.style.display === "block") {
           sectionId.style.display = "none";
-
-          if (sectionId.id === "div-new-routine") {
-               document.getElementById("button-new-routine").innerHTML = `<i class="fa-solid fa-plus"></i> Routine`;
-          } else {
-               document.getElementById("button-new-exercise").innerHTML = `<i class="fa-solid fa-plus"></i> Exercise`;
-          }
+          showPlusOnButton(sectionId.id);
      } else {
           sectionId.style.display = "block";
-          if (sectionId.id === "div-new-routine") {
-               document.getElementById("button-new-routine").innerHTML = `<i class="fa-solid fa-minus"></i> Routine`;
-          } else {
-               document.getElementById("button-new-exercise").innerHTML = `<i class="fa-solid fa-minus"></i> Exercise`;
-          }
+          showMinusOnButton(sectionId.id);
+     }
+}
+
+/**
+ * * These two functions below make the [Routine] and [Exercise] buttons show either a + or -, dependng on whether the section is expanded or not
+ * @param {} sectionId tells the function which is section is getting expanded/closed
+ */
+
+// 1
+function showPlusOnButton(sectionId) {
+     if (sectionId === "div-new-routine") {
+          document.getElementById("button-new-routine").innerHTML = `<i class="fa-solid fa-plus"></i> Routine`;
+     } else if (sectionId === "div-new-exercise") {
+          document.getElementById("button-new-exercise").innerHTML = `<i class="fa-solid fa-plus"></i> Exercise`;
+     }
+}
+
+// 2
+function showMinusOnButton(sectionId) {
+     if (sectionId === "div-new-routine") {
+          document.getElementById("button-new-routine").innerHTML = `<i class="fa-solid fa-minus"></i> Routine`;
+     } else if (sectionId === "div-new-exercise") {
+          document.getElementById("button-new-exercise").innerHTML = `<i class="fa-solid fa-minus"></i> Exercise`;
      }
 }
 
 /**
  * * The following TWO functions work together *
- * 1) displayCurrentlyLoadedRoutine () this function displays the currently loaded Routine to the user. It persists on page load and refreshes when user saves a new Routine
+ * 1) populateExerciseList() this function displays the currently loaded Routine to the user. It persists on page load and refreshes when user saves a new Routine
  * 2) addToggleExerciseListViewFunctionToButton() - because a new button to toggle exercise list view is generated each time a new Routine is saved, it needs to be re-assigned the function enabling it to toggle views
  */
-function displayCurrentlyLoadedRoutine() {
+function populateExerciseList() {
      // Grab the saved Routine from localStorage
      const grabbedData = localStorage.getItem("routineDataKey");
 
-     if (grabbedData !== null) {
-          const currentlyLoadedRoutine = JSON.parse(grabbedData);
-
-          // Displaying the exercise list in the Routine
-          const exerciseDetails = document.getElementById("exercise-details");
-
-          // Creates button for toggling exercise list view
-          let htmlString = `<button class='button-toggle-lists' id='button-toggle-exercise-list'><i class="fa-solid fa-angle-down"></i> Show Exercise List <i class="fa-solid fa-angle-down"></i></button>`;
-
-          htmlString += "<ol id='ol-currently-loaded-routine'>";
-          for (i = 0; i < currentlyLoadedRoutine.exerciseList.length; i++) {
-               htmlString += `<li>${currentlyLoadedRoutine.exerciseList[i].name} - ${convertToStringAndPad2(
-                    currentlyLoadedRoutine.exerciseList[i].durationMinutes
-               )}m:${convertToStringAndPad2(currentlyLoadedRoutine.exerciseList[i].durationSeconds)}s</li>`;
-          }
-          htmlString += "</ol>";
-
-          exerciseDetails.innerHTML = htmlString;
-
-          addToggleExerciseListViewFunctionToButton();
+     if (grabbedData === null) {
+          return;
      }
+
+     const currentlyLoadedRoutine = JSON.parse(grabbedData);
+
+     // Displaying the exercise list in the Routine
+     const exerciseDetails = document.getElementById("exercise-details");
+
+     // Creates button for toggling exercise list view
+     let htmlString = `<button class='button-toggle-lists' id='button-toggle-exercise-list'><i class="fa-solid fa-angle-down"></i> Show Exercise List <i class="fa-solid fa-angle-down"></i></button>`;
+
+     htmlString += "<ol id='ol-currently-loaded-routine'>";
+     for (i = 0; i < currentlyLoadedRoutine.exerciseList.length; i++) {
+          htmlString += `<li>${currentlyLoadedRoutine.exerciseList[i].name} - ${convertToStringAndPad2(
+               currentlyLoadedRoutine.exerciseList[i].durationMinutes
+          )}m:${convertToStringAndPad2(currentlyLoadedRoutine.exerciseList[i].durationSeconds)}s</li>`;
+     }
+     htmlString += "</ol>";
+
+     exerciseDetails.innerHTML = htmlString;
+
+     addToggleExerciseListViewFunctionToButton();
 }
 
 // Paired with above
@@ -310,11 +326,6 @@ function createNewExerciseCard(name) {
      newButtonExercise.id = `${nameHyphenated}`;
      newCard.append(newButtonExercise);
 
-     // TODO: Create a new div which acts as as the INPUTS container
-     // const newInputContainer = document.createElement("div");
-     // newInputContainer.classList.add("input-container");
-     // newCard.append(newInputContainer);
-
      // Create a new label and append it to the parent container for MINUTES
      const newLabelMinutesDuration = document.createElement("label");
      newLabelMinutesDuration.textContent = "Minutes";
@@ -363,8 +374,6 @@ function createNewExerciseCard(name) {
  * 1) On click of a button, it will unhide/"expand" the exercise card associated with  it and hide/"close" previous expanded cards
  * 2) The user clicks on the a button that has its card expanded, it will hide it
  * 3) Also stores the id of the currently expanded button in global variable currentSelectedExerciseButtonId
- *
- * TODO: If there's time: refactor this function to have all these labels and inputs in a div and simply toggle the div on and off
  */
 function addEventListenerToExerciseButtons() {
      const exerciseButtons = document.querySelectorAll(".button-exercise");
@@ -538,12 +547,11 @@ document.getElementById("button-save-new-routine").addEventListener("click", fun
      // Closes Routine/Exercse sections so users can focus on the timer section. Reset the buttons to show + (plus)
      hideRoutineAndExerciseSectionsAndResetTheirButtons();
 
-     // Displays to the user the currently loaded Routine
-     displayCurrentlyLoadedRoutine();
+     // Populates the exercise list which users can open and close
+     populateExerciseList();
 
      // Timer section gets populated with the new Routine's info
      populateTimerDetailsOnLoad();
-     displayCurrentlyLoadedRoutine();
 
      // Resets the Exercise name's color to white in case it's been changed to yellow
      resetTimerDisplayCurrentExerciseNameColor();
@@ -624,7 +632,13 @@ stopButton.addEventListener("click", function () {
 
 // 1
 function createTempArraysForTimer() {
-     const currentlyLoadedRoutine = JSON.parse(localStorage.getItem("routineDataKey"));
+     const grabbedData = localStorage.getItem("routineDataKey");
+
+     if (grabbedData === null) {
+          return;
+     }
+
+     const currentlyLoadedRoutine = JSON.parse(grabbedData);
 
      // Grab each exercise's name & duration and put them into their own separate temporary arrays
      for (let i = 0; i < currentlyLoadedRoutine.exerciseList.length; i++) {
@@ -700,8 +714,14 @@ function updateCountdown() {
  * * Populating Timer Section with the currently loaded Routine's name, first Exercise name & duration in its exerciseList
  */
 function populateTimerDetailsOnLoad() {
+     const grabbedData = localStorage.getItem("routineDataKey");
+
+     if (grabbedData === null) {
+          return;
+     }
+
      const routineName = document.getElementById("timer-display-routine-name");
-     routineName.textContent = JSON.parse(localStorage.getItem("routineDataKey")).name;
+     routineName.textContent = JSON.parse(grabbedData).name;
 
      const routineText = document.getElementById("timer-display-routine-text");
      routineText.textContent = "Routine";
@@ -710,10 +730,10 @@ function populateTimerDetailsOnLoad() {
      currentExerciseText.textContent = "Current Exercise";
 
      const exerciseName = document.getElementById("timer-display-current-exercise-name");
-     exerciseName.innerHTML = JSON.parse(localStorage.getItem("routineDataKey")).exerciseList[0].name;
+     exerciseName.innerHTML = JSON.parse(grabbedData).exerciseList[0].name;
 
-     const minutes = `${JSON.parse(localStorage.getItem("routineDataKey")).exerciseList[0].durationMinutes}`;
-     const seconds = `${JSON.parse(localStorage.getItem("routineDataKey")).exerciseList[0].durationSeconds}`;
+     const minutes = `${JSON.parse(grabbedData).exerciseList[0].durationMinutes}`;
+     const seconds = `${JSON.parse(grabbedData).exerciseList[0].durationSeconds}`;
 
      const countdown = document.getElementById("timer-display-countdown");
      countdown.textContent = `${convertToStringAndPad2(minutes)}:${convertToStringAndPad2(seconds)}`;
@@ -722,4 +742,3 @@ function populateTimerDetailsOnLoad() {
 }
 
 // Always calls this upon page load or refresh, but isn't in pageLoad() because it causes an error being able to save Exercises/Routines when there isn't already a Routine in localStorage. When a new Routine is stored in localStorage, the page refreshes, and this function works properly and shouldn't throw an Uncaught TypeError in the console anymore
-populateTimerDetailsOnLoad();
