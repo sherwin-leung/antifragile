@@ -114,10 +114,10 @@ function hideRoutineAndExerciseSectionsAndResetTheirButtons() {
 // Add no-scroll to entire page
 document.body.classList.add("no-scroll");
 
-// After the overlay animation (1.575s), enable scrolling again (add 2 millisecond buffer) by removing the no-scroll class
+// After the overlay animation (1.5s), enable scrolling again (add 2 millisecond buffer) by removing the no-scroll class
 setTimeout(function () {
      document.body.classList.remove("no-scroll");
-}, 1577);
+}, 1502);
 
 /**
  * * This functions handles generating a random phrase each time the page is loaded/reloaded
@@ -547,6 +547,7 @@ document.getElementById("button-save-new-routine").addEventListener("click", fun
      hideSaveNewRoutineButton();
 
      // Closes Routine/Exercse sections so users can focus on the timer section. Reset the buttons to show + (plus)
+     // ! See if users prefer this or not
      hideRoutineAndExerciseSectionsAndResetTheirButtons();
 
      // Populates the exercise list which users can open and close
