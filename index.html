@@ -51,38 +51,6 @@
             <div class="list-building-styles" id="exercise-details"></div>
         </section>
 
-        <!--! New Routine Section -->
-        <section id="section-new-routine">
-            <button class="button-toggle-view" id="button-new-routine" onclick="toggleViewOnAndOff('div-new-routine')">
-                <i class="fa-solid fa-plus"></i> Routine
-            </button>
-
-            <div class="div-toggle-view" id="div-new-routine">
-                <div class="list-building-styles" id="creation-routine-instructions">
-                    <button class="button-toggle-lists" id="button-toggle-instructions">
-                        <i class="fa-solid fa-angle-down"></i> Show Instructions <i
-                            class="fa-solid fa-angle-down"></i></button>
-                    <ol id="ol-instructions">
-                        <li>Enter a <span class="span-new">routine</span> name</li>
-                        <li><i>(Optional)</i> Create a <span class="span-new">new exercise</span> below</li>
-                        <li>Select an <span class="span-exercise">exercise</span> and enter the duration</li>
-                        <li>Press [Add] to append it to the routine<br>(add as many as you'd like)</li>
-                        <li>Press <span class="span-save">[Save]</span> to save the routine</li>
-                    </ol>
-                </div>
-
-                <div class="new-x-cluster" id="new-routine-cluster">
-                    <label class="label-x-name" for="routine-name">Routine Name</label>
-                    <input type="text" id="new-routine-input" name="routine-name" />
-                    <button class="button-save" id="button-save-new-routine">Save</button>
-                </div>
-
-                <div class="list-building-styles" id="routine-being-built-details"></div>
-
-                <div id="exercise-cards-container"></div>
-            </div>
-        </section>
-
         <!-- ! New Exercise Section -->
         <section id="section-new-exercise">
             <button class="button-toggle-view" id="button-new-exercise"
@@ -101,6 +69,37 @@
             </div>
         </section>
 
+        <!--! New Routine Section -->
+        <section id="section-new-routine">
+            <button class="button-toggle-view" id="button-new-routine" onclick="toggleViewOnAndOff('div-new-routine')">
+                <i class="fa-solid fa-plus"></i> Routine
+            </button>
+
+            <div class="div-toggle-view" id="div-new-routine">
+                <div class="list-building-styles" id="creation-routine-instructions">
+                    <button class="button-toggle-lists" id="button-toggle-instructions">
+                        <i class="fa-solid fa-angle-down"></i> Show Instructions <i
+                            class="fa-solid fa-angle-down"></i></button>
+                    <ol id="ol-instructions">
+                        <li>Enter a <span class="span-new">routine</span> name</li>
+                        <li><i>(Optional)</i> Create a <span class="span-new">new exercise</span> above</li>
+                        <li>Select an <span class="span-exercise">exercise</span> and enter the duration</li>
+                        <li>Press [Add] to append it to the routine<br>(add as many as you'd like)</li>
+                        <li>Press <span class="span-save">[Save]</span> to save the routine</li>
+                    </ol>
+                </div>
+
+                <div class="new-x-cluster" id="new-routine-cluster">
+                    <label class="label-x-name" for="routine-name">Routine Name</label>
+                    <input type="text" id="new-routine-input" name="routine-name" />
+                    <button class="button-save" id="button-save-new-routine">Save</button>
+                </div>
+
+                <div class="list-building-styles" id="routine-being-built-details"></div>
+
+                <div id="exercise-cards-container"></div>
+            </div>
+        </section>
 
     </main>
 </body>
