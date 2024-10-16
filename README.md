@@ -116,5 +116,5 @@ _On desktop, you can delete local storage for a site directly without erasing al
 
 * V.L. for his mentorship and support
 * J.Z. and I.W. for helping me bug test
-* LE SSERAFIM's song [ANTIFRAGILE](https://youtu.be/pyf8cbqyfPs) whose name I borrowed ~~(purloined)~~
+* LE SSERAFIM's song [ANTIFRAGILE](https://youtu.be/pyf8cbqyfPs) whose name I ~~purloined~~ borrowed
 * [animista](https://animista.net/) - an awesome CSS library for animations
