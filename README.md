@@ -49,7 +49,7 @@ _On desktop, you can delete local storage for a site directly without erasing al
 1. Press **F12** to access dev tools
 2. Click **Application** tab
 3. Expand **Local storage** under _Storage_ category
-4. Click **https://sherwin-leung.github.io**
+4. Click `https://sherwin-leung.github.io`
 5. Click the **Ø** symbol next to the filter bar to clear all data
 
 ### Mobile
