@@ -66,7 +66,7 @@ _On desktop, you can delete local storage for a site directly without erasing al
 
 <details>
 
-<summary>View known bugs</summary>
+<summary>Click to view known bugs</summary>
 
 * The ability to enter negative number in the input. For example, entering a duration of 1 minute but **-50** as the seconds will result in the timer showing as 01:-50 at first, but upon clicking the play button, the countdown will start properly at 00:10
 
