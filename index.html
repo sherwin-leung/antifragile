@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>antifragile. - timer</title>
+    <title>antifragile.</title>
     <link rel="icon" type="image/x-icon" href="images/icons8-cherry-blossom-96.png">
 
     <link rel="stylesheet" href="styles/styles.css">
@@ -33,11 +33,12 @@
         <section id="section-timer">
             <div class="timer-display-cluster">
                 <p id="timer-display-routine-text"></p>
-                <p id="timer-display-routine-name">No Routine</p>
+                <p id="timer-display-routine-name">Nothing saved yet!</p>
             </div>
 
             <div class="timer-display-cluster">
-                <p id="timer-display-current-exercise-text">Use the buttons below to create one! &#128071</p>
+                <p id="timer-display-current-exercise-text">Use the <span class="span-new">buttons</span> below to
+                    create an exercise<br>then save it into a routine &#128071</p>
                 <p id="timer-display-current-exercise-name"></p>
                 <p id="timer-display-countdown"></p>
             </div>
@@ -49,6 +50,27 @@
             </div>
 
             <div class="list-building-styles" id="exercise-details"></div>
+
+            <div class="list-building-styles" id="creation-routine-instructions">
+                <button class="button-toggle-lists" id="button-toggle-instructions">
+                    <i class="fa-solid fa-angle-down"></i> Show Instructions <i
+                        class="fa-solid fa-angle-down"></i></button>
+                <ol id="ol-instructions">
+                    <li><i>(Optional)</i> Expand the exercise <span class="span-new">section</span></li>
+                    <li><i>(Optional)</i> Enter an exercise name and press <span class="span-save">[Save]</span></li>
+                    <li>Expand the routine <span class="span-new">section</span></li>
+                    <li>Enter a routine</span> name</li>
+                    <li>Select an <span class="span-exercise">exercise</span> and input the durations</li>
+                    <li>Press [Add] to append it to the routine</li>
+                    <li><i>(Optional)</i> Repeat step 6 until all <span class="span-exercise">exercises</span> are added
+                    </li>
+                    <li>Press <span class="span-save">[Save]</span> to save the routine</li>
+                    <li>The timer will populate for you up top</li>
+                    <br>
+                    <a href="https://github.com/sherwin-leung/antifragile?tab=readme-ov-file#how-to-use"
+                        target="_blank">Still confused? Click here!</a>
+                </ol>
+            </div>
         </section>
 
         <!-- ! New Exercise Section -->
@@ -59,6 +81,7 @@
             </button>
 
             <div class="div-toggle-view" id="div-new-exercise">
+
                 <div class="new-x-cluster" id="new-exercise-cluster">
                     <div id="label-input-container">
                         <label class="label-x-name" for="exercise-name">Exercise Name</label>
@@ -66,6 +89,7 @@
                     </div>
                     <button class="button-save" id="button-save-new-exercise">Save</button>
                 </div>
+
             </div>
         </section>
 
@@ -76,18 +100,6 @@
             </button>
 
             <div class="div-toggle-view" id="div-new-routine">
-                <div class="list-building-styles" id="creation-routine-instructions">
-                    <button class="button-toggle-lists" id="button-toggle-instructions">
-                        <i class="fa-solid fa-angle-down"></i> Show Instructions <i
-                            class="fa-solid fa-angle-down"></i></button>
-                    <ol id="ol-instructions">
-                        <li>Enter a <span class="span-new">routine</span> name</li>
-                        <li><i>(Optional)</i> Create a <span class="span-new">new exercise</span> above</li>
-                        <li>Select an <span class="span-exercise">exercise</span> and enter the duration</li>
-                        <li>Press [Add] to append it to the routine<br>(add as many as you'd like)</li>
-                        <li>Press <span class="span-save">[Save]</span> to save the routine</li>
-                    </ol>
-                </div>
 
                 <div class="new-x-cluster" id="new-routine-cluster">
                     <label class="label-x-name" for="routine-name">Routine Name</label>
@@ -98,6 +110,7 @@
                 <div class="list-building-styles" id="routine-being-built-details"></div>
 
                 <div id="exercise-cards-container"></div>
+
             </div>
         </section>
 
