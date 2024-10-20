@@ -62,15 +62,13 @@ _On desktop, you can delete local storage for a site directly without erasing al
 
 ### Known Bugs
 
-* High on the priority list to fix
+* If any are listed below, they are high on the priority list to fix
 
 <details>
 
 <summary>Click to view known bugs</summary>
 
-* The ability to enter negative number in the input. For example, entering a duration of 1 minute but **-50** as the seconds will result in the timer showing as 01:-50 at first, but upon clicking the play button, the countdown will start properly at 00:10
-
-* Similarly, entering any value over 59 in seconds will cause similar behaviors as above. Entering 0 minutes and **65** seconds will display as 00:65, but become 01:05 once the play button is clicked and will countdown properly
+* None found, for now! 😰
 
 </details>
 
@@ -109,6 +107,8 @@ _On desktop, you can delete local storage for a site directly without erasing al
 
 ## Version History
 
+* 1.01
+   * Fixed bug with out of bounds values for duration inputs
 * 1.0
    * Initial Release
 
