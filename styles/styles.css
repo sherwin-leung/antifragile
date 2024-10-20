@@ -15,8 +15,9 @@
     --clr-pastel-purple-darker: rgb(61, 80, 163);
 
     /* Used */
-    --clr-light-grey       : rgb(193, 193, 193);
-    --clr-light-grey-darker: rgb(170, 170, 170);
+    --clr-light-grey-lighter: rgb(219, 219, 219);
+    --clr-light-grey        : rgb(193, 193, 193);
+    --clr-light-grey-darker : rgb(170, 170, 170);
 
     --clr-pastel-yellow-lighter: #f5cc87;
     --clr-pastel-yellow        : #fac66d;
@@ -136,9 +137,9 @@ label {
     color           : rgba(245, 245, 245, 0.867);
 
     /* Overlay animation */
-    animation         : fade-back ease-out forwards;
+    animation      : fade-back ease-out forwards;
     /* ! DISABLE/ENABLE FOR TESTING */
-    /* animation-delay: 1.5s; */
+    animation-delay: 1.5s;
 
     img {
         display: inline;
@@ -375,12 +376,17 @@ label {
     padding-top: 2rem;
 }
 
+.version-text {
+    font-size: var(--slightly-smaller-font-size);
+    color    : var(--clr-light-grey-lighter);
+}
+
 /* * START DIV TOGGLE VIEW */
 
 /* Sections are hidden on page load */
 .div-toggle-view {
     /* ! DISABLE/ENABLE FOR TESTING */
-    /* display: none; */
+    display: none;
 }
 
 /* The buttons that are in charge of toggling the show/hide of above */
