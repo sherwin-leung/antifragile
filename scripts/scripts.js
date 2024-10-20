@@ -257,7 +257,7 @@ document.getElementById("button-save-new-exercise").addEventListener("click", fu
  * * The following THREE functions work together
  * 1) refreshExerciseCards() couples the two following functions together
  * 2) clearExerciseCards() which clears all existing exercise cards
- * 3) renderExerciseCards() which renders all the exercise cards anew
+ * 3) renderExerciseCards() which renders all the exercise cards anew, assigns functions to the buttons, and validation checks for inputs
  */
 
 // 1
@@ -293,11 +293,17 @@ function renderExerciseCards() {
           createNewExerciseCard(name);
      }
 
-     // Add Event Listeners to to all [exercise] buttons
+     // Add Event Listeners to to all [Exercise] buttons
      addEventListenerToExerciseButtons();
 
      // Add Event Listeners to all [Add] buttons
      addEventListenerToAddButtons();
+
+     // Ensures that the minutes (for duration) that a user inputs cannot be a negative number
+     enforceValidInputMinutesValue();
+
+     // Ensures that the seconds (for duration) that a user inputs cannot outside of 0-59
+     enforceValidInputSecondsValue();
 }
 
 /**
@@ -466,6 +472,45 @@ function addEventListenerToAddButtons() {
 }
 
 /**
+ * * This function enforces that the user can only input positive numbers in the input for duration in minutes
+ * Credits: https://stackoverflow.com/questions/34577806/how-to-prevent-inserting-value-that-is-greater-than-to-max-in-number-field-in-ht
+ */
+function enforceValidInputMinutesValue() {
+     const allInputMinutes = document.getElementsByClassName("input-minutes-duration");
+
+     for (let i = 0; i < allInputMinutes.length; i++) {
+          allInputMinutes[i].oninput = function () {
+               const min = parseInt(this.min);
+
+               if (parseInt(this.value) < min) {
+                    this.value = min;
+               }
+          };
+     }
+}
+
+/**
+ * * This function enforces that the user can only input numbers between 0-59 inclusive in the input for duration in seconds
+ * Credits: https://stackoverflow.com/questions/34577806/how-to-prevent-inserting-value-that-is-greater-than-to-max-in-number-field-in-ht
+ */
+function enforceValidInputSecondsValue() {
+     const allInputSeconds = document.getElementsByClassName("input-seconds-duration");
+
+     for (let i = 0; i < allInputSeconds.length; i++) {
+          allInputSeconds[i].oninput = function () {
+               const max = parseInt(this.max);
+               const min = parseInt(this.min);
+
+               if (parseInt(this.value) > max) {
+                    this.value = max;
+               } else if (parseInt(this.value) < min) {
+                    this.value = min;
+               }
+          };
+     }
+}
+
+/**
  * * The following FOUR functions work together
  * 1) displayRoutineBeingBuiltDetails() shows users the list of exercise for the current Routine that they're building
  * 2) createTempExerciseList() builds a string from tempExerciseArray and returns it
@@ -547,7 +592,7 @@ document.getElementById("button-save-new-routine").addEventListener("click", fun
      hideSaveNewRoutineButton();
 
      // Closes Routine/Exercse sections so users can focus on the timer section. Reset the buttons to show + (plus)
-     // ! See if users prefer this or not
+     // TODO: See if users prefer this or not
      hideRoutineAndExerciseSectionsAndResetTheirButtons();
 
      // Populates the exercise list which users can open and close
@@ -643,7 +688,7 @@ function createTempArraysForTimer() {
 
      const currentlyLoadedRoutine = JSON.parse(grabbedData);
 
-     // Grab each exercise's name & duration and put them into their own separate temporary arrays
+     // Grab each exercise's name & duration and put them into their own separate temporary arrays (one for name, one for duration)
      for (let i = 0; i < currentlyLoadedRoutine.exerciseList.length; i++) {
           // Names
           const exerciseName = currentlyLoadedRoutine.exerciseList[i].name;
