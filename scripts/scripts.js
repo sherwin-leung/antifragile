@@ -89,9 +89,10 @@ function convertToStringAndPad2(x) {
      return String(x).padStart(2, "0");
 }
 
-// Helper function - resetTimerDisplayCurrentExerciseNameColor() does as its name says, in the event that a user completed one workout, had the Exercise name element changed to yellow, then created a new Routine
+// Helper function - resetTimerDisplayCurrentExerciseNameColor() does as its name says, in the event that current exercise being displayed's name was changed to anything other than lilac
 function resetTimerDisplayCurrentExerciseNameColor() {
-     document.getElementById("timer-display-current-exercise-name").style.color = "whitesmoke";
+     // This is the same as var(--clr--lilac) in CSS variables
+     document.getElementById("timer-display-current-exercise-name").style.color = "#e7d1ff";
 }
 
 // Helper function - hideRoutineAndExerciseSectionsAndResetTheirButtons() hides the Routine and Exercise sections and resets their buttons to show + (plus)
@@ -611,7 +612,7 @@ document.getElementById("button-save-new-routine").addEventListener("click", fun
      // Timer section gets populated with the new Routine's info
      populateTimerDetailsOnLoad();
 
-     // Resets the Exercise name's color to white in case it's been changed to yellow
+     // Resets the Exercise name's color to lilac in case it's been changed to yellow
      resetTimerDisplayCurrentExerciseNameColor();
 });
 
@@ -638,16 +639,22 @@ document.getElementById("button-toggle-instructions").addEventListener("click", 
 });
 
 /**
- * * The following FOUR functions, TWO Event Listeners, and variables work together to start/stop and display the countdown timer
+ * * The following SEVEN functions, TWO Event Listeners, and variables work together to start/stop and display the countdown timer
  * Event Listeners - Assigns function to startButton/pauseButton/stopButton and disables/enables relevant buttons when clicked
  *
  * 1) createTempArraysForTimer() grabs Routine data and stores the name & duration of each Exercise in the Routine's exerciseList in global temporary arrays
  *
  * 2) startCountdown() starts the countdown for the current Exercise (based on the index). Fires up tick() and then tells it to run every 1 second. If there are no Exercises left in the exercise list, it performs clean up and stops the countdown
  *
- * 3) stopCountdown() stops the countdown. If the user presses [Start] again, it restarts the countdown from the beginning of the list
+ * 3) togglePauseAndResumeCountdown() is for the [Pause button]. It calls function 4) and 5) below. If the timer is currently paused, it will resume it from where it left off. If it's currently running, it will pause it at the current countdown state
  *
- * 4) tick() in charge of displaying  to the user the countdown timer. If the seconds reach -1 (the duration is over), it stops the countdown, increments the index by 1, and tells startCountdown() to run for the next Exercise if there is one
+ * 4) pauseCountdown() pauses the timer if it is currently running
+ *
+ * 5) resumeCountdown() resumes the countdown if it was paused by the function above
+ *
+ * 6) stopCountdown() stops the countdown and performs a lot of clean up. If the user presses [Start] again, it restarts the countdown from the beginning of the list
+ *
+ * 7) tick() in charge of displaying  to the user the countdown timer. If the seconds reach -1 (the duration is over), it stops the countdown, increments the index by 1, and tells startCountdown() to run for the next Exercise if there is one
  *
  * TODO: Implement a [Pause]
  */
@@ -660,21 +667,24 @@ let tempArrayOfDurations = [];
 
 let currentExerciseIndex = 0; // To keep track of the current exercise that's being timed
 
+let isTimerPaused = false;
+
 const timerDisplayExerciseName = document.getElementById("timer-display-current-exercise-name");
 const timerDisplayCountdown = document.getElementById("timer-display-countdown");
 
 const startButton = document.getElementById("button-start");
 const pauseButton = document.getElementById("button-pause");
-const resumeButton = document.getElementById("button-resume");
 const stopButton = document.getElementById("button-stop");
 
-// * [Stop] starts off disabled
-// disableElement(stopButton);
+// * [Pause] and [Stop] starts off disabled
+disableElement(pauseButton);
+disableElement(stopButton);
 
 // Event Listener 1 [Start]
 startButton.addEventListener("click", function () {
-     // disableElement(startButton);
-     // enableElement(stopButton);
+     disableElement(startButton);
+     enableElement(pauseButton);
+     enableElement(stopButton);
 
      createTempArraysForTimer();
 
@@ -685,21 +695,24 @@ startButton.addEventListener("click", function () {
 
 // Event Listener 2 [Pause]
 pauseButton.addEventListener("click", function () {
-     pauseCountdown();
+     togglePauseAndResumeCountdown();
 });
 
-// Event listener temp [Resume]
-resumeButton.addEventListener("click", function () {
-     resumeCountdown();
-});
-
-// Event Listener 3 [Stop]
+// Event Listener 3 [Stop] - performs a lot of clean up
 stopButton.addEventListener("click", function () {
-     // enableElement(startButton);
-     // disableElement(stopButton);
+     enableElement(startButton);
+     disableElement(pauseButton);
+     disableElement(stopButton);
 
      stopCountdown();
 
+     // Resets pause button back to the icon in case it's currently showing "Resume"
+     pauseButton.innerHTML = `<i class="fa-solid fa-pause"></i>`;
+
+     // Reset timer pause switch
+     isTimerPaused = false;
+
+     // Change timer display text
      timerDisplayExerciseName.textContent = "Stopped";
      timerDisplayCountdown.textContent = "00:00";
 });
@@ -731,48 +744,64 @@ function createTempArraysForTimer() {
 // 2
 function startCountdown() {
      // If there are no more exercises, stop the timer from running
+     // Also perform a little clean up with buttons
      if (currentExerciseIndex === tempArrayOfDurations.length) {
+          stopCountdown();
+
           timerDisplayExerciseName.textContent = "✨Finished!✨";
           timerDisplayExerciseName.style.color = "#ffcc74";
-          stopCountdown();
+
+          enableElement(startButton);
+          disableElement(pauseButton);
+          disableElement(stopButton);
+
           return;
      }
 
-     timerDisplayExerciseName.style.color = "whitesmoke";
+     resetTimerDisplayCurrentExerciseNameColor();
      totalCountdownTimeInSeconds = tempArrayOfDurations[currentExerciseIndex];
 
      tick(); // Call the update function once to display the initial time..
      timerIntervalId = setInterval(tick, 1000); // ..then call the function every second
 }
 
+// 3
+function togglePauseAndResumeCountdown() {
+     if (isTimerPaused === false) {
+          pauseCountdown();
+          timerDisplayExerciseName.style.color = "#e7d1ff";
+     } else {
+          resumeCountdown();
+     }
+}
+
+// 4
 function pauseCountdown() {
      clearInterval(timerIntervalId);
+     isTimerPaused = true;
      pauseButton.textContent = "Resume";
      timerDisplayExerciseName.textContent = "Paused";
 }
 
+// 5
 function resumeCountdown() {
+     timerIntervalId = setInterval(tick, 1000);
+     isTimerPaused = false;
      pauseButton.innerHTML = `<i class="fa-solid fa-pause"></i>`;
-     const displayMinutes = Math.floor(totalCountdownTimeInSeconds / 60);
-     const displaySeconds = totalCountdownTimeInSeconds % 60;
-
-     // Update display with the current exercise name
      timerDisplayExerciseName.textContent = tempArrayOfNames[currentExerciseIndex];
-
-     // Update the display with the current exercise time
-     timerDisplayCountdown.textContent = `${convertToStringAndPad2(displayMinutes)}:${convertToStringAndPad2(displaySeconds)}`;
 }
 
-// 3
+// 6
 function stopCountdown() {
      clearInterval(timerIntervalId);
 
      // Empties out temp arrays to ensure previous instances of countdowns are erased
+     // * Must be run every time stopCountdown is called, so cannot be in an Event Listener
      tempArrayOfNames = [];
      tempArrayOfDurations = [];
 }
 
-// 4
+// 7
 function tick() {
      // Stop the countdown when time is up for the current exercise
      if (totalCountdownTimeInSeconds < 0) {
