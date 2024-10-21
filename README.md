@@ -8,7 +8,7 @@ Antifragile (stylized as "antifragile.") is a simple countdown timer that allows
 
 ## How To Use
 
-`As of version 1.0 - subject to change with when additional functionalities are implemented`
+`As of version 1.02 - subject to change with when additional functionalities are implemented`
 
 ### First Usage
 
@@ -20,7 +20,8 @@ Antifragile (stylized as "antifragile.") is a simple countdown timer that allows
    * Click/tap on an exercise you want to append to your routine list. There are two by default, "Rest" and "Stretch", and you should see your newly added exercise as a button as well. In this example, you would also see "Shadowboxing"
    * Fill in the two inputs labeled minutes and seconds. _Empty or non-numeric values will default to as 0_
    * Press **Save** and you should see your routine's name, the first exercise's name and duration, and a button to start and stop at the top portion of your screen
-3. Control the timer with the **start** and **stop** buttons
+     
+3. Control the timer with the **start**, **pause/resume**, and **stop** buttons
 
 ### Subsequent Uses
 
@@ -78,12 +79,9 @@ _On desktop, you can delete local storage for a site directly without erasing al
   
 <details>
 
-<summary>Click to view planned updates</summary>
+<summary>Click to list of view planned updates</summary>
 
 * Implement visual feedback to the user to indicate successes when saving exercises/routines, or errors such as missing an exercise/routine name while saving
-
-* Pause button
-* Skip exercise button
 
 * Sounds
 * Mute button
@@ -105,11 +103,21 @@ _On desktop, you can delete local storage for a site directly without erasing al
 
 </details>
 
+<details>
+
+<summary>Click to view list of completed updates</summary>
+
+* Pause/resume button and functionality
+  
+</details>
+
 ## Version History
 
-* 1.01
+* v1.02
+   * Implemented pause/resume button and functionality
+* v1.01
    * Fixed bug with out of bounds values for duration inputs
-* 1.0
+* v1.0
    * Initial Release
 
 ## Acknowledgments
