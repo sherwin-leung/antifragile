@@ -656,7 +656,6 @@ document.getElementById("button-toggle-instructions").addEventListener("click", 
  *
  * 7) tick() in charge of displaying  to the user the countdown timer. If the seconds reach -1 (the duration is over), it stops the countdown, increments the index by 1, and tells startCountdown() to run for the next Exercise if there is one
  *
- * TODO: Implement a [Pause]
  */
 
 let timerIntervalId;
@@ -706,7 +705,7 @@ stopButton.addEventListener("click", function () {
 
      stopCountdown();
 
-     // Resets pause button back to the icon in case it's currently showing "Resume"
+     // Resets pause button back to the icon in case it's currently showing "R"
      pauseButton.innerHTML = `<i class="fa-solid fa-pause"></i>`;
 
      // Reset timer pause switch
@@ -779,7 +778,7 @@ function togglePauseAndResumeCountdown() {
 function pauseCountdown() {
      clearInterval(timerIntervalId);
      isTimerPaused = true;
-     pauseButton.textContent = "Resume";
+     pauseButton.innerHTML = `<i class="fa-solid fa-r"></i>`;
      timerDisplayExerciseName.textContent = "Paused";
 }
 
