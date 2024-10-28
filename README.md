@@ -6,9 +6,11 @@ Antifragile (stylized as "antifragile.") is a simple countdown timer that allows
 
 * Simply visit this [GitHub Page](https://sherwin-leung.github.io/antifragile/) to use!
 
-## How To Use
+## 💡How To Use
 
-`As of version 1.02 - subject to change with when additional functionalities are implemented`
+`
+As of version 1.02 - subject to change with when additional functionalities are implemented
+`
 
 ### First Usage
 
@@ -44,7 +46,7 @@ At the moment, there is no functionality to clear existing exerises on the timer
 
 There are plans to implement functionalities to allow users to delete existing exercises and routines in the future, but in the mean time, users using the [timer](https://sherwin-leung.github.io/antifragile/) can delete their associated data (and thus starting the timer with a fresh slate) with the following steps:
 
-### Desktop
+### 🖥️ Desktop
 
 _On desktop, you can delete local storage for a site directly without erasing all your cookies._
 1. Press **F12** to access dev tools
@@ -53,7 +55,7 @@ _On desktop, you can delete local storage for a site directly without erasing al
 4. Click `https://sherwin-leung.github.io`
 5. Click the **Ø** symbol next to the filter bar to clear all data
 
-### Mobile
+### 📱 Mobile
 
 * Simply clear your browser's cookies/site data. ***Keep in mind that this will probably sign you out of any sites you've signed into on your phone's browser!***
 
@@ -61,7 +63,7 @@ _On desktop, you can delete local storage for a site directly without erasing al
 
 ## Known Bugs & Future Plans
 
-### Known Bugs
+### 🐛 Known Bugs
 
 * If any are listed below, they are high on the priority list to fix
 
@@ -73,7 +75,7 @@ _On desktop, you can delete local storage for a site directly without erasing al
 
 </details>
 
-### Future Plans
+### 🔮 Future Plans
 
 * Roughly in order of priority, but subject to change
   
@@ -120,7 +122,7 @@ _On desktop, you can delete local storage for a site directly without erasing al
 * v1.0
    * Initial Release
 
-## Acknowledgments
+## 🙏 Acknowledgments
 
 * V.L. for his mentorship and support
 * J.Z. and I.W. for helping me bug test
