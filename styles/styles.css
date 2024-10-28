@@ -562,6 +562,10 @@ label {
         border-bottom: 2px solid var(--clr-grey-blue-lighter);
     }
 
+    /* input:user-valid {
+        border-bottom: 2px solid #7ab87a;
+    } */
+
     .button-save {
         width           : var(--btn-save-original-width);
         margin          : 0 auto;

@@ -596,10 +596,10 @@ document.getElementById("button-save-new-routine").addEventListener("click", fun
      // Empties out the temporary array
      tempExerciseArray = [];
 
-     // Clear the Routine being built's exercist list details
+     // Clear the Routine being built's exercise list details
      document.getElementById("routine-being-built-details").textContent = "";
 
-     // Hides the [Save New Routine] button for next time
+     // Hides the [Save] button (for Routines) for next time
      hideSaveNewRoutineButton();
 
      // Closes Routine/Exercse sections so users can focus on the timer section. Reset the buttons to show + (plus)
