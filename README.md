@@ -85,23 +85,18 @@ _On desktop, you can delete local storage for a site directly without erasing al
 
 * Implement visual feedback to the user to indicate successes when saving exercises/routines, or errors such as missing an exercise/routine name while saving
 
-* Sounds
+* Play a sound for start/finish of an exercise
 * Mute button
 
 * Option to add a "buffer countdown" between each exercise
 
 * Display upcoming exercise's name
 * Display how many exercises left in routine
-* Highlight where the user progress
 
 * Ability to delete exercises
-
-* Ability to save multiple routines
-* Ability to delete routines
-* Ability to edit current routine
-
-* Pin favorite exercises buttons to the top
 * Sort excercise buttons by alphabetical order
+
+* Ability to edit current routine
 
 </details>
 
