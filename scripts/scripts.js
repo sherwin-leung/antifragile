@@ -680,7 +680,7 @@ let tempArrayOfDurations = [];
 
 let currentExerciseIndex = 0; // To keep track of the current exercise that's being timed
 
-let timerInitiated = false;
+let isTimerRunning = false;
 let isTimerPaused = false;
 
 const timerDisplayExerciseName = document.getElementById("timer-display-current-exercise-name");
@@ -696,7 +696,7 @@ disableElement(stopButton);
 startButton.addEventListener("click", function () {
      enableElement(stopButton);
 
-     if (timerInitiated === false) {
+     if (isTimerRunning === false) {
           createTempArraysForTimer();
 
           // Start the countdown for the first exercise
@@ -762,7 +762,7 @@ function startCountdown() {
           return;
      }
 
-     timerInitiated = true;
+     isTimerRunning = true;
 
      // Change button icon
      startButton.innerHTML = `<i class="fa-solid fa-pause"></i>`;
@@ -807,7 +807,7 @@ function resumeCountdown() {
 // 6
 function stopCountdown() {
      clearInterval(timerIntervalId);
-     timerInitiated = false;
+     isTimerRunning = false;
 
      // Empties out temp arrays to ensure previous instances of countdowns are erased
      // * Must be run every time stopCountdown is called, so cannot be in an Event Listener
