@@ -142,6 +142,7 @@ function generateOverlayPhrase() {
 
 /**
  * * This function handles toggling on and off the view of certain contents when the main three buttons are clicked/tapped
+ * It us coupled with the two event listeners below
  * @param divId indicates which div to toggle on and off
  */
 
@@ -156,6 +157,14 @@ function toggleViewOnAndOff(divId) {
           showMinusOnButton(sectionId.id);
      }
 }
+
+document.getElementById("button-new-exercise").addEventListener("click", function () {
+     toggleViewOnAndOff("div-new-exercise");
+});
+
+document.getElementById("button-new-routine").addEventListener("click", function () {
+     toggleViewOnAndOff("div-new-routine");
+});
 
 /**
  * * These two functions below make the [Routine] and [Exercise] buttons show either a + or -, dependng on whether the section is expanded or not
