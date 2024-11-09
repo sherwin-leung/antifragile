@@ -477,6 +477,7 @@ function addEventListenerToAddButtons() {
                // Shows user the new list of exercises they're building
                displayRoutineBeingBuiltDetails();
                // Shows button to allow user to save the Routine
+               // TODO: See if users prefer this or not
                showSaveNewRoutineButton();
           });
      });
@@ -559,6 +560,9 @@ function createClearButton() {
 
      document.getElementById("button-clear").addEventListener("click", function () {
           clearRoutineBeingBuiltDetails();
+
+          // Also hides the save Routine button so that users cannot save a Routine without exercises
+          hideSaveNewRoutineButton();
      });
 }
 
@@ -600,6 +604,7 @@ document.getElementById("button-save-new-routine").addEventListener("click", fun
      document.getElementById("routine-being-built-details").textContent = "";
 
      // Hides the [Save] button (for Routines) for next time
+     // TODO: See if users prefer this or not
      hideSaveNewRoutineButton();
 
      // Closes Routine/Exercse sections so users can focus on the timer section. Reset the buttons to show + (plus)
