@@ -739,7 +739,7 @@ label {
 /* Most common desktop screens */
 @media (width >=1800px) {
     .title {
-        font-size: calc(var(--title-font-size) * 1.2);
+        font-size: calc(var(--title-font-size)*1.2);
     }
 
     .header-content {
@@ -748,7 +748,7 @@ label {
 
 
     .button-toggle-view {
-        width: calc(var(--btn-toggle-view-original-width) * 1.2);
+        width: calc(var(--btn-toggle-view-original-width)*1.2);
     }
 
     .new-x-cluster {

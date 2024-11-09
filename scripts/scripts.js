@@ -654,7 +654,7 @@ document.getElementById("button-toggle-instructions").addEventListener("click", 
 
 /**
  * * The following SEVEN functions, TWO Event Listeners, and variables work together to start/stop and display the countdown timer
- * Event Listeners - Assigns function to startButton/pauseButton/stopButton and disables/enables relevant buttons when clicked
+ * Event Listeners - Assigns function to startButton/stopButton and disables/enables relevant buttons when clicked
  *
  * 1) createTempArraysForTimer() grabs Routine data and stores the name & duration of each Exercise in the Routine's exerciseList in global temporary arrays
  *
@@ -680,47 +680,39 @@ let tempArrayOfDurations = [];
 
 let currentExerciseIndex = 0; // To keep track of the current exercise that's being timed
 
+let timerInitiated = false;
 let isTimerPaused = false;
 
 const timerDisplayExerciseName = document.getElementById("timer-display-current-exercise-name");
 const timerDisplayCountdown = document.getElementById("timer-display-countdown");
 
 const startButton = document.getElementById("button-start");
-const pauseButton = document.getElementById("button-pause");
 const stopButton = document.getElementById("button-stop");
 
-// * [Pause] and [Stop] starts off disabled
-disableElement(pauseButton);
+// * [Stop] starts off disabled
 disableElement(stopButton);
 
 // Event Listener 1 [Start]
 startButton.addEventListener("click", function () {
-     disableElement(startButton);
-     enableElement(pauseButton);
      enableElement(stopButton);
 
-     createTempArraysForTimer();
+     if (timerInitiated === false) {
+          createTempArraysForTimer();
 
-     // Start the countdown for the first exercise
-     currentExerciseIndex = 0;
-     startCountdown();
+          // Start the countdown for the first exercise
+          currentExerciseIndex = 0;
+          startCountdown();
+     } else {
+          togglePauseAndResumeCountdown();
+     }
 });
 
-// Event Listener 2 [Pause]
-pauseButton.addEventListener("click", function () {
-     togglePauseAndResumeCountdown();
-});
-
-// Event Listener 3 [Stop] - performs a lot of clean up
+// Event Listener 2 [Stop] - performs a lot of clean up
 stopButton.addEventListener("click", function () {
      enableElement(startButton);
-     disableElement(pauseButton);
      disableElement(stopButton);
 
      stopCountdown();
-
-     // Resets pause button back to the icon in case it's currently showing "R"
-     pauseButton.innerHTML = `<i class="fa-solid fa-pause"></i>`;
 
      // Reset timer pause switch
      isTimerPaused = false;
@@ -765,11 +757,15 @@ function startCountdown() {
           timerDisplayExerciseName.style.color = "#ffcc74";
 
           enableElement(startButton);
-          disableElement(pauseButton);
           disableElement(stopButton);
 
           return;
      }
+
+     timerInitiated = true;
+
+     // Change button icon
+     startButton.innerHTML = `<i class="fa-solid fa-pause"></i>`;
 
      resetTimerDisplayCurrentExerciseNameColor();
      totalCountdownTimeInSeconds = tempArrayOfDurations[currentExerciseIndex];
@@ -778,7 +774,7 @@ function startCountdown() {
      timerIntervalId = setInterval(tick, 1000); // ..then call the function every second
 }
 
-// 3
+// 3 (toggles functions 4 and 5 below)
 function togglePauseAndResumeCountdown() {
      if (isTimerPaused === false) {
           pauseCountdown();
@@ -792,26 +788,34 @@ function togglePauseAndResumeCountdown() {
 function pauseCountdown() {
      clearInterval(timerIntervalId);
      isTimerPaused = true;
-     pauseButton.innerHTML = `<i class="fa-solid fa-r"></i>`;
      timerDisplayExerciseName.textContent = "Paused";
+
+     // Change button icon
+     startButton.innerHTML = `<i class="fa-solid fa-play"></i>`;
 }
 
 // 5
 function resumeCountdown() {
      timerIntervalId = setInterval(tick, 1000);
      isTimerPaused = false;
-     pauseButton.innerHTML = `<i class="fa-solid fa-pause"></i>`;
      timerDisplayExerciseName.textContent = tempArrayOfNames[currentExerciseIndex];
+
+     // Change button icon
+     startButton.innerHTML = `<i class="fa-solid fa-pause"></i>`;
 }
 
 // 6
 function stopCountdown() {
      clearInterval(timerIntervalId);
+     timerInitiated = false;
 
      // Empties out temp arrays to ensure previous instances of countdowns are erased
      // * Must be run every time stopCountdown is called, so cannot be in an Event Listener
      tempArrayOfNames = [];
      tempArrayOfDurations = [];
+
+     // Change button icon
+     startButton.innerHTML = `<i class="fa-solid fa-play"></i>`;
 }
 
 // 7
