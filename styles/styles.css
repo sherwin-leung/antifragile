@@ -7,14 +7,14 @@
 /* * GLOBAL VARIABLES */
 
 :root {
-    /* Not used */
+    /* NOT USED */
+
     --standard-size: 1rem;
     --bgc-blue     : #5e96c2;
 
-    /* A variation of this is used */
-    --clr-pastel-purple-darker: rgb(61, 80, 163);
+    /* IN USE */
 
-    /* Used */
+    /* Colors */
     --clr-light-grey-lighter: rgb(219, 219, 219);
     --clr-light-grey        : rgb(193, 193, 193);
     --clr-light-grey-darker : rgb(170, 170, 170);
@@ -35,10 +35,20 @@
     --clr-lilac-darker: rgb(200, 167, 236);
 
 
-    --title-font-size               : 3rem;
-    --slightly-smaller-font-size    : 0.77em;
+    /* Sizes */
+    --title-font-size           : 3rem;
+    --slightly-smaller-font-size: 0.77em;
+
+    --new-x-cluster-original-width  : 20rem;
     --btn-toggle-view-original-width: 15rem;
     --btn-save-original-width       : 10rem;
+
+    --timer-display-routine-name-original-size         : 1.5rem;
+    --timer-display-current-exercise-name-original-size: 2.25rem;
+    --timer-display-countdown-original-size            : 3.5rem;
+
+    --exercise-cards-container-left-and-right-padding-original-size: 1rem;
+
 }
 
 /* * START RESETS */
@@ -138,9 +148,9 @@ label {
     color           : rgba(245, 245, 245, 0.867);
 
     /* Overlay animation */
-    animation      : fade-back ease-out forwards;
+    animation         : fade-back ease-out forwards;
     /* ! DISABLE/ENABLE FOR TESTING */
-    animation-delay: 1.5s;
+    /* animation-delay: 1.5s; */
 
     img {
         display: inline;
@@ -445,16 +455,16 @@ label {
 }
 
 #timer-display-routine-name {
-    font-size: 1.5rem;
+    font-size: var(--timer-display-routine-name-original-size);
 }
 
 #timer-display-current-exercise-name {
-    font-size: 2.25rem;
+    font-size: var(--timer-display-current-exercise-name-original-size);
     color    : var(--clr-lilac);
 }
 
 #timer-display-countdown {
-    font-size: 3.5rem;
+    font-size: var(--timer-display-countdown-original-size);
     color    : white;
 }
 
@@ -540,8 +550,9 @@ label {
 
 /* This is for both Routine and Exercises' text inputs */
 .new-x-cluster {
-    /* Margin makes it easier to see how wide the inputs lines will be than using padding */
-    margin: 1.5rem 5rem 0;
+    width     : var(--new-x-cluster-original-width);
+    margin    : 0 auto;
+    margin-top: 1.5rem;
 
     label,
     input {
@@ -610,7 +621,7 @@ label {
 }
 
 #exercise-cards-container {
-    padding              : 0 1rem;
+    padding              : 0 var(--exercise-cards-container-left-and-right-padding-original-size);
     display              : grid;
     grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
     gap                  : 0.3rem;
@@ -672,38 +683,28 @@ label {
 
 /* Small tablets or really large phones */
 @media (width >=490px) {
-    .main-content {
-        padding: 0 1rem;
+    .new-x-cluster {
+        width: calc(var(--new-x-cluster-original-width)*1.2);
     }
 }
 
 /* Tablets */
 @media (width >=750px) {
-    .main-content {
-        padding: 0 3rem;
-    }
-
-    .new-x-cluster {
-        input {
-            font-size: 1rem;
-        }
-
-        .button-save {
-            width: calc(var(--btn-save-original-width)*1.2);
-        }
-    }
-
     #exercise-cards-container {
-        grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+        padding: 0 calc(var(--exercise-cards-container-left-and-right-padding-original-size)*7.5);
+    }
+}
+
+@media (width >=1000px) {
+    #exercise-cards-container {
+        padding              : 0 calc(var(--exercise-cards-container-left-and-right-padding-original-size)*10);
+        grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
     }
 }
 
 /* Small laptops */
+/* Content begins to get bigger here  */
 @media (width >=1300px) {
-    .main-content {
-        padding: 0 7rem;
-    }
-
     .title {
         font-size: calc(var(--title-font-size) * 1.1);
     }
@@ -713,30 +714,30 @@ label {
     }
 
     .button-toggle-view {
-        width: calc(var(--btn-toggle-view-original-width) * 1.2);
+        width: calc(var(--btn-toggle-view-original-width) * 1.1);
     }
 
     .new-x-cluster {
+        width: calc(var(--new-x-cluster-original-width)*1.3);
+
+        /* Changes user input's text to be larger (the value) */
         input {
-            font-size: 1.2rem;
+            font-size: 1rem;
         }
 
         .button-save {
-            width: calc(var(--btn-save-original-width)*1.4);
+            width: calc(var(--btn-save-original-width)*1.1);
         }
     }
 
     #exercise-cards-container {
-        grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+        padding              : 0 calc(var(--exercise-cards-container-left-and-right-padding-original-size)*20);
+        grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
     }
 }
 
 /* Most common desktop screens */
 @media (width >=1800px) {
-    .main-content {
-        padding: 0 25rem;
-    }
-
     .title {
         font-size: calc(var(--title-font-size) * 1.2);
     }
@@ -745,54 +746,52 @@ label {
         padding-top: 4rem;
     }
 
-    #timer-display-routine-name {
-        font-size: calc(1.5rem*1.5);
-    }
-
-    #timer-display-current-exercise-name {
-        font-size: calc(2.25rem*1.5);
-    }
-
-    #timer-display-countdown {
-        font-size: calc(3.5*1.5);
-    }
 
     .button-toggle-view {
-        width: calc(var(--btn-toggle-view-original-width) * 1.35);
+        width: calc(var(--btn-toggle-view-original-width) * 1.2);
     }
 
     .new-x-cluster {
-        input {
-            font-size: 1.3rem;
-        }
+        width: calc(var(--new-x-cluster-original-width)*1.4);
 
         .button-save {
-            width: calc(var(--btn-save-original-width)*1.5);
-        }
-    }
-}
-
-@media (width >=2400px) {
-    .main-content {
-        padding: 0 30rem;
-    }
-
-    .title {
-        font-size: calc(var(--title-font-size) * 1.4);
-    }
-
-    .header-content {
-        padding-top   : 4.5rem;
-        padding-bottom: 0.7rem;
-    }
-
-    .new-x-cluster {
-        .button-save {
-            width: calc(var(--btn-save-original-width)*1.65);
+            width: calc(var(--btn-save-original-width)*1.2);
         }
     }
 
     #exercise-cards-container {
-        grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+        padding: 0 calc(var(--exercise-cards-container-left-and-right-padding-original-size)*22);
+    }
+}
+
+@media (width >=2400px) {
+    .title {
+        font-size: calc(var(--title-font-size) * 1.3);
+    }
+
+    .header-content {
+        padding-top   : 5rem;
+        padding-bottom: 0.5rem;
+    }
+
+    #timer-display-routine-name {
+        font-size: calc(var(--timer-display-routine-name-original-size)*1.5);
+    }
+
+    #timer-display-current-exercise-name {
+        font-size: calc(var(--timer-display-current-exercise-name-original-size)*1.5);
+    }
+
+    #timer-display-countdown {
+        font-size: calc(var(--timer-display-countdown-original-size)*1.5);
+    }
+
+    .new-x-cluster {
+        width: calc(var(--new-x-cluster-original-width)*1.5);
+    }
+
+    #exercise-cards-container {
+        padding: 0 calc(var(--exercise-cards-container-left-and-right-padding-original-size)*30);
+
     }
 }
