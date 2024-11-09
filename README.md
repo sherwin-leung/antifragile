@@ -9,7 +9,7 @@ Antifragile (stylized as "antifragile.") is a simple countdown timer that allows
 ## 💡How To Use
 
 `
-As of version 1.02 - subject to change with when additional functionalities are implemented
+As of version 1.03 - subject to change with when additional functionalities are implemented
 `
 
 ### First Usage
@@ -23,7 +23,7 @@ As of version 1.02 - subject to change with when additional functionalities are 
    * Fill in the two inputs labeled minutes and seconds. _Empty or non-numeric values will default to as 0_
    * Press **Save** and you should see your routine's name, the first exercise's name and duration, and a button to start and stop at the top portion of your screen
      
-3. Control the timer with the **start**, **pause/resume**, and **stop** buttons
+3. Control the timer with the **start** and **stop** buttons
 
 ### Subsequent Uses
 
@@ -110,6 +110,8 @@ _On desktop, you can delete local storage for a site directly without erasing al
 
 ## Version History
 
+* v1.03
+  * Consolidated play/pause/resume functionalities into one button, instead of play and pause/resume
 * v1.02
    * Implemented pause/resume button and functionality
 * v1.01
