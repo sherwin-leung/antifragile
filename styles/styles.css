@@ -148,9 +148,9 @@ label {
     color           : rgba(245, 245, 245, 0.867);
 
     /* Overlay animation */
-    animation      : fade-back ease-out forwards;
+    animation         : fade-back ease-out forwards;
     /* ! DISABLE/ENABLE FOR TESTING */
-    animation-delay: 1.5s;
+    /* animation-delay: 1.5s; */
 
     img {
         display: inline;

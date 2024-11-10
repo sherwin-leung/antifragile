@@ -600,34 +600,37 @@ function saveNewRoutineToLocalStorage() {
 
 // Paired with above
 document.getElementById("button-save-new-routine").addEventListener("click", function () {
-     // Saves Routine to localStorage first
-     saveNewRoutineToLocalStorage();
+     // Only perform these functions if the input for Routine name is not empty
+     if (document.getElementById("new-routine-input").value.trim().length > 0) {
+          // Saves Routine to localStorage first
+          saveNewRoutineToLocalStorage();
 
-     // Resets the input field to be empty
-     document.getElementById("new-routine-input").value = "";
+          // Resets the input field to be empty
+          document.getElementById("new-routine-input").value = "";
 
-     // Empties out the temporary array
-     tempExerciseArray = [];
+          // Empties out the temporary array
+          tempExerciseArray = [];
 
-     // Clear the Routine being built's exercise list details
-     document.getElementById("routine-being-built-details").textContent = "";
+          // Clear the Routine being built's exercise list details
+          document.getElementById("routine-being-built-details").textContent = "";
 
-     // Hides the [Save] button (for Routines) for next time
-     // TODO: See if users prefer this or not
-     hideSaveNewRoutineButton();
+          // Hides the [Save] button (for Routines) for next time
+          // TODO: See if users prefer this or not
+          hideSaveNewRoutineButton();
 
-     // Closes Routine/Exercse sections so users can focus on the timer section. Reset the buttons to show + (plus)
-     // TODO: See if users prefer this or not
-     hideRoutineAndExerciseSectionsAndResetTheirButtons();
+          // Closes Routine/Exercse sections so users can focus on the timer section. Reset the buttons to show + (plus)
+          // TODO: See if users prefer this or not
+          hideRoutineAndExerciseSectionsAndResetTheirButtons();
 
-     // Populates the exercise list which users can open and close
-     populateExerciseList();
+          // Populates the exercise list which users can open and close
+          populateExerciseList();
 
-     // Timer section gets populated with the new Routine's info
-     populateTimerDetailsOnLoad();
+          // Timer section gets populated with the new Routine's info
+          populateTimerDetailsOnLoad();
 
-     // Resets the Exercise name's color to lilac in case it's been changed to yellow
-     resetTimerDisplayCurrentExerciseNameColor();
+          // Resets the Exercise name's color to lilac in case it's been changed to yellow
+          resetTimerDisplayCurrentExerciseNameColor();
+     }
 });
 
 /**
@@ -753,7 +756,7 @@ function startCountdown() {
      if (currentExerciseIndex === tempArrayOfDurations.length) {
           stopCountdown();
 
-          timerDisplayExerciseName.textContent = "✨Finished!✨";
+          timerDisplayExerciseName.textContent = "Finished!";
           timerDisplayExerciseName.style.color = "#ffcc74";
 
           enableElement(startButton);
