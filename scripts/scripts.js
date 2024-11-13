@@ -222,7 +222,7 @@ function showButtonFeedbackOnSuccessfulSave(x) {
      setTimeout(function () {
           saveNewXButton.classList.remove("button-save-success");
           saveNewXButton.innerHTML = "Save";
-     }, 1000); // 1 second delay
+     }, 1000);
 }
 
 /**
@@ -651,8 +651,7 @@ function createClearButton() {
 // 4
 function clearRoutineBeingBuiltDetails() {
      tempExerciseArray = [];
-     displayRoutineBeingBuiltDetails();
-
+     // displayRoutineBeingBuiltDetails();
      document.getElementById("routine-being-built-details").textContent = "";
 }
 
@@ -698,26 +697,30 @@ saveNewRoutineButton.addEventListener("click", function () {
           // Resets the input field to be empty
           document.getElementById("new-routine-input").value = "";
 
-          // Empties out the temporary array
-          tempExerciseArray = [];
-
-          // Clear the Routine being built's exercise list details
-          document.getElementById("routine-being-built-details").textContent = "";
-
-          // Closes Routine/Exercse sections so users can focus on the timer section. Reset the buttons to show + (plus)
           // TODO
+          // 1s delay
           setTimeout(function () {
+               // Scrolls to the top
+               window.scrollTo(0, 0);
+          }, 1000);
+
+          // 1.5s delay
+          setTimeout(function () {
+               // Empties out the temporary array and clears the Routine being built's exercise list details
+               clearRoutineBeingBuiltDetails();
+
+               // Closes Routine/Exercse sections so users can focus on the timer section. Reset the buttons to show + (plus)
                toggleSection("close", "exercise");
                toggleSection("close", "routine");
-          }, 1000);
+          }, 1500);
 
           // Shows user feedback that their Routine was saved
           showButtonFeedbackOnSuccessfulSave("routine");
 
-          // Populates the exercise list which users can open and close to refer to
+          // Initializes the exercise list which users can open and close to refer to
           initializeExerciseList();
 
-          // Timer section gets populated with the new Routine's info
+          // Timer section gets initialized with the new Routine's info
           initializeTimerDetailsOnLoad();
 
           // Resets the Exercise name's color to lilac in case it's been changed to yellow
@@ -921,7 +924,7 @@ function tick() {
 }
 
 /**
- * * Populating Timer Section with the currently loaded Routine's name, first Exercise name & duration in its exerciseList
+ * * Initializing Timer Section with the currently loaded Routine's name, first Exercise name & duration in its exerciseList
  */
 
 function initializeTimerDetailsOnLoad() {
