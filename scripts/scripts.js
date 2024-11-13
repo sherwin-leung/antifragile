@@ -1,12 +1,14 @@
 /**
  * * Global Variables
  */
+
 let currentlySelectedExerciseButtonId;
 let tempExerciseArray = [];
 
 /**
  * * Constructors for various Objects
  */
+
 class Exercise {
      constructor(name, durationMinutes, durationSeconds) {
           this.name = name;
@@ -25,16 +27,18 @@ class Routine {
 /**
  * * On page load, run this function
  */
+
 window.onload = pageLoad();
 
 /**
  * This function is a collection of functions that need to be run upon the user loading the page
  */
+
 function pageLoad() {
      generateOverlayPhrase();
      refreshExerciseCards();
-     populateTimerDetailsOnLoad();
-     populateExerciseList();
+     initializeTimerDetailsOnLoad();
+     initializeExerciseList();
 }
 
 /**
@@ -68,16 +72,6 @@ function checkIfAlreadyExistsInLocalStorage(arrayToCheck, name) {
 // Helper function - convertToTitleCase(str) takes a string and returns it As Title Case (capitalizes the first letter of each word in a string)
 function convertToTitleCase(str) {
      return str.toLowerCase().replace(/\b\w/g, (s) => s.toUpperCase());
-}
-
-// Helper function - hideShowNewRoutineButton() hides the [Save New Routine] button in the New Routine section
-function hideSaveNewRoutineButton() {
-     document.getElementById("button-save-new-routine").style.display = "none";
-}
-
-// Helper function - showShowNewRoutineButton() show the [Save New Routine] button in the New Routine section
-function showSaveNewRoutineButton() {
-     document.getElementById("button-save-new-routine").style.display = "block";
 }
 
 // Helper function - convertToStringAndPad2() converts the parameter into a String and then pads it with 0 in front if it is less than two chars
@@ -120,6 +114,7 @@ setTimeout(function () {
 /**
  * * This functions handles generating a random phrase each time the page is loaded/reloaded
  */
+
 function generateOverlayPhrase() {
      const arrayOfPhrases = ["an exercise timer"];
      const randomIndex = Math.floor(Math.random() * arrayOfPhrases.length);
@@ -145,11 +140,13 @@ function toggleViewOnAndOff(divId) {
      }
 }
 
-document.getElementById("button-new-exercise").addEventListener("click", function () {
+const newExerciseButton = document.getElementById("button-new-exercise");
+newExerciseButton.addEventListener("click", function () {
      toggleViewOnAndOff("div-new-exercise");
 });
 
-document.getElementById("button-new-routine").addEventListener("click", function () {
+const newRoutineButton = document.getElementById("button-new-routine");
+newRoutineButton.addEventListener("click", function () {
      toggleViewOnAndOff("div-new-routine");
 });
 
@@ -158,6 +155,7 @@ document.getElementById("button-new-routine").addEventListener("click", function
  * @param {string} action
  * @param {string} sectionToToggle
  */
+
 function toggleSection(action, sectionToToggle) {
      let sectionView;
      let buttonToChange;
@@ -176,7 +174,7 @@ function toggleSection(action, sectionToToggle) {
      if (action === "open") {
           sectionView.style.display = "block";
           showMinusOnButton(buttonToChange);
-     } else {
+     } else if (action === "close") {
           sectionView.style.display = "none";
           showPlusOnButton(buttonToChange);
      }
@@ -206,11 +204,34 @@ function showMinusOnButton(sectionId) {
 }
 
 /**
+ * * This function shows the user visual feedback if they were able to save a new Exercise or Routine
+ * @param {string} x will be either "exercise" or "routine"
+ */
+
+function showButtonFeedbackOnSuccessfulSave(x) {
+     // Store the specified [Save] button. x === either "exercise" or "routine"
+     const saveNewXButton = document.getElementById(`button-save-new-${x}`);
+
+     // Add a the class "button-save-success" to the Save button button
+     saveNewXButton.classList.add("button-save-success");
+
+     // Change button to show success feedback
+     saveNewXButton.innerHTML = `<i class="fa-solid fa-check"></i> Saved`; // Check icon and 'Saved'
+
+     // Revert after a short delay to original state
+     setTimeout(function () {
+          saveNewXButton.classList.remove("button-save-success");
+          saveNewXButton.innerHTML = "Save";
+     }, 1000); // 1 second delay
+}
+
+/**
  * * The following TWO functions work together *
- * 1) populateExerciseList() this function displays the currently loaded Routine to the user. It persists on page load and refreshes when user saves a new Routine
+ * 1) initializeExerciseList() this function displays the currently loaded Routine to the user. It persists on page load and refreshes when user saves a new Routine
  * 2) addToggleExerciseListViewFunctionToButton() - because a new button to toggle exercise list view is generated each time a new Routine is saved, it needs to be re-assigned the function enabling it to toggle views
  */
-function populateExerciseList() {
+
+function initializeExerciseList() {
      // Grab the saved Routine from localStorage
      const grabbedData = localStorage.getItem("routineDataKey");
 
@@ -256,37 +277,74 @@ function addToggleExerciseListViewFunctionToButton() {
 }
 
 /**
- * * This function handles the creation and saving of new Exercises into localStorage
- * Paired with EventListener below that assigns it to the button [Save Exercise]
+ * * The following function and Event Listener work together to hide and show the instructions for how to create Exercises and Routines
  */
-function saveNewExerciseToLocalStorage() {
-     event.preventDefault();
 
+function toggleInstructionsView() {
+     const instructions = document.getElementById("ol-instructions");
+     const showInstructionsLabel = document.getElementById("button-toggle-instructions");
+
+     if (instructions.style.display === "block") {
+          instructions.style.display = "none";
+          showInstructionsLabel.innerHTML = `<i class="fa-solid fa-angle-down"></i> Show Instructions <i class="fa-solid fa-angle-down"></i>`;
+     } else {
+          instructions.style.display = "block";
+          showInstructionsLabel.innerHTML = `<i class="fa-solid fa-angle-up"></i> Hide Instructions <i class="fa-solid fa-angle-up"></i>`;
+     }
+}
+
+// Paired with above
+const instructionsButton = document.getElementById("button-toggle-instructions");
+instructionsButton.addEventListener("click", function () {
+     toggleInstructionsView();
+});
+
+/**
+ * * These two functions handle the creation and saving of new Exercises into localStorage
+ * 1) isValidNewExerciseInput() returns whether or not the input is an empty String or not
+ * 2) saveNewExerciseToLocalStorage() creates an saves a new Exercise object if the name given was not an empty string, and if one with the same name doesn't already exist in local storage
+ * Paired with EventListener below that assigns them to the button
+ */
+
+// 1
+function isValidNewExerciseNameInput() {
+     const exerciseName = sanitize(document.getElementById("new-exercise-input").value);
+     if (exerciseName.trim().length > 0) {
+          return true;
+     }
+     return false;
+}
+
+// 2
+function saveNewExerciseToLocalStorage() {
      // Get existing data from localStorage or retrieve an empty array if there is none as a fallback
      const existingExerciseData = JSON.parse(localStorage.getItem("exerciseDataKey")) || [];
 
      // Store user's input
      const exerciseName = sanitize(convertToTitleCase(document.getElementById("new-exercise-input").value));
 
-     // Only create a new Exercise if its name isn't an empty string and it doesn't already exist
-     if (exerciseName.trim().length > 0 && checkIfAlreadyExistsInLocalStorage(existingExerciseData, exerciseName) === false) {
-          // Create a new Exercise Object and pushes it into the existing exercise data. Afterwards, save existing data with the new Exercise to localStorage
+     // Create the new Exercise only if it doesn't exis already
+     if (checkIfAlreadyExistsInLocalStorage(existingExerciseData, exerciseName) === false) {
           const newExercise = new Exercise(exerciseName, 0, 0);
           existingExerciseData.push(newExercise);
           localStorage.setItem("exerciseDataKey", JSON.stringify(existingExerciseData));
-
-          // Refreshes buttons
-          refreshExerciseCards();
      }
-
-     // Always resets the input field to be empty
-     document.getElementById("new-exercise-input").value = "";
 }
 
 // Paired with above
-document.getElementById("button-save-new-exercise").addEventListener("click", function () {
-     saveNewExerciseToLocalStorage();
-     toggleSection("open", "routine");
+const saveNewExerciseButton = document.getElementById("button-save-new-exercise");
+
+saveNewExerciseButton.addEventListener("click", function () {
+     if (isValidNewExerciseNameInput() === true) {
+          // Note, Exercise will not be stored if one already exists with the same name in local storage
+          saveNewExerciseToLocalStorage();
+          // Resets the input field to be empty
+          document.getElementById("new-exercise-input").value = "";
+
+          refreshExerciseCards();
+          toggleSection("open", "routine");
+          showButtonFeedbackOnSuccessfulSave("exercise");
+     }
 });
 
 /**
@@ -352,6 +410,7 @@ function renderExerciseCards() {
  *
  * @param {string} name Retrieves name of exercise(s) from localStorage key/value pair exerciseDataKey
  */
+
 function createNewExerciseCard(name) {
      // This is just so that if an exercise name is two words, like "jumping jacks", we won't get class/id/etc as "class="jumping jacks" but rather "class="jumping-jacks"
      const nameHyphenated = name.split(" ").join("-");
@@ -419,6 +478,7 @@ function createNewExerciseCard(name) {
  * 2) The user clicks on the a button that has its card expanded, it will hide it
  * 3) Also stores the id of the currently expanded button in global variable currentSelectedExerciseButtonId
  */
+
 function addEventListenerToExerciseButtons() {
      const exerciseButtons = document.querySelectorAll(".button-exercise");
 
@@ -445,7 +505,7 @@ function addEventListenerToExerciseButtons() {
                     secondsInput.style.display === "block" &&
                     addButton.style.display === "block";
 
-               // Hide all labels, inputs, and [Add] buttons
+               // First hide all labels, inputs, and [Add] buttons
                const allContainers = document.querySelectorAll(".exercise-card");
                allContainers.forEach(function (container) {
                     container.querySelector("label").style.display = "none";
@@ -457,7 +517,7 @@ function addEventListenerToExerciseButtons() {
                     container.querySelector(".button-add").style.display = "none";
                });
 
-               // If the current cluster is hidden, show it
+               // Then if the current cluster is hidden, unhide/show it. That way, only cluster is expanded/shown is shown at a time (the one that's clicked)
                if (isCurrentClusterVisible === false) {
                     minutesLabel.style.display = "block";
                     minutesInput.style.display = "block";
@@ -478,6 +538,7 @@ function addEventListenerToExerciseButtons() {
  * * This function allows the user to use the exercise cards to add exercises into a temporary array which will then be used as a property of new Routines
  * Paired with it is the Event Listener function that assigns the function to ALL [Add] buttons
  */
+
 function addToTempExerciseList() {
      // Converts value from string to int
      const minutes = parseInt(document.getElementById(`input-minutes-${currentlySelectedExerciseButtonId}`).value);
@@ -501,8 +562,6 @@ function addEventListenerToAddButtons() {
                addToTempExerciseList();
                // Shows user the new list of exercises they're building
                displayRoutineBeingBuiltDetails();
-               // Shows button to allow user to save the Routine
-               showSaveNewRoutineButton();
           });
      });
 }
@@ -511,6 +570,7 @@ function addEventListenerToAddButtons() {
  * * This function enforces that the user can only input positive numbers in the input for duration in minutes
  * Credits: https://stackoverflow.com/questions/34577806/how-to-prevent-inserting-value-that-is-greater-than-to-max-in-number-field-in-ht
  */
+
 function enforceValidInputMinutesValue() {
      const allInputMinutes = document.getElementsByClassName("input-minutes-duration");
 
@@ -529,6 +589,7 @@ function enforceValidInputMinutesValue() {
  * * This function enforces that the user can only input numbers between 0-59 inclusive in the input for duration in seconds
  * Credits: https://stackoverflow.com/questions/34577806/how-to-prevent-inserting-value-that-is-greater-than-to-max-in-number-field-in-ht
  */
+
 function enforceValidInputSecondsValue() {
      const allInputSeconds = document.getElementsByClassName("input-seconds-duration");
 
@@ -584,9 +645,6 @@ function createClearButton() {
 
      document.getElementById("button-clear").addEventListener("click", function () {
           clearRoutineBeingBuiltDetails();
-
-          // Also hides the save Routine button so that users cannot save a Routine without exercises
-          hideSaveNewRoutineButton();
      });
 }
 
@@ -599,24 +657,41 @@ function clearRoutineBeingBuiltDetails() {
 }
 
 /**
- * * This function handles the creation and saving of new Routines into localStorage
- * Paired with it is the Event Listener that assigns the function to the [Save New Routine] button
+ * * These three functions handle the creation and saving of new Exercises into localStorage
+ * 1) isValidNewRoutineInput() returns whether or not the input is an empty String or not
+ * 2) isTempExerciseArrayEmpty() returns whether the temporary Exercise array is empty. If it is empty, the user is not allowed to create a Routine
+ * 3) saveNewRoutineToLocalStorage() creates an saves a new Routine object if the name given was not an empty string
+ * Paired with EventListener below that assigns them to the button
  */
+
+//1
+function isValidNewRoutineNameInput() {
+     const routineName = sanitize(document.getElementById("new-routine-input").value);
+     if (routineName.trim().length > 0) {
+          return true;
+     }
+     return false;
+}
+// 2
+function isTempExerciseArrayEmpty() {
+     if (tempExerciseArray.length === 0) {
+          return true;
+     }
+     return false;
+}
+
+//2
 function saveNewRoutineToLocalStorage() {
      // Store name of new Routine from input
      const routineName = sanitize(convertToTitleCase(document.getElementById("new-routine-input").value));
-
-     // Only create a new Routine if its name isn't an empty string
-     if (routineName.trim().length > 0) {
-          const newRoutine = new Routine(routineName, tempExerciseArray);
-          localStorage.setItem("routineDataKey", JSON.stringify(newRoutine));
-     }
+     const newRoutine = new Routine(routineName, tempExerciseArray);
+     localStorage.setItem("routineDataKey", JSON.stringify(newRoutine));
 }
 
 // Paired with above
-document.getElementById("button-save-new-routine").addEventListener("click", function () {
-     // Only perform these functions if the input for Routine name is not empty
-     if (document.getElementById("new-routine-input").value.trim().length > 0) {
+const saveNewRoutineButton = document.getElementById("button-save-new-routine");
+saveNewRoutineButton.addEventListener("click", function () {
+     if (isValidNewRoutineNameInput() === true && isTempExerciseArrayEmpty() === false) {
           // Saves Routine to localStorage first
           saveNewRoutineToLocalStorage();
 
@@ -629,45 +704,25 @@ document.getElementById("button-save-new-routine").addEventListener("click", fun
           // Clear the Routine being built's exercise list details
           document.getElementById("routine-being-built-details").textContent = "";
 
-          // Hides the [Save] button (for Routines) for next time
-          hideSaveNewRoutineButton();
-
           // Closes Routine/Exercse sections so users can focus on the timer section. Reset the buttons to show + (plus)
-          // TODO: See if users prefer this or not
-          toggleSection("close", "exercise");
-          toggleSection("close", "routine");
+          // TODO
+          setTimeout(function () {
+               toggleSection("close", "exercise");
+               toggleSection("close", "routine");
+          }, 1000);
 
-          // Populates the exercise list which users can open and close
-          populateExerciseList();
+          // Shows user feedback that their Routine was saved
+          showButtonFeedbackOnSuccessfulSave("routine");
+
+          // Populates the exercise list which users can open and close to refer to
+          initializeExerciseList();
 
           // Timer section gets populated with the new Routine's info
-          populateTimerDetailsOnLoad();
+          initializeTimerDetailsOnLoad();
 
           // Resets the Exercise name's color to lilac in case it's been changed to yellow
           resetTimerDisplayCurrentExerciseNameColor();
      }
-});
-
-/**
- * * The following function and Event Listener work together to hide and show the instructions for creating and saving a new Routine
- */
-
-function toggleInstructionsView() {
-     const instructions = document.getElementById("ol-instructions");
-     const showInstructionsLabel = document.getElementById("button-toggle-instructions");
-
-     if (instructions.style.display === "block") {
-          instructions.style.display = "none";
-          showInstructionsLabel.innerHTML = `<i class="fa-solid fa-angle-down"></i> Show Instructions <i class="fa-solid fa-angle-down"></i>`;
-     } else {
-          instructions.style.display = "block";
-          showInstructionsLabel.innerHTML = `<i class="fa-solid fa-angle-up"></i> Hide Instructions <i class="fa-solid fa-angle-up"></i>`;
-     }
-}
-
-// Paired with above
-document.getElementById("button-toggle-instructions").addEventListener("click", function () {
-     toggleInstructionsView();
 });
 
 /**
@@ -771,7 +826,7 @@ function startCountdown() {
      if (currentExerciseIndex === tempArrayOfDurations.length) {
           stopCountdown();
 
-          timerDisplayExerciseName.textContent = "Finished!";
+          timerDisplayExerciseName.textContent = "✨Finished!✨";
           timerDisplayExerciseName.style.color = "#ffcc74";
 
           enableElement(startButton);
@@ -868,7 +923,8 @@ function tick() {
 /**
  * * Populating Timer Section with the currently loaded Routine's name, first Exercise name & duration in its exerciseList
  */
-function populateTimerDetailsOnLoad() {
+
+function initializeTimerDetailsOnLoad() {
      const grabbedData = localStorage.getItem("routineDataKey");
 
      if (grabbedData === null) {

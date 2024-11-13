@@ -19,7 +19,7 @@
     --clr-light-grey-darker : rgb(170, 170, 170);
 
     --clr-pastel-yellow-lighter: #f5cc87;
-    --clr-pastel-yellow        : #fac66d;
+    --clr-pastel-yellow        : #f8c469;
 
     --clr-sky-blue: #5e96c2;
 
@@ -34,6 +34,8 @@
 
     --clr-lilac       : rgb(231, 209, 255);
     --clr-lilac-darker: rgb(200, 167, 236);
+
+    --clr-success-green: #73bd73;
 
 
     /* Sizes */
@@ -172,6 +174,7 @@ label {
     background             : rgb(251, 187, 215);
     background             : linear-gradient(180deg, rgba(251, 187, 215, 1) 5%, rgba(143, 194, 255, 1) 95%);
     -webkit-background-clip: text;
+    background-clip        : text;
     -webkit-text-fill-color: transparent;
     font-size              : var(--title-font-size);
 }
@@ -397,7 +400,6 @@ label {
 
 /* Sections are hidden on page load */
 .div-toggle-view {
-    /* ! DISABLE/ENABLE FOR TESTING */
     display: none;
 }
 
@@ -592,12 +594,17 @@ label {
     .button-save:hover {
         background-color: var(--clr-pastel-yellow);
     }
-}
 
 
-#button-save-new-routine {
-    /* TODO: See if users prefer this or not */
-    display: none;
+    /* TODO */
+    .button-save-success {
+        background-color: var(--clr-success-green);
+    }
+
+    /* Just in case the user was hovering the button after pressing save, this will ensure that the button isn't showing yellow like color */
+    .button-save-success:hover {
+        background-color: var(--clr-success-green);
+    }
 }
 
 #routine-being-built-details {
