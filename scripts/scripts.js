@@ -206,9 +206,10 @@ function showMinusOnButton(sectionId) {
 /**
  * * This function shows the user visual feedback if they were able to save a new Exercise or Routine
  * @param {string} x will be either "exercise" or "routine"
+ * @param {int} durationInMilliseconds how long the button is green for. Default is 1000ms
  */
 
-function showButtonFeedbackOnSuccessfulSave(x) {
+function showButtonFeedbackOnSuccessfulSave(x, duration = 1000) {
      // Store the specified [Save] button. x === either "exercise" or "routine"
      const saveNewXButton = document.getElementById(`button-save-new-${x}`);
 
@@ -222,7 +223,7 @@ function showButtonFeedbackOnSuccessfulSave(x) {
      setTimeout(function () {
           saveNewXButton.classList.remove("button-save-success");
           saveNewXButton.innerHTML = "Save";
-     }, 1000);
+     }, duration);
 }
 
 /**
@@ -697,14 +698,15 @@ saveNewRoutineButton.addEventListener("click", function () {
           // Resets the input field to be empty
           document.getElementById("new-routine-input").value = "";
 
+          // Shows user feedback that their Routine was saved
+          showButtonFeedbackOnSuccessfulSave("routine", 1510);
+
           // TODO
-          // 1s delay
           setTimeout(function () {
                // Scrolls to the top
                window.scrollTo(0, 0);
-          }, 1000);
+          }, 600);
 
-          // 1.5s delay
           setTimeout(function () {
                // Empties out the temporary array and clears the Routine being built's exercise list details
                clearRoutineBeingBuiltDetails();
@@ -713,9 +715,6 @@ saveNewRoutineButton.addEventListener("click", function () {
                toggleSection("close", "exercise");
                toggleSection("close", "routine");
           }, 1500);
-
-          // Shows user feedback that their Routine was saved
-          showButtonFeedbackOnSuccessfulSave("routine");
 
           // Initializes the exercise list which users can open and close to refer to
           initializeExerciseList();
