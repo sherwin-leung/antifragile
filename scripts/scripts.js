@@ -95,19 +95,6 @@ function resetTimerDisplayCurrentExerciseNameColor() {
      document.getElementById("timer-display-current-exercise-name").style.color = "#e7d1ff";
 }
 
-// Helper function - hideRoutineAndExerciseSectionsAndResetTheirButtons() hides the Routine and Exercise sections and resets their buttons to show + (plus)
-function hideRoutineAndExerciseSectionsAndResetTheirButtons() {
-     const routineSectionView = document.getElementById("div-new-routine");
-     const exerciseSectionView = document.getElementById("div-new-exercise");
-
-     routineSectionView.style.display = "none";
-     exerciseSectionView.style.display = "none";
-
-     // Sets the buttons to have +
-     document.getElementById("button-new-routine").innerHTML = `<i class="fa-solid fa-plus"></i> Routine`;
-     document.getElementById("button-new-exercise").innerHTML = `<i class="fa-solid fa-plus"></i> Exercise`;
-}
-
 // Helper function - disableElement() sets the "disabled" attribute to an element
 function disableElement(element) {
      element.setAttribute("disabled", "");
@@ -141,9 +128,9 @@ function generateOverlayPhrase() {
 }
 
 /**
- * * This function handles toggling on and off the view of certain contents when the main three buttons are clicked/tapped
+ * * This function handles toggling on and off the view of certain contents when the main buttons are CLICKED or TAPPED
  * It us coupled with the two event listeners below
- * @param divId indicates which div to toggle on and off
+ * @param {string} divId indicates which div to toggle on and off
  */
 
 function toggleViewOnAndOff(divId) {
@@ -167,8 +154,37 @@ document.getElementById("button-new-routine").addEventListener("click", function
 });
 
 /**
+ * * This function can be manually called to expand (open) or hide (close) a designated section (exercise or routine). It will also deal with the +/- on the buttons
+ * @param {string} action
+ * @param {string} sectionToToggle
+ */
+function toggleSection(action, sectionToToggle) {
+     let sectionView;
+     let buttonToChange;
+     let label;
+
+     if (sectionToToggle === "exercise") {
+          sectionView = document.getElementById("div-new-exercise");
+          buttonToChange = "div-new-exercise";
+          label = "Exercise";
+     } else if (sectionToToggle === "routine") {
+          sectionView = document.getElementById("div-new-routine");
+          buttonToChange = "div-new-routine";
+          label = "Routine";
+     }
+
+     if (action === "open") {
+          sectionView.style.display = "block";
+          showMinusOnButton(buttonToChange);
+     } else {
+          sectionView.style.display = "none";
+          showPlusOnButton(buttonToChange);
+     }
+}
+
+/**
  * * These two functions below make the [Routine] and [Exercise] buttons show either a + or -, dependng on whether the section is expanded or not
- * @param {} sectionId tells the function which is section is getting expanded/closed
+ * @param {string} sectionId tells the function which is section is getting expanded/closed
  */
 
 // 1
@@ -234,8 +250,7 @@ function addToggleExerciseListViewFunctionToButton() {
                exerciseListToggleButton.innerHTML = `<i class="fa-solid fa-angle-down"></i> Show Exercise List <i class="fa-solid fa-angle-down"></i>`;
           } else {
                olRoutine.style.display = "block";
-               exerciseListToggleButton.innerHTML = `<i class="fa-solid fa-angle-up"></i> Hide Exercise List <i
-                            class="fa-solid fa-angle-up"></i>`;
+               exerciseListToggleButton.innerHTML = `<i class="fa-solid fa-angle-up"></i> Hide Exercise List <i class="fa-solid fa-angle-up"></i>`;
           }
      });
 }
@@ -271,6 +286,7 @@ function saveNewExerciseToLocalStorage() {
 // Paired with above
 document.getElementById("button-save-new-exercise").addEventListener("click", function () {
      saveNewExerciseToLocalStorage();
+     toggleSection("open", "routine");
 });
 
 /**
@@ -334,7 +350,7 @@ function renderExerciseCards() {
  * 4) A number input for the exercise duration
  * 5) A button that allows the user to add the exercise & duration to a temporary array which will pushed into the Routine object later
  *
- * @param {*} name Retrieves name of exercise(s) from localStorage key/value pair exerciseDataKey
+ * @param {string} name Retrieves name of exercise(s) from localStorage key/value pair exerciseDataKey
  */
 function createNewExerciseCard(name) {
      // This is just so that if an exercise name is two words, like "jumping jacks", we won't get class/id/etc as "class="jumping jacks" but rather "class="jumping-jacks"
@@ -486,7 +502,6 @@ function addEventListenerToAddButtons() {
                // Shows user the new list of exercises they're building
                displayRoutineBeingBuiltDetails();
                // Shows button to allow user to save the Routine
-               // TODO: See if users prefer this or not
                showSaveNewRoutineButton();
           });
      });
@@ -615,12 +630,12 @@ document.getElementById("button-save-new-routine").addEventListener("click", fun
           document.getElementById("routine-being-built-details").textContent = "";
 
           // Hides the [Save] button (for Routines) for next time
-          // TODO: See if users prefer this or not
           hideSaveNewRoutineButton();
 
           // Closes Routine/Exercse sections so users can focus on the timer section. Reset the buttons to show + (plus)
           // TODO: See if users prefer this or not
-          hideRoutineAndExerciseSectionsAndResetTheirButtons();
+          toggleSection("close", "exercise");
+          toggleSection("close", "routine");
 
           // Populates the exercise list which users can open and close
           populateExerciseList();
