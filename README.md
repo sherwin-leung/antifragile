@@ -9,7 +9,7 @@ Antifragile (stylized as "antifragile.") is a simple countdown timer that allows
 ## 💡How To Use
 
 `
-As of version 1.03 - subject to change with when additional functionalities are implemented
+As of version 1.04 - subject to change with when additional functionalities are implemented
 `
 
 ### First Usage
@@ -83,8 +83,6 @@ _On desktop, you can delete local storage for a site directly without erasing al
 
 <summary>Click to list of view planned updates</summary>
 
-* Implement visual feedback to the user to indicate successes when saving exercises/routines, or errors such as missing an exercise/routine name while saving
-
 * Play a sound for start/finish of an exercise
 * Mute button
 
@@ -96,7 +94,7 @@ _On desktop, you can delete local storage for a site directly without erasing al
 * Ability to delete exercises
 * Sort excercise buttons by alphabetical order
 
-* Ability to edit current routine
+* Store and load multiple routines
 
 </details>
 
@@ -106,10 +104,14 @@ _On desktop, you can delete local storage for a site directly without erasing al
 
 * Pause/resume button and functionality
   
+* Implement visual feedback to the user to indicate successes when saving exercises/routines, or errors such as missing an exercise/routine name while saving
+  
 </details>
 
 ## Version History
 
+* v1.04
+  * Added some initial visual feedback to the user when they successfully save exercises and/or routines. More visual feedback to come!
 * v1.03
   * Consolidated play/pause/resume functionalities into one button, instead of play and pause/resume
 * v1.02
