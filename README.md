@@ -9,7 +9,7 @@ Antifragile (stylized as "antifragile.") is a simple countdown timer that allows
 ## 💡How To Use
 
 `
-As of version 1.04 - subject to change with when additional functionalities are implemented
+As of version 1.05 - subject to change with when additional functionalities are implemented
 `
 
 ### First Usage
@@ -110,6 +110,8 @@ _On desktop, you can delete local storage for a site directly without erasing al
 
 ## Version History
 
+* v1.05
+  * Added visual feedback when trying to save an exercise or routine without inputting a name or a routine with no exercises in its list
 * v1.04
   * Added some initial visual feedback to the user when they successfully save exercises and/or routines. More visual feedback to come!
 * v1.03
