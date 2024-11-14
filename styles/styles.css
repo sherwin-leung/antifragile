@@ -36,6 +36,7 @@
     --clr-lilac-darker: rgb(200, 167, 236);
 
     --clr-success-green: #73bd73;
+    --clr-error-red    : #c95056;
 
 
     /* Sizes */
@@ -173,7 +174,6 @@ label {
     }
 }
 
-
 .title {
     background             : rgb(251, 187, 215);
     background             : linear-gradient(180deg, rgba(251, 187, 215, 1) 5%, rgba(143, 194, 255, 1) 95%);
@@ -181,6 +181,15 @@ label {
     background-clip        : text;
     -webkit-text-fill-color: transparent;
     font-size              : var(--title-font-size);
+}
+
+#overlay-phrase {
+    margin-bottom: 0.5rem;
+}
+
+.version-text {
+    font-size: var(--slightly-smaller-font-size);
+    color    : var(--clr-light-grey-lighter);
 }
 
 /* ----------------------------------------------
@@ -395,11 +404,6 @@ label {
     padding-top: 2rem;
 }
 
-.version-text {
-    font-size: var(--slightly-smaller-font-size);
-    color    : var(--clr-light-grey-lighter);
-}
-
 /* * START DIV TOGGLE VIEW */
 
 /* Sections are hidden on page load */
@@ -599,15 +603,76 @@ label {
         background-color: var(--clr-pastel-yellow);
     }
 
-
-    /* TODO */
-    .button-save-success {
+    /* * Feedback - for successful save of an Exercise or Routine */
+    .button-success-save {
         background-color: var(--clr-success-green);
     }
 
     /* Just in case the user was hovering the button after pressing save, this will ensure that the button isn't showing yellow like color */
-    .button-save-success:hover {
+    .button-success-save:hover {
         background-color: var(--clr-success-green);
+    }
+
+    /* * Feedback - for when the user tries to save an Exercise or Routine without inputting a name */
+    .input-error-missing-name {
+        border-bottom: 2px solid var(--clr-error-red);
+        animation    : horizontal-shaking 0.15s infinite;
+    }
+
+    /* * Feedback - for when the user tries to save a Routine without adding any Exercises */
+    .button-error-empty-exercise-list {
+        background-color: var(--clr-error-red);
+        color           : whitesmoke;
+        animation       : horizontal-shaking-less 0.2s infinite;
+    }
+
+    .button-error-empty-exercise-list:hover {
+        background-color: var(--clr-error-red);
+
+    }
+}
+
+@keyframes horizontal-shaking {
+    0% {
+        transform: translateX(0)
+    }
+
+    25% {
+        transform: translateX(4.5px)
+    }
+
+    50% {
+        transform: translateX(-4.5px)
+    }
+
+    75% {
+        transform: translateX(4.5px)
+    }
+
+    100% {
+        transform: translateX(0)
+    }
+}
+
+@keyframes horizontal-shaking-less {
+    0% {
+        transform: translateX(0)
+    }
+
+    25% {
+        transform: translateX(1.5px)
+    }
+
+    50% {
+        transform: translateX(-1.5px)
+    }
+
+    75% {
+        transform: translateX(1.5px)
+    }
+
+    100% {
+        transform: translateX(0)
     }
 }
 
@@ -690,6 +755,7 @@ label {
         margin          : 0.5rem 0 1rem;
     }
 
+    /* * Feedback - for when user tries to save a Routine without adding in Exercises */
 }
 
 /* * START MEDIA QUERIES */

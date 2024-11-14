@@ -209,20 +209,66 @@ function showMinusOnButton(sectionId) {
  * @param {int} durationInMilliseconds how long the button is green for. Default is 1000ms
  */
 
-function showButtonFeedbackOnSuccessfulSave(x, duration = 1000) {
+function showFeedbackButtonSuccessSave(x, duration = 750) {
      // Store the specified [Save] button. x === either "exercise" or "routine"
      const saveNewXButton = document.getElementById(`button-save-new-${x}`);
 
      // Add a the class "button-save-success" to the Save button button
-     saveNewXButton.classList.add("button-save-success");
+     saveNewXButton.classList.add("button-success-save");
 
      // Change button to show success feedback
      saveNewXButton.innerHTML = `<i class="fa-solid fa-check"></i> Saved`; // Check icon and 'Saved'
 
      // Revert after a short delay to original state
      setTimeout(function () {
-          saveNewXButton.classList.remove("button-save-success");
+          saveNewXButton.classList.remove("button-success-save");
           saveNewXButton.innerHTML = "Save";
+     }, duration);
+}
+
+/**
+ * * This function shows the user visual feedback if they try to save an Exercise or Routine inputting a name
+ * @param {string} x
+ * @param {int} duration
+ */
+function showFeedbackInputErrorMissingName(x, duration = 350) {
+     const newXInput = document.getElementById(`new-${x}-input`);
+
+     newXInput.classList.add("input-error-missing-name");
+
+     setTimeout(function () {
+          newXInput.classList.remove("input-error-missing-name");
+     }, duration);
+}
+
+/**
+ * * This function shows the user visual feedback if they try to save a Routine with no Excercises added to the list
+ * @param {int} duration
+ */
+
+let isShowFeedbackErrorEmptyExerciseListRunning = false;
+
+function showFeedbackErrorEmptyExerciseList(duration = 700) {
+     // So that the user clicking the button multiple times doesn't make the animation wonky because of the delay
+     if (isShowFeedbackErrorEmptyExerciseListRunning === true) {
+          return;
+     }
+
+     isShowFeedbackErrorEmptyExerciseListRunning = true;
+
+     const saveNewRoutineButton = document.getElementById(`button-save-new-routine`);
+
+     // Add a the class "button-save-success" to the Save button button
+     saveNewRoutineButton.classList.add("button-error-empty-exercise-list");
+
+     // Change button to show success feedback
+     saveNewRoutineButton.innerHTML = `<i class="fa-solid fa-xmark"></i> Add Exercises`; // Check icon and 'Saved'
+
+     // Revert after a short delay to original state
+     setTimeout(function () {
+          saveNewRoutineButton.classList.remove("button-error-empty-exercise-list");
+          saveNewRoutineButton.innerHTML = "Save";
+          isShowFeedbackErrorEmptyExerciseListRunning = false;
      }, duration);
 }
 
@@ -344,7 +390,9 @@ saveNewExerciseButton.addEventListener("click", function () {
 
           refreshExerciseCards();
           toggleSection("open", "routine");
-          showButtonFeedbackOnSuccessfulSave("exercise");
+          showFeedbackButtonSuccessSave("exercise");
+     } else {
+          showFeedbackInputErrorMissingName("exercise");
      }
 });
 
@@ -691,40 +739,47 @@ function saveNewRoutineToLocalStorage() {
 // Paired with above
 const saveNewRoutineButton = document.getElementById("button-save-new-routine");
 saveNewRoutineButton.addEventListener("click", function () {
-     if (isValidNewRoutineNameInput() === true && isTempExerciseArrayEmpty() === false) {
-          // Saves Routine to localStorage first
-          saveNewRoutineToLocalStorage();
-
-          // Resets the input field to be empty
-          document.getElementById("new-routine-input").value = "";
-
-          // Shows user feedback that their Routine was saved
-          showButtonFeedbackOnSuccessfulSave("routine", 1510);
-
-          // TODO
-          setTimeout(function () {
-               // Scrolls to the top
-               window.scrollTo(0, 0);
-          }, 600);
-
-          setTimeout(function () {
-               // Empties out the temporary array and clears the Routine being built's exercise list details
-               clearRoutineBeingBuiltDetails();
-
-               // Closes Routine/Exercse sections so users can focus on the timer section. Reset the buttons to show + (plus)
-               toggleSection("close", "exercise");
-               toggleSection("close", "routine");
-          }, 1500);
-
-          // Initializes the exercise list which users can open and close to refer to
-          initializeExerciseList();
-
-          // Timer section gets initialized with the new Routine's info
-          initializeTimerDetailsOnLoad();
-
-          // Resets the Exercise name's color to lilac in case it's been changed to yellow
-          resetTimerDisplayCurrentExerciseNameColor();
+     if (isValidNewRoutineNameInput() === false) {
+          showFeedbackInputErrorMissingName("routine");
+          return;
      }
+
+     if (isTempExerciseArrayEmpty() === true) {
+          showFeedbackErrorEmptyExerciseList();
+          return;
+     }
+
+     // Saves Routine to localStorage first
+     saveNewRoutineToLocalStorage();
+
+     // Resets the input field to be empty
+     document.getElementById("new-routine-input").value = "";
+
+     // Shows user feedback that their Routine was saved
+     showFeedbackButtonSuccessSave("routine", 1510);
+
+     setTimeout(function () {
+          // Scrolls to the top
+          window.scrollTo(0, 0);
+     }, 750);
+
+     setTimeout(function () {
+          // Empties out the temporary array and clears the Routine being built's exercise list details
+          clearRoutineBeingBuiltDetails();
+
+          // Closes Routine/Exercse sections so users can focus on the timer section. Reset the buttons to show + (plus)
+          toggleSection("close", "exercise");
+          toggleSection("close", "routine");
+     }, 1500);
+
+     // Initializes the exercise list which users can open and close to refer to
+     initializeExerciseList();
+
+     // Timer section gets initialized with the new Routine's info
+     initializeTimerDetailsOnLoad();
+
+     // Resets the Exercise name's color to lilac in case it's been changed to yellow
+     resetTimerDisplayCurrentExerciseNameColor();
 });
 
 /**
