@@ -37,7 +37,7 @@ window.onload = pageLoad();
 function pageLoad() {
      generateOverlayPhrase();
      refreshExerciseCards();
-     initializeTimerDetailsOnLoad();
+     initializeTimerDetails();
      initializeExerciseList();
 }
 
@@ -62,7 +62,7 @@ function sanitize(string) {
 // Helper function - checkIfAlreadyExistsInLocalStorage() checks if an exercise or routine already exists in localStorage
 function checkIfAlreadyExistsInLocalStorage(arrayToCheck, name) {
      for (i = 0; i < arrayToCheck.length; i++) {
-          if (arrayToCheck[i].name === name) {
+          if (arrayToCheck[i].name.toLowerCase() === name.toLowerCase()) {
                return true;
           }
      }
@@ -203,52 +203,85 @@ function showMinusOnButton(sectionId) {
      }
 }
 
+// Feedback Section
 /**
  * * This function shows the user visual feedback if they were able to save a new Exercise or Routine
  * @param {string} x will be either "exercise" or "routine"
  * @param {int} durationInMilliseconds how long the button is green for. Default is 1000ms
  */
 
-function showFeedbackButtonSuccessSave(x, duration = 750) {
+function showFeedbackButtonSuccessSave(x, durationInMilliseconds = 550) {
      // Store the specified [Save] button. x === either "exercise" or "routine"
      const saveNewXButton = document.getElementById(`button-save-new-${x}`);
 
-     // Add a the class "button-save-success" to the Save button button
-     saveNewXButton.classList.add("button-success-save");
+     // Add the classes for the success effect and animation
+     saveNewXButton.classList.add("button-success-save", "animate");
 
      // Change button to show success feedback
      saveNewXButton.innerHTML = `<i class="fa-solid fa-check"></i> Saved`; // Check icon and 'Saved'
 
-     // Revert after a short delay to original state
+     // Remove animation class after animation completes
      setTimeout(function () {
-          saveNewXButton.classList.remove("button-success-save");
+          saveNewXButton.classList.remove("button-success-save", "animate");
           saveNewXButton.innerHTML = "Save";
-     }, duration);
+     }, durationInMilliseconds);
 }
 
 /**
  * * This function shows the user visual feedback if they try to save an Exercise or Routine inputting a name
  * @param {string} x
- * @param {int} duration
+ * @param {int} durationInMilliseconds
  */
-function showFeedbackInputErrorMissingName(x, duration = 350) {
+
+function showFeedbackInputErrorMissingName(x, durationInMilliseconds = 350) {
      const newXInput = document.getElementById(`new-${x}-input`);
 
      newXInput.classList.add("input-error-missing-name");
 
      setTimeout(function () {
           newXInput.classList.remove("input-error-missing-name");
-     }, duration);
+     }, durationInMilliseconds);
 }
 
 /**
  * * This function shows the user visual feedback if they try to save a Routine with no Excercises added to the list
- * @param {int} duration
+ * @param {int} durationInMilliseconds
+ */
+
+let isShowFeedbackErrorDuplicateExerciseRunning = false;
+
+function showFeedbackErrorDuplicateExercise(durationInMilliseconds = 550) {
+     // So that the user clicking the button multiple times doesn't make the animation wonky because of the delay
+     if (isShowFeedbackErrorDuplicateExerciseRunning === true) {
+          return;
+     }
+
+     isShowFeedbackErrorDuplicateExerciseRunning = true;
+
+     const saveNewExerciseButton = document.getElementById(`button-save-new-exercise`);
+
+     // Add a the class "button-save-success" to the Save button button
+     saveNewExerciseButton.classList.add("button-error-red");
+
+     // Change button to show success feedback
+     saveNewExerciseButton.innerHTML = `<i class="fa-solid fa-xmark"></i> Duplicate Exercise`; // Check icon and 'Saved'
+
+     // Revert after a short delay to original state
+     setTimeout(function () {
+          saveNewExerciseButton.classList.remove("button-error-red");
+          saveNewExerciseButton.innerHTML = "Save";
+          isShowFeedbackErrorDuplicateExerciseRunning = false;
+     }, durationInMilliseconds);
+}
+
+/**
+ * * This function shows the user visual feedback if they try to save a Routine with no Excercises added to the list
+ * @param {int} durationInMilliseconds
  */
 
 let isShowFeedbackErrorEmptyExerciseListRunning = false;
 
-function showFeedbackErrorEmptyExerciseList(duration = 700) {
+function showFeedbackErrorEmptyExerciseList(durationInMilliseconds = 550) {
      // So that the user clicking the button multiple times doesn't make the animation wonky because of the delay
      if (isShowFeedbackErrorEmptyExerciseListRunning === true) {
           return;
@@ -259,18 +292,19 @@ function showFeedbackErrorEmptyExerciseList(duration = 700) {
      const saveNewRoutineButton = document.getElementById(`button-save-new-routine`);
 
      // Add a the class "button-save-success" to the Save button button
-     saveNewRoutineButton.classList.add("button-error-empty-exercise-list");
+     saveNewRoutineButton.classList.add("button-error-red");
 
      // Change button to show success feedback
      saveNewRoutineButton.innerHTML = `<i class="fa-solid fa-xmark"></i> Add Exercises`; // Check icon and 'Saved'
 
      // Revert after a short delay to original state
      setTimeout(function () {
-          saveNewRoutineButton.classList.remove("button-error-empty-exercise-list");
+          saveNewRoutineButton.classList.remove("button-error-red");
           saveNewRoutineButton.innerHTML = "Save";
           isShowFeedbackErrorEmptyExerciseListRunning = false;
-     }, duration);
+     }, durationInMilliseconds);
 }
+// ? End Feedback Section
 
 /**
  * * The following TWO functions work together *
@@ -370,30 +404,33 @@ function saveNewExerciseToLocalStorage() {
      // Store user's input
      const exerciseName = sanitize(convertToTitleCase(document.getElementById("new-exercise-input").value));
 
-     // Create the new Exercise only if it doesn't exis already
-     if (checkIfAlreadyExistsInLocalStorage(existingExerciseData, exerciseName) === false) {
-          const newExercise = new Exercise(exerciseName, 0, 0);
-          existingExerciseData.push(newExercise);
-          localStorage.setItem("exerciseDataKey", JSON.stringify(existingExerciseData));
-     }
+     // Save new Exercise into local storage
+     const newExercise = new Exercise(exerciseName, 0, 0);
+     existingExerciseData.push(newExercise);
+     localStorage.setItem("exerciseDataKey", JSON.stringify(existingExerciseData));
 }
 
 // Paired with above
 const saveNewExerciseButton = document.getElementById("button-save-new-exercise");
 
 saveNewExerciseButton.addEventListener("click", function () {
-     if (isValidNewExerciseNameInput() === true) {
-          // Note, Exercise will not be stored if one already exists with the same name in local storage
-          saveNewExerciseToLocalStorage();
-          // Resets the input field to be empty
-          document.getElementById("new-exercise-input").value = "";
-
-          refreshExerciseCards();
-          toggleSection("open", "routine");
-          showFeedbackButtonSuccessSave("exercise");
-     } else {
+     if (isValidNewExerciseNameInput() === false) {
           showFeedbackInputErrorMissingName("exercise");
+          return;
      }
+
+     const exerciseName = sanitize(document.getElementById("new-exercise-input").value);
+     const existingExerciseData = JSON.parse(localStorage.getItem("exerciseDataKey")) || [];
+     if (checkIfAlreadyExistsInLocalStorage(existingExerciseData, exerciseName) === true) {
+          showFeedbackErrorDuplicateExercise();
+          return;
+     }
+
+     saveNewExerciseToLocalStorage();
+     document.getElementById("new-exercise-input").value = "";
+     refreshExerciseCards();
+     toggleSection("open", "routine");
+     showFeedbackButtonSuccessSave("exercise");
 });
 
 /**
@@ -712,7 +749,7 @@ function clearRoutineBeingBuiltDetails() {
  * Paired with EventListener below that assigns them to the button
  */
 
-//1
+// 1
 function isValidNewRoutineNameInput() {
      const routineName = sanitize(document.getElementById("new-routine-input").value);
      if (routineName.trim().length > 0) {
@@ -720,6 +757,7 @@ function isValidNewRoutineNameInput() {
      }
      return false;
 }
+
 // 2
 function isTempExerciseArrayEmpty() {
      if (tempExerciseArray.length === 0) {
@@ -728,7 +766,7 @@ function isTempExerciseArrayEmpty() {
      return false;
 }
 
-//2
+// 3
 function saveNewRoutineToLocalStorage() {
      // Store name of new Routine from input
      const routineName = sanitize(convertToTitleCase(document.getElementById("new-routine-input").value));
@@ -749,14 +787,9 @@ saveNewRoutineButton.addEventListener("click", function () {
           return;
      }
 
-     // Saves Routine to localStorage first
      saveNewRoutineToLocalStorage();
 
-     // Resets the input field to be empty
      document.getElementById("new-routine-input").value = "";
-
-     // Shows user feedback that their Routine was saved
-     showFeedbackButtonSuccessSave("routine", 1510);
 
      setTimeout(function () {
           // Scrolls to the top
@@ -772,13 +805,15 @@ saveNewRoutineButton.addEventListener("click", function () {
           toggleSection("close", "routine");
      }, 1500);
 
+     showFeedbackButtonSuccessSave("routine", 1510);
+
      // Initializes the exercise list which users can open and close to refer to
      initializeExerciseList();
 
      // Timer section gets initialized with the new Routine's info
-     initializeTimerDetailsOnLoad();
+     initializeTimerDetails();
 
-     // Resets the Exercise name's color to lilac in case it's been changed to yellow
+     // Resets the Exercise name's color to lilac in case it's been changed to yellow (Finished's font color)
      resetTimerDisplayCurrentExerciseNameColor();
 });
 
@@ -981,7 +1016,7 @@ function tick() {
  * * Initializing Timer Section with the currently loaded Routine's name, first Exercise name & duration in its exerciseList
  */
 
-function initializeTimerDetailsOnLoad() {
+function initializeTimerDetails() {
      const grabbedData = localStorage.getItem("routineDataKey");
 
      if (grabbedData === null) {
