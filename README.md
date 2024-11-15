@@ -30,7 +30,7 @@ As of version 1.06 - subject to change with when additional functionalities are 
 * To add a new exercise, simply repeat step 1 above. The new exercise's button will be appended in the **Routine** section
 * To add a new routine, simply repeat step 2 above. This will overwrite the previous routine
 
-## About Storage of Data
+## 💾 About Storage of Data
 
 <details>
   
