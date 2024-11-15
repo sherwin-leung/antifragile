@@ -143,3 +143,4 @@ _On desktop, you can delete local storage for a site directly without erasing al
 * J.Z. and I.W. for helping me bug test
 * LE SSERAFIM's song [ANTIFRAGILE](https://youtu.be/pyf8cbqyfPs) whose name I ~~purloined~~ borrowed
 * [animista](https://animista.net/) - an awesome CSS library for animations
+* Various code snippets from Stack Overflow and around the internet. I try to put credits within comments in the source code if it's something I straight copied
