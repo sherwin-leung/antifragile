@@ -110,6 +110,10 @@ _On desktop, you can delete local storage for a site directly without erasing al
 
 ## Version History
 
+<details>
+
+<summary>Version 1 Changelog</summary>
+
 * v1.05
   * Added visual feedback when trying to save an exercise or routine without inputting a name or a routine with no exercises in its list
 * v1.04
@@ -122,6 +126,8 @@ _On desktop, you can delete local storage for a site directly without erasing al
    * Fixed bug with out of bounds values for duration inputs
 * v1.0
    * Initial Release
+  
+</details>
 
 ## 🙏 Acknowledgments
 
