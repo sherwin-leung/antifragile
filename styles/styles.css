@@ -88,12 +88,13 @@ button {
 /* * START HTML ELEMENTS */
 
 body {
-    font-family        : "Nunito", sans-serif;
-    min-height         : 100vh;
-    text-align         : center;
-    background-image   : linear-gradient(to bottom, #000000, #040103, #070307, #08050d, #060811, #060c14, #060f17, #061219, #08151c, #0b1720, #0c1a23, #0d1c27);
-    /* background-color: var(--clr-sky-blue); */
-    color              : whitesmoke;
+    font-family              : "Nunito", sans-serif;
+    min-height               : 100vh;
+    text-align               : center;
+    background-image         : linear-gradient(to bottom, #000000, #040103, #070307, #08050d, #060811, #060c14, #060f17, #061219, #08151c, #0b1720, #0c1a23, #0d1c27);
+    /* background-image      : radial-gradient(circle, #232327, #1d1c1f, #171516, #0e0c0d, #000000); */
+    /* background-color      : var(--clr-sky-blue); */
+    color                    : whitesmoke;
 }
 
 button {

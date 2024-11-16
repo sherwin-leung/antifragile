@@ -1,14 +1,12 @@
 /**
  * * Global Variables
  */
-
 let currentlySelectedExerciseButtonId;
 let tempExerciseArray = [];
 
 /**
  * * Constructors for various Objects
  */
-
 class Exercise {
      constructor(name, durationMinutes, durationSeconds) {
           this.name = name;
@@ -27,13 +25,11 @@ class Routine {
 /**
  * * On page load, run this function
  */
-
 window.onload = pageLoad();
 
 /**
  * This function is a collection of functions that need to be run upon the user loading the page
  */
-
 function pageLoad() {
      generateOverlayPhrase();
      refreshExerciseCards();
@@ -44,7 +40,6 @@ function pageLoad() {
 /**
  * * Helper Functions
  */
-
 // Helper function - sanitize() sanitizes a string by replacing special characters with their HTML entity equivalents to prevent XSS attacks
 function sanitize(string) {
      const map = {
@@ -55,7 +50,9 @@ function sanitize(string) {
           "'": "&#x27;",
           "/": "&#x2F;",
      };
+
      const reg = /[&<>"'/]/gi;
+
      return string.replace(reg, (match) => map[match]);
 }
 
@@ -66,6 +63,7 @@ function checkIfAlreadyExistsInLocalStorage(arrayToCheck, name) {
                return true;
           }
      }
+
      return false;
 }
 
@@ -102,7 +100,6 @@ function enableElement(element) {
 /**
  * * Disable scrolling while the overlay is showing in case that main content height is > 100vh, which is the overlay's height
  */
-
 // Add no-scroll to entire page
 document.body.classList.add("no-scroll");
 
@@ -114,7 +111,6 @@ setTimeout(function () {
 /**
  * * This functions handles generating a random phrase each time the page is loaded/reloaded
  */
-
 function generateOverlayPhrase() {
      const arrayOfPhrases = ["an exercise timer"];
      const randomIndex = Math.floor(Math.random() * arrayOfPhrases.length);
@@ -127,7 +123,6 @@ function generateOverlayPhrase() {
  * It us coupled with the two event listeners below
  * @param {string} divId indicates which div to toggle on and off
  */
-
 function toggleViewOnAndOff(divId) {
      const sectionId = document.getElementById(divId);
 
@@ -141,11 +136,13 @@ function toggleViewOnAndOff(divId) {
 }
 
 const newExerciseButton = document.getElementById("button-new-exercise");
+
 newExerciseButton.addEventListener("click", function () {
      toggleViewOnAndOff("div-new-exercise");
 });
 
 const newRoutineButton = document.getElementById("button-new-routine");
+
 newRoutineButton.addEventListener("click", function () {
      toggleViewOnAndOff("div-new-routine");
 });
@@ -155,7 +152,6 @@ newRoutineButton.addEventListener("click", function () {
  * @param {string} action
  * @param {string} sectionToToggle
  */
-
 function toggleSection(action, sectionToToggle) {
      let sectionView;
      let buttonToChange;
@@ -184,7 +180,6 @@ function toggleSection(action, sectionToToggle) {
  * * These two functions below make the [Routine] and [Exercise] buttons show either a + or -, dependng on whether the section is expanded or not
  * @param {string} sectionId tells the function which is section is getting expanded/closed
  */
-
 // 1
 function showPlusOnButton(sectionId) {
      if (sectionId === "div-new-routine") {
@@ -209,7 +204,6 @@ function showMinusOnButton(sectionId) {
  * @param {string} x will be either "exercise" or "routine"
  * @param {int} durationInMilliseconds how long the button is green for. Default is 1000ms
  */
-
 function showFeedbackButtonSuccessSave(x, durationInMilliseconds = 550) {
      // Store the specified [Save] button. x === either "exercise" or "routine"
      const saveNewXButton = document.getElementById(`button-save-new-${x}`);
@@ -232,7 +226,6 @@ function showFeedbackButtonSuccessSave(x, durationInMilliseconds = 550) {
  * @param {string} x
  * @param {int} durationInMilliseconds
  */
-
 function showFeedbackInputErrorMissingName(x, durationInMilliseconds = 350) {
      const newXInput = document.getElementById(`new-${x}-input`);
 
@@ -247,7 +240,6 @@ function showFeedbackInputErrorMissingName(x, durationInMilliseconds = 350) {
  * * This function shows the user visual feedback if they try to save a Routine with no Excercises added to the list
  * @param {int} durationInMilliseconds
  */
-
 let isShowFeedbackErrorDuplicateExerciseRunning = false;
 
 function showFeedbackErrorDuplicateExercise(durationInMilliseconds = 550) {
@@ -278,7 +270,6 @@ function showFeedbackErrorDuplicateExercise(durationInMilliseconds = 550) {
  * * This function shows the user visual feedback if they try to save a Routine with no Excercises added to the list
  * @param {int} durationInMilliseconds
  */
-
 let isShowFeedbackErrorEmptyExerciseListRunning = false;
 
 function showFeedbackErrorEmptyExerciseList(durationInMilliseconds = 550) {
@@ -311,7 +302,6 @@ function showFeedbackErrorEmptyExerciseList(durationInMilliseconds = 550) {
  * 1) initializeExerciseList() this function displays the currently loaded Routine to the user. It persists on page load and refreshes when user saves a new Routine
  * 2) addToggleExerciseListViewFunctionToButton() - because a new button to toggle exercise list view is generated each time a new Routine is saved, it needs to be re-assigned the function enabling it to toggle views
  */
-
 function initializeExerciseList() {
      // Grab the saved Routine from localStorage
      const grabbedData = localStorage.getItem("routineDataKey");
@@ -360,7 +350,6 @@ function addToggleExerciseListViewFunctionToButton() {
 /**
  * * The following function and Event Listener work together to hide and show the instructions for how to create Exercises and Routines
  */
-
 function toggleInstructionsView() {
      const instructions = document.getElementById("ol-instructions");
      const showInstructionsLabel = document.getElementById("button-toggle-instructions");
@@ -386,13 +375,13 @@ instructionsButton.addEventListener("click", function () {
  * 2) saveNewExerciseToLocalStorage() creates an saves a new Exercise object if the name given was not an empty string, and if one with the same name doesn't already exist in local storage
  * Paired with EventListener below that assigns them to the button
  */
-
 // 1
 function isValidNewExerciseNameInput() {
      const exerciseName = sanitize(document.getElementById("new-exercise-input").value);
      if (exerciseName.trim().length > 0) {
           return true;
      }
+
      return false;
 }
 
@@ -439,7 +428,6 @@ saveNewExerciseButton.addEventListener("click", function () {
  * 2) clearExerciseCards() which clears all existing exercise cards
  * 3) renderExerciseCards() which renders all the exercise cards anew, assigns functions to the buttons, and validation checks for inputs
  */
-
 // 1
 function refreshExerciseCards() {
      clearExerciseCards();
@@ -496,7 +484,6 @@ function renderExerciseCards() {
  *
  * @param {string} name Retrieves name of exercise(s) from localStorage key/value pair exerciseDataKey
  */
-
 function createNewExerciseCard(name) {
      // This is just so that if an exercise name is two words, like "jumping jacks", we won't get class/id/etc as "class="jumping jacks" but rather "class="jumping-jacks"
      const nameHyphenated = name.split(" ").join("-");
@@ -564,7 +551,6 @@ function createNewExerciseCard(name) {
  * 2) The user clicks on the a button that has its card expanded, it will hide it
  * 3) Also stores the id of the currently expanded button in global variable currentSelectedExerciseButtonId
  */
-
 function addEventListenerToExerciseButtons() {
      const exerciseButtons = document.querySelectorAll(".button-exercise");
 
@@ -624,7 +610,6 @@ function addEventListenerToExerciseButtons() {
  * * This function allows the user to use the exercise cards to add exercises into a temporary array which will then be used as a property of new Routines
  * Paired with it is the Event Listener function that assigns the function to ALL [Add] buttons
  */
-
 function addToTempExerciseList() {
      // Converts value from string to int
      const minutes = parseInt(document.getElementById(`input-minutes-${currentlySelectedExerciseButtonId}`).value);
@@ -656,7 +641,6 @@ function addEventListenerToAddButtons() {
  * * This function enforces that the user can only input positive numbers in the input for duration in minutes
  * Credits: https://stackoverflow.com/questions/34577806/how-to-prevent-inserting-value-that-is-greater-than-to-max-in-number-field-in-ht
  */
-
 function enforceValidInputMinutesValue() {
      const allInputMinutes = document.getElementsByClassName("input-minutes-duration");
 
@@ -675,7 +659,6 @@ function enforceValidInputMinutesValue() {
  * * This function enforces that the user can only input numbers between 0-59 inclusive in the input for duration in seconds
  * Credits: https://stackoverflow.com/questions/34577806/how-to-prevent-inserting-value-that-is-greater-than-to-max-in-number-field-in-ht
  */
-
 function enforceValidInputSecondsValue() {
      const allInputSeconds = document.getElementsByClassName("input-seconds-duration");
 
@@ -700,7 +683,6 @@ function enforceValidInputSecondsValue() {
  * 3) createClearButton() creates the button to be assigned to the clearRoutineBeingBuilt() function
  * 4) clearRoutineBeingBuiltDetails() clears out the list of exercises the user currently is building for a new Routine for if the user wants to restart selection process
  */
-
 // 1
 function displayRoutineBeingBuiltDetails() {
      document.getElementById("routine-being-built-details").innerHTML = createTempExerciseList();
@@ -748,13 +730,13 @@ function clearRoutineBeingBuiltDetails() {
  * 3) saveNewRoutineToLocalStorage() creates an saves a new Routine object if the name given was not an empty string
  * Paired with EventListener below that assigns them to the button
  */
-
 // 1
 function isValidNewRoutineNameInput() {
      const routineName = sanitize(document.getElementById("new-routine-input").value);
      if (routineName.trim().length > 0) {
           return true;
      }
+
      return false;
 }
 
@@ -763,6 +745,7 @@ function isTempExerciseArrayEmpty() {
      if (tempExerciseArray.length === 0) {
           return true;
      }
+
      return false;
 }
 
@@ -791,26 +774,20 @@ saveNewRoutineButton.addEventListener("click", function () {
 
      document.getElementById("new-routine-input").value = "";
 
+     // Empties out the temporary array and clears the Routine being built's exercise list details
+     clearRoutineBeingBuiltDetails();
+
+     // Scrolls to the top
      setTimeout(function () {
-          // Scrolls to the top
           window.scrollTo(0, 0);
-     }, 750);
+     }, 550);
 
-     setTimeout(function () {
-          // Empties out the temporary array and clears the Routine being built's exercise list details
-          clearRoutineBeingBuiltDetails();
-
-          // Closes Routine/Exercse sections so users can focus on the timer section. Reset the buttons to show + (plus)
-          toggleSection("close", "exercise");
-          toggleSection("close", "routine");
-     }, 1500);
-
-     showFeedbackButtonSuccessSave("routine", 1510);
+     showFeedbackButtonSuccessSave("routine");
 
      // Initializes the exercise list which users can open and close to refer to
      initializeExerciseList();
 
-     // Timer section gets initialized with the new Routine's info
+     // Timer section gets initialized with the new Routine's data
      initializeTimerDetails();
 
      // Resets the Exercise name's color to lilac in case it's been changed to yellow (Finished's font color)
@@ -836,7 +813,6 @@ saveNewRoutineButton.addEventListener("click", function () {
  * 7) tick() in charge of displaying  to the user the countdown timer. If the seconds reach -1 (the duration is over), it stops the countdown, increments the index by 1, and tells startCountdown() to run for the next Exercise if there is one
  *
  */
-
 let timerIntervalId;
 let totalCountdownTimeInSeconds;
 
@@ -1015,7 +991,6 @@ function tick() {
 /**
  * * Initializing Timer Section with the currently loaded Routine's name, first Exercise name & duration in its exerciseList
  */
-
 function initializeTimerDetails() {
      const grabbedData = localStorage.getItem("routineDataKey");
 
