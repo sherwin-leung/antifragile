@@ -117,7 +117,8 @@ a {
     color: whitesmoke;
 }
 
-a:hover {
+a:hover,
+a:focus {
     color: var(--clr-pastel-purple-lighter);
 }
 
@@ -157,9 +158,9 @@ label {
     color           : rgba(245, 245, 245, 0.867);
 
     /* Overlay animation */
-    animation      : fade-back ease-out forwards;
+    animation         : fade-back ease-out forwards;
     /* ! DISABLE/ENABLE FOR TESTING */
-    animation-delay: 1.5s;
+    /* animation-delay: 1.5s; */
 
     img {
         display: inline;
@@ -427,7 +428,8 @@ label {
     }
 }
 
-.button-toggle-view:hover {
+.button-toggle-view:hover,
+.button-toggle-view:focus {
     background-color: var(--clr-grey-blue-darker);
 
     .fa-plus,
@@ -503,7 +505,8 @@ label {
         height          : 4rem;
     }
 
-    .button-control:hover {
+    .button-control:hover,
+    .button-control:focus {
         background-color: var(--clr-pastel-purple-darkest);
         color           : white;
     }
@@ -596,7 +599,8 @@ label {
         background-color: var(--clr-pastel-yellow-lighter);
     }
 
-    .button-save:hover {
+    .button-save:hover,
+    .button-save:focus {
         background-color: var(--clr-pastel-yellow);
     }
 
@@ -610,7 +614,8 @@ label {
     }
 
     /* Just in case the user was hovering the button after pressing save, this will ensure that the button isn't showing yellow like color */
-    .button-success-save:hover {
+    .button-success-save:hover,
+    .button-success-save:focus {
         background-color: var(--clr-success-green);
     }
 
@@ -675,7 +680,8 @@ label {
         animation       : horizontal-shaking-less 0.2s infinite;
     }
 
-    .button-error-red:hover {
+    .button-error-red:hover,
+    .button-error-red:focus {
         background-color: var(--clr-error-red);
 
     }
@@ -816,7 +822,8 @@ label {
         padding         : 0.55rem 0;
     }
 
-    .button-exercise:hover {
+    .button-exercise:hover,
+    .button-exercise:focus {
         background-color: var(--clr-lilac-darker);
     }
 
