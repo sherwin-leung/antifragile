@@ -40,7 +40,7 @@
 
 
     /* Sizes */
-    --title-font-size           : 3rem;
+    --title-font-size           : 2.5rem;
     --slightly-smaller-font-size: 0.8em;
 
     --new-x-cluster-original-width  : 20rem;
@@ -404,7 +404,7 @@ label {
 /* * START HEADER */
 
 .header-content {
-    padding-top: 2rem;
+    padding-top: 0.7rem;
 }
 
 /* * START DIV TOGGLE VIEW */
@@ -457,7 +457,7 @@ label {
 
 .settings-checkbox {
     display: inline-block;
-    margin : 0.5rem 1rem;
+    margin : 0.15rem 0.5rem;
 }
 
 /* * START TIMER SECTION */
@@ -940,7 +940,7 @@ label {
     }
 
     .header-content {
-        padding-top: 2.5rem;
+        padding-top: 1rem;
     }
 
     .button-toggle-view {
@@ -973,7 +973,7 @@ label {
     }
 
     .header-content {
-        padding-top: 3rem;
+        padding-top: 2rem;
     }
 
 
@@ -1000,7 +1000,7 @@ label {
     }
 
     .header-content {
-        padding-top: 3.5rem;
+        padding-top: 3rem;
     }
 
     #timer-display-routine-name {

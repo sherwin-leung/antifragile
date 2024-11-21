@@ -926,20 +926,20 @@ function startCountdown() {
      timerIntervalId = setInterval(tick, 1000); // ..then call the function every second
 }
 
-// 2a - used inside startCountdown()
+// 2a
+function updateDisplayHowManyExercisesLeft() {
+     timerDisplayNumberOfExercisesLeft.textContent = `${tempArrayOfNames.length - (currentExerciseIndex + 1)} exercises left`;
+}
+
+// 2b - used inside startCountdown()
 function updateDisplayNextExercise() {
      if (currentExerciseIndex === tempArrayOfNames.length - 1) {
-          timerDisplayNextExerciseName.textContent = "Next: None";
+          timerDisplayNextExerciseName.textContent = "Almost there!";
           return;
      }
 
-     timerDisplayNextExerciseName.textContent = `Next: ${tempArrayOfNames[currentExerciseIndex + 1]}`;
+     timerDisplayNextExerciseName.textContent = `Next up - ${tempArrayOfNames[currentExerciseIndex + 1]}`;
      return;
-}
-
-// 2b
-function updateDisplayHowManyExercisesLeft() {
-     timerDisplayNumberOfExercisesLeft.textContent = `Exercises left: ${tempArrayOfNames.length - (currentExerciseIndex + 1)}`;
 }
 
 // 3 (toggles functions 4 and 5 below)
@@ -1065,13 +1065,13 @@ function initializeTimerDetails() {
      upcomingText.textContent = "Upcoming";
 
      const exercisesLeft = document.getElementById("timer-extra-number-of-exercises-left");
-     exercisesLeft.textContent = `Exercises left: ${parsedData.exerciseList.length - 1}`;
+     exercisesLeft.textContent = `${parsedData.exerciseList.length - 1} exercises left`;
 
      const nextExerciseName = document.getElementById("timer-extra-next-exercise-name");
      if (JSON.parse(grabbedData).exerciseList.length == 1) {
           nextExerciseName.textContent = "Only one exercise in this routine";
      } else {
-          nextExerciseName.textContent = `Next: ${parsedData.exerciseList[1].name}`;
+          nextExerciseName.textContent = `Next up - ${parsedData.exerciseList[1].name}`;
      }
 }
 
