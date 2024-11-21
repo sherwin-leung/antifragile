@@ -445,6 +445,10 @@ label {
     width : var(--settings-original-width);
     margin: 0 auto;
 
+    fieldset {
+        border: 0;
+    }
+
     input,
     label {
         display: inline-block;
@@ -459,7 +463,7 @@ label {
 /* * START TIMER SECTION */
 
 #section-timer {
-    padding: 2rem 0;
+    padding: 0.5rem 0 2rem;
 }
 
 #timer-display-routine-text,
