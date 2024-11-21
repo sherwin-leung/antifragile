@@ -313,7 +313,7 @@ function initializeExerciseList() {
      const currentlyLoadedRoutine = JSON.parse(grabbedData);
 
      // Displaying the exercise list in the Routine
-     const exerciseDetails = document.getElementById("exercise-details");
+     const exerciseDetails = document.getElementById("exercise-list");
 
      // Creates button for toggling exercise list view
      let htmlString = `<button class='button-toggle-lists' id='button-toggle-exercise-list'><i class="fa-solid fa-angle-down"></i> Show Exercise List <i class="fa-solid fa-angle-down"></i></button>`;
@@ -350,7 +350,7 @@ function addToggleExerciseListViewFunctionToButton() {
 /**
  * * The following function and Event Listener work together to hide and show the instructions for how to create Exercises and Routines
  */
-function toggleInstructionsView() {
+function toggleInstructionsListView() {
      const instructions = document.getElementById("ol-instructions");
      const showInstructionsLabel = document.getElementById("button-toggle-instructions");
 
@@ -366,7 +366,7 @@ function toggleInstructionsView() {
 // Paired with above
 const instructionsButton = document.getElementById("button-toggle-instructions");
 instructionsButton.addEventListener("click", function () {
-     toggleInstructionsView();
+     toggleInstructionsListView();
 });
 
 /**
@@ -436,7 +436,7 @@ function refreshExerciseCards() {
 
 // 2
 function clearExerciseCards() {
-     const parentExerciseCardsContainer = document.getElementById("exercise-cards-container");
+     const parentExerciseCardsContainer = document.getElementById("container-exercise-cards");
      let exerciseCard = parentExerciseCardsContainer.firstElementChild;
 
      while (exerciseCard) {
@@ -450,10 +450,6 @@ function renderExerciseCards() {
      // Create the Rest button which is always at the beginning
      createNewExerciseCard("Rest");
      createNewExerciseCard("Stretch");
-     // TODO
-     createNewExerciseCard("e1");
-     createNewExerciseCard("e2");
-     createNewExerciseCard("e3");
 
      // Grabs existing exercises data from localStorage and converts it into an array
      const existingExerciseDataInStringForm = localStorage.getItem("exerciseDataKey");
@@ -495,7 +491,7 @@ function createNewExerciseCard(name) {
      // Create a new div which acts as as the CARD container
      const newCard = document.createElement("div");
      newCard.classList.add("exercise-card");
-     document.getElementById("exercise-cards-container").append(newCard);
+     document.getElementById("container-exercise-cards").append(newCard);
 
      // Create a button then append it to the parent container
      const newButtonExercise = document.createElement("button");
@@ -830,7 +826,8 @@ let isTimerPaused = false;
 
 const timerDisplayExerciseName = document.getElementById("timer-display-current-exercise-name");
 const timerDisplayCountdown = document.getElementById("timer-display-countdown");
-const timerDisplayNextExerciseName = document.getElementById("timer-display-next-exercise-name");
+const timerDisplayNextExerciseName = document.getElementById("timer-extra-next-exercise-name");
+const timerDisplayNumberOfExercisesLeft = document.getElementById("timer-extra-number-of-exercises-left");
 
 const startButton = document.getElementById("button-start");
 const stopButton = document.getElementById("button-stop");
@@ -895,14 +892,14 @@ function createTempArraysForTimer() {
      }
 }
 
-// 2
+// 2 - has multiple other functions below used within this function
 function startCountdown() {
      // If there are no more exercises, stop the timer from running
      // Also perform a little clean up with buttons
      if (currentExerciseIndex === tempArrayOfDurations.length) {
           stopCountdown();
 
-          timerDisplayExerciseName.textContent = "✨Finished!✨";
+          timerDisplayExerciseName.textContent = "Finished!🎉";
           timerDisplayExerciseName.style.color = "#ffcc74";
 
           enableElement(startButton);
@@ -918,10 +915,12 @@ function startCountdown() {
      // Change button icon
      startButton.innerHTML = `<i class="fa-solid fa-pause"></i>`;
 
-     // Clean up
+     // Clean up and update once
      resetTimerDisplayCurrentExerciseNameColor();
      updateDisplayNextExercise(); // Call this function once to reset the "next exercise" section in case it's been changed to something else
+     updateDisplayHowManyExercisesLeft();
 
+     // Countdown
      tick(); // Call the update function once to display the initial time..
      timerIntervalId = setInterval(tick, 1000); // ..then call the function every second
 }
@@ -929,12 +928,17 @@ function startCountdown() {
 // 2a - used inside startCountdown()
 function updateDisplayNextExercise() {
      if (currentExerciseIndex === tempArrayOfNames.length - 1) {
-          timerDisplayNextExerciseName.textContent = "You're on your last one!";
+          timerDisplayNextExerciseName.textContent = "Next: None";
           return;
      }
 
-     timerDisplayNextExerciseName.textContent = tempArrayOfNames[currentExerciseIndex + 1];
+     timerDisplayNextExerciseName.textContent = `Next: ${tempArrayOfNames[currentExerciseIndex + 1]}`;
      return;
+}
+
+// 2b
+function updateDisplayHowManyExercisesLeft() {
+     timerDisplayNumberOfExercisesLeft.textContent = `Exercises left: ${tempArrayOfNames.length - (currentExerciseIndex + 1)}`;
 }
 
 // 3 (toggles functions 4 and 5 below)
@@ -980,7 +984,9 @@ function stopCountdown() {
      // Change button icon
      startButton.innerHTML = `<i class="fa-solid fa-play"></i>`;
 
-     timerDisplayNextExerciseName.textContent = "All done!";
+     // For Upcoming
+     timerDisplayNumberOfExercisesLeft.textContent = "Rehydrate!";
+     timerDisplayNextExerciseName.textContent = "💧";
 }
 
 // 7
@@ -1022,39 +1028,74 @@ function calculateAndUpdateMinutesAndSeconds() {
  */
 function initializeTimerDetails() {
      const grabbedData = localStorage.getItem("routineDataKey");
-
      if (grabbedData === null) {
           return;
      }
 
+     const parsedData = JSON.parse(grabbedData);
+
+     // Routine
      const routineText = document.getElementById("timer-display-routine-text");
      routineText.textContent = "Routine";
 
      const routineName = document.getElementById("timer-display-routine-name");
-     routineName.textContent = JSON.parse(grabbedData).name;
+     routineName.textContent = parsedData.name;
 
-     const nextExerciseText = document.getElementById("timer-display-next-exercise-text");
-     nextExerciseText.textContent = "Next Exercise";
-
-     const nextExerciseName = document.getElementById("timer-display-next-exercise-name");
-
-     if (JSON.parse(grabbedData).exerciseList.length == 1) {
-          nextExerciseName.textContent = "Only one exercise in this routine";
-     } else {
-          nextExerciseName.textContent = JSON.parse(grabbedData).exerciseList[1].name;
-     }
-
+     // Current Exercise
      const currentExerciseText = document.getElementById("timer-display-current-exercise-text");
      currentExerciseText.textContent = "Current Exercise";
 
      const currentExerciseName = document.getElementById("timer-display-current-exercise-name");
-     currentExerciseName.textContent = JSON.parse(grabbedData).exerciseList[0].name;
+     currentExerciseName.textContent = parsedData.exerciseList[0].name;
 
-     const minutes = `${JSON.parse(grabbedData).exerciseList[0].durationMinutes}`;
-     const seconds = `${JSON.parse(grabbedData).exerciseList[0].durationSeconds}`;
+     // Countdown
+     const minutes = `${parsedData.exerciseList[0].durationMinutes}`;
+     const seconds = `${parsedData.exerciseList[0].durationSeconds}`;
 
      const countdown = document.getElementById("timer-display-countdown");
      countdown.textContent = `${convertToStringAndPad2(minutes)}:${convertToStringAndPad2(seconds)}`;
 
-     document.getElementById("control-buttons-container").style.display = "block";
+     // Control buttons
+     document.getElementById("container-control-buttons").style.display = "block";
+
+     // * Extra
+     // Upcoming
+     const upcomingText = document.getElementById("timer-upcoming-text");
+     upcomingText.textContent = "Upcoming";
+
+     const exercisesLeft = document.getElementById("timer-extra-number-of-exercises-left");
+     exercisesLeft.textContent = `Exercises left: ${parsedData.exerciseList.length - 1}`;
+
+     const nextExerciseName = document.getElementById("timer-extra-next-exercise-name");
+     if (JSON.parse(grabbedData).exerciseList.length == 1) {
+          nextExerciseName.textContent = "Only one exercise in this routine";
+     } else {
+          nextExerciseName.textContent = `Next: ${parsedData.exerciseList[1].name}`;
+     }
 }
+
+// TODO
+// 1
+function toggleExtraTimerDetailsContainerView() {
+     const upcoming = document.getElementById("container-upcoming");
+     upcoming.classList.toggle("timer-extra-show");
+
+     const exerciseList = document.getElementById("exercise-list");
+     exerciseList.classList.toggle("timer-extra-show");
+}
+
+const extraDetailsInput = document.getElementById("input-toggle-extra-details-settings");
+extraDetailsInput.addEventListener("change", function () {
+     toggleExtraTimerDetailsContainerView();
+});
+
+// 2
+function toggleInstructionsContainerView() {
+     const instructions = document.getElementById("container-instructions");
+     instructions.classList.toggle("timer-extra-show");
+}
+
+const instructionsInput = document.getElementById("input-toggle-instructions-settings");
+instructionsInput.addEventListener("change", function () {
+     toggleInstructionsContainerView();
+});

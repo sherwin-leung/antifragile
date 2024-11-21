@@ -41,9 +41,10 @@
 
     /* Sizes */
     --title-font-size           : 3rem;
-    --slightly-smaller-font-size: 0.77em;
+    --slightly-smaller-font-size: 0.8em;
 
     --new-x-cluster-original-width  : 20rem;
+    --settings-original-width       : 20rem;
     --btn-toggle-view-original-width: 15rem;
     --btn-save-original-width       : 10rem;
 
@@ -51,7 +52,7 @@
     --timer-display-current-exercise-name-original-size: 2.25rem;
     --timer-display-countdown-original-size            : 3.5rem;
 
-    --exercise-cards-container-left-and-right-padding-original-size: 1rem;
+    --container-exercise-cards-left-and-right-padding-original-size: 1rem;
 
 }
 
@@ -158,9 +159,9 @@ label {
     color           : rgba(245, 245, 245, 0.867);
 
     /* Overlay animation */
-    animation      : fade-back ease-out forwards;
+    animation         : fade-back ease-out forwards;
     /* ! DISABLE/ENABLE FOR TESTING */
-    animation-delay: 1.5s;
+    /* animation-delay: 1.5s; */
 
     img {
         display: inline;
@@ -451,23 +452,40 @@ label {
     color          : var(--clr-light-grey-darker);
 }
 
+/* * START SETTINGS SECTION */
+
+#section-settings {
+    width : var(--settings-original-width);
+    margin: 0 auto;
+
+    input,
+    label {
+        display: inline-block;
+    }
+}
+
+.settings-checkbox {
+    display: block;
+    margin : 0.5rem 1rem;
+}
+
 /* * START TIMER SECTION */
 
 #section-timer {
-    padding: 2rem 0 3rem;
+    padding: 2rem 0;
 }
 
 #timer-display-routine-text,
-#timer-display-current-exercise-text,
-#timer-display-next-exercise-text {
+#timer-display-current-exercise-text {
     font-size    : var(--slightly-smaller-font-size);
     margin-bottom: 0.25rem;
     color        : var(--clr-light-grey);
 }
 
 .timer-display-cluster {
-    padding   : 1rem;
-    /* border : 2px solid green; */
+    padding: 1rem;
+    /* TODO */
+    border : 2px solid red;
 }
 
 #timer-display-routine-name {
@@ -484,10 +502,9 @@ label {
     color    : white;
 }
 
-#control-buttons-container {
+#container-control-buttons {
     /* Don't show buttons if there are no Routines loaded */
-    display       : none;
-    padding-bottom: 2rem;
+    display: none;
 
     .button-control {
         /* This is pill shaped*/
@@ -522,21 +539,20 @@ label {
     font-size: var(--slightly-smaller-font-size);
 }
 
-#ol-currently-loaded-routine {
-    display    : none;
-    padding-top: 0.5rem;
-}
+/* * START INSTRUCTIONS SECTION */
 
-/* * START SECTION NEW EXERCISE */
+#container-instructions {
+    /* TODO */
+    border: 2px solid skyblue;
 
-#section-new-exercise {
-    padding: 1rem 0 1rem;
-}
+    #ol-instructions {
+        display    : none;
+        padding-top: 0.5rem;
+    }
 
-/* * START NEW ROUTINE SECTION */
-
-#section-new-routine {
-    padding: 1rem 0 3rem;
+    a {
+        font-size: 0.83rem;
+    }
 }
 
 .span-new {
@@ -551,18 +567,40 @@ label {
     color: var(--clr-pastel-yellow-lighter);
 }
 
-#creation-routine-instructions {
-    padding-top: 1.5rem;
+/* * START STYLES FOR EXTRA DETAILS */
 
-    #ol-instructions {
-        display    : none;
-        padding-top: 0.5rem;
-        font-size  : 0.8rem;
-    }
+/* Visibility toggles for "extra" timer details */
+.timer-extra-hide {
+    /* display: none; */
+    /* TODO */
+    border : 2px solid pink;
+    padding: 1rem;
+}
 
-    a {
-        font-size: 0.83rem;
-    }
+.timer-extra-show {
+    display: block;
+}
+
+#timer-upcoming-text {
+    font-size    : var(--slightly-smaller-font-size);
+    color        : var(--clr-light-grey);
+    margin-bottom: 0.25rem;
+}
+
+.timer-extra-details {
+    font-size: var(--slightly-smaller-font-size);
+}
+
+/* Show/Hide Exercise List */
+#ol-currently-loaded-routine {
+    display    : none;
+    padding-top: 0.5rem;
+}
+
+/* * START SECTION NEW EXERCISE */
+
+#section-new-exercise {
+    padding: 1rem 0 1rem;
 }
 
 /* This is for both Routine and Exercises' text inputs */
@@ -769,6 +807,12 @@ label {
     }
 }
 
+/* * START NEW ROUTINE SECTION */
+
+#section-new-routine {
+    padding: 1rem 0 3rem;
+}
+
 #routine-being-built-details {
     padding: 1rem;
 
@@ -791,8 +835,8 @@ label {
     }
 }
 
-#exercise-cards-container {
-    padding              : 0 var(--exercise-cards-container-left-and-right-padding-original-size);
+#container-exercise-cards {
+    padding              : 0 var(--container-exercise-cards-left-and-right-padding-original-size);
     display              : grid;
     grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
     gap                  : 0.3rem;
@@ -863,14 +907,14 @@ label {
 
 /* Tablets */
 @media (width >=750px) {
-    #exercise-cards-container {
-        padding: 0 calc(var(--exercise-cards-container-left-and-right-padding-original-size)*7.5);
+    #container-exercise-cards {
+        padding: 0 calc(var(--container-exercise-cards-left-and-right-padding-original-size)*7.5);
     }
 }
 
 @media (width >=1000px) {
-    #exercise-cards-container {
-        padding              : 0 calc(var(--exercise-cards-container-left-and-right-padding-original-size)*10);
+    #container-exercise-cards {
+        padding              : 0 calc(var(--container-exercise-cards-left-and-right-padding-original-size)*10);
         grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
     }
 }
@@ -883,7 +927,7 @@ label {
     }
 
     .header-content {
-        padding-top: 3rem;
+        padding-top: 2.5rem;
     }
 
     .button-toggle-view {
@@ -903,8 +947,8 @@ label {
         }
     }
 
-    #exercise-cards-container {
-        padding              : 0 calc(var(--exercise-cards-container-left-and-right-padding-original-size)*20);
+    #container-exercise-cards {
+        padding              : 0 calc(var(--container-exercise-cards-left-and-right-padding-original-size)*20);
         grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
     }
 }
@@ -916,7 +960,7 @@ label {
     }
 
     .header-content {
-        padding-top: 3.5rem;
+        padding-top: 3rem;
     }
 
 
@@ -932,8 +976,8 @@ label {
         }
     }
 
-    #exercise-cards-container {
-        padding: 0 calc(var(--exercise-cards-container-left-and-right-padding-original-size)*22);
+    #container-exercise-cards {
+        padding: 0 calc(var(--container-exercise-cards-left-and-right-padding-original-size)*22);
     }
 }
 
@@ -943,8 +987,7 @@ label {
     }
 
     .header-content {
-        padding-top   : 5rem;
-        padding-bottom: 0.5rem;
+        padding-top: 3.5rem;
     }
 
     #timer-display-routine-name {
@@ -963,8 +1006,8 @@ label {
         width: calc(var(--new-x-cluster-original-width)*1.5);
     }
 
-    #exercise-cards-container {
-        padding: 0 calc(var(--exercise-cards-container-left-and-right-padding-original-size)*30);
+    #container-exercise-cards {
+        padding: 0 calc(var(--container-exercise-cards-left-and-right-padding-original-size)*30);
 
     }
 }

@@ -29,52 +29,87 @@
 
     <main class="main-content">
 
+        <!-- ! Settings Section -->
+        <section id="section-settings">
+            <fieldset>
+                <legend><i class="fa-solid fa-gear"></i></legend>
+
+                <div class="settings-checkbox">
+                    <input type="checkbox" id="input-toggle-extra-details-settings" />
+                    <label for="input-toggle-extra-details-settings"><i class="fa-solid fa-expand"></i></label>
+                </div>
+
+                <div class="settings-checkbox">
+                    <input type="checkbox" id="input-toggle-sounds-settings" />
+                    <label for="input-toggle-sounds-settings">
+                        <i class="fa-solid fa-volume-high"></i>
+                        <i class="fa-solid fa-volume-xmark"></i>
+                    </label>
+                </div>
+
+                <div class="settings-checkbox">
+                    <input type="checkbox" id="input-toggle-instructions-settings" />
+                    <label for="input-toggle-instructions-settings">
+                        <i class="fa-regular fa-circle-question"></i>
+                    </label>
+                </div>
+            </fieldset>
+        </section>
+
         <!-- ! Timer Section -->
         <section id="section-timer">
-            <div class="timer-display-cluster">
-                <p id="timer-display-routine-text"></p>
-                <p id="timer-display-routine-name">Nothing saved yet!</p>
+            <div id="timer-main">
+                <!-- Routine -->
+                <div class="timer-display-cluster">
+                    <p id="timer-display-routine-text"></p>
+                    <p id="timer-display-routine-name">Nothing saved yet!</p>
+                </div>
+
+                <!-- Current Exercise -->
+                <div class="timer-display-cluster">
+                    <p id="timer-display-current-exercise-text">Use the <span class="span-new">buttons</span> below to
+                        create an exercise<br>then save it into a routine &#128071</p>
+                    <p id="timer-display-current-exercise-name"></p>
+                    <p id="timer-display-countdown"></p>
+                </div>
+
+                <!-- Control buttons -->
+                <div id="container-control-buttons">
+                    <button class="button-control" id="button-start"><i class="fa-solid fa-play"></i></button>
+                    <button class="button-control" id="button-stop"><i class="fa-solid fa-stop"></i></button>
+                </div>
             </div>
 
-            <div class="timer-display-cluster">
-                <p id="timer-display-next-exercise-text"></p>
-                <p id="timer-display-next-exercise-name"></p>
-            </div>
+            <div id="timer-extras">
+                <!-- Upcoming -->
+                <div class="timer-extra-hide" id="container-upcoming">
+                    <p id="timer-upcoming-text"></p>
+                    <p class="timer-extra-details" id="timer-extra-number-of-exercises-left"></p>
+                    <p class="timer-extra-details" id="timer-extra-next-exercise-name"></p>
+                </div>
 
-            <div class="timer-display-cluster">
-                <p id="timer-display-current-exercise-text">Use the <span class="span-new">buttons</span> below to
-                    create an exercise<br>then save it into a routine &#128071</p>
-                <p id="timer-display-current-exercise-name"></p>
-                <p id="timer-display-countdown"></p>
-            </div>
+                <!-- Show Exercise List -->
+                <div class="list-building-styles timer-extra-hide" id="exercise-list"></div>
 
-            <div id="control-buttons-container">
-                <button class="button-control" id="button-start"><i class="fa-solid fa-play"></i></button>
-                <button class="button-control" id="button-stop"><i class="fa-solid fa-stop"></i></button>
-            </div>
-
-            <div class="list-building-styles" id="exercise-details"></div>
-
-            <div class="list-building-styles" id="creation-routine-instructions">
-                <button class="button-toggle-lists" id="button-toggle-instructions">
-                    <i class="fa-solid fa-angle-down"></i>
-                    Show Instructions
-                    <!-- <i class="fa-solid fa-circle-question"></i> <i class="fa-solid fa-circle-info"></i> -->
-                    <i class="fa-solid fa-angle-down"></i>
-                </button>
-                <ol id="ol-instructions">
-                    <li>Expand the exercise <span class="span-new">section</span></li>
-                    <li>Enter an exercise name and press <span class="span-save">[Save]</span></li>
-                    <li>Enter a routine</span> name in the routine <span class="span-new">section</span></li>
-                    <li>Select an <span class="span-exercise">exercise</span> and input the durations</li>
-                    <li>Press [Add] to append it to the routine</li>
-                    <li>Repeat step 6 until all desired <span class="span-exercise">exercises</span> are added </li>
-                    <li>Press <span class="span-save">[Save]</span> to save the routine</li>
-                    <li>The timer will initialize for you up top</li>
-                    <br>
-                    <a href="https://github.com/sherwin-leung/antifragile?tab=readme-ov-file#how-to-use"
-                        target="_blank">Want more info like where data is stored?<br>Click here!</a>
-                </ol>
+                <!-- Show Instructions -->
+                <div class="list-building-styles timer-extra-hide" id="container-instructions">
+                    <button class="button-toggle-lists" id="button-toggle-instructions">
+                        <i class="fa-solid fa-angle-down"></i> Show Instructions <i class="fa-solid fa-angle-down"></i>
+                    </button>
+                    <ol id="ol-instructions">
+                        <li>Expand the exercise <span class="span-new">section</span></li>
+                        <li>Enter an exercise name and press <span class="span-save">[Save]</span></li>
+                        <li>Enter a routine</span> name in the routine <span class="span-new">section</span></li>
+                        <li>Select an <span class="span-exercise">exercise</span> and input the durations</li>
+                        <li>Press [Add] to append it to the routine</li>
+                        <li>Repeat step 6 until all desired <span class="span-exercise">exercises</span> are added </li>
+                        <li>Press <span class="span-save">[Save]</span> to save the routine</li>
+                        <li>The timer will initialize for you up top</li>
+                        <br>
+                        <a href="https://github.com/sherwin-leung/antifragile?tab=readme-ov-file#how-to-use"
+                            target="_blank">Want more info like where data is stored?<br>Click here!</a>
+                    </ol>
+                </div>
             </div>
         </section>
 
@@ -86,10 +121,8 @@
 
             <div class="div-toggle-view" id="div-new-exercise">
                 <div class="new-x-cluster" id="new-exercise-cluster">
-                    <div id="label-input-container">
-                        <label class="label-x-name" for="new-exercise-input">Exercise Name</label>
-                        <input required type="text" id="new-exercise-input" name="exercise-name" />
-                    </div>
+                    <label class="label-x-name" for="new-exercise-input">Exercise Name</label>
+                    <input required type="text" id="new-exercise-input" name="exercise-name" />
                     <button class="button-save" id="button-save-new-exercise">Save</button>
                 </div>
             </div>
@@ -110,7 +143,7 @@
 
                 <div class="list-building-styles" id="routine-being-built-details"></div>
 
-                <div id="exercise-cards-container"></div>
+                <div id="container-exercise-cards"></div>
             </div>
         </section>
 
