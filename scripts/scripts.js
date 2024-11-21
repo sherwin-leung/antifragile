@@ -32,6 +32,7 @@ window.onload = pageLoad();
  */
 function pageLoad() {
      generateOverlayPhrase();
+     saveNewExerciseToLocalStorage;
      refreshExerciseCards();
      initializeTimerDetails();
      initializeExerciseList();
@@ -1087,6 +1088,8 @@ function toggleExtraTimerDetailsContainerView() {
 const extraDetailsInput = document.getElementById("input-toggle-extra-details-settings");
 extraDetailsInput.addEventListener("change", function () {
      toggleExtraTimerDetailsContainerView();
+     showFeedbackSettingsToggle("timer-upcoming-text");
+     showFeedbackSettingsToggle("button-toggle-exercise-list");
 });
 
 // 2
@@ -1098,4 +1101,34 @@ function toggleInstructionsContainerView() {
 const instructionsInput = document.getElementById("input-toggle-instructions-settings");
 instructionsInput.addEventListener("change", function () {
      toggleInstructionsContainerView();
+     showFeedbackSettingsToggle("button-toggle-instructions");
 });
+
+/**
+ * * This function shows the user visual feedback if they toggle the settings to show more timer details or the instructions
+ * @param {string} target the element to add the feedback
+ * @param {int} durationInMilliseconds how long the button is green for
+ */
+function showFeedbackSettingsToggle(targetParam, durationInMilliseconds = 1000) {
+     const targetElement = document.getElementById(targetParam);
+
+     if (targetElement === null) {
+          return;
+     }
+
+     // Dynamically create a higher specificity rule for this element (classes are less specific than ids, so if an id already has styling in it, classes may not override it)
+     const style = document.createElement("style");
+     style.innerHTML = `
+          #${targetParam}.flash {
+               color: var(--clr-pastel-yellow);
+          }
+     `;
+     document.head.appendChild(style);
+
+     targetElement.classList.add("flash");
+
+     setTimeout(function () {
+          targetElement.classList.remove("flash");
+          document.head.removeChild(style); // Clean up the dynamic style
+     }, durationInMilliseconds);
+}

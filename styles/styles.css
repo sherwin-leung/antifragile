@@ -159,9 +159,9 @@ label {
     color           : rgba(245, 245, 245, 0.867);
 
     /* Overlay animation */
-    animation         : fade-back ease-out forwards;
+    animation      : fade-back ease-out forwards;
     /* ! DISABLE/ENABLE FOR TESTING */
-    /* animation-delay: 1.5s; */
+    animation-delay: 1.5s;
 
     img {
         display: inline;
@@ -439,19 +439,6 @@ label {
     }
 }
 
-/* * START BUTTON TOGGLE LISTS */
-/* For Hide/Show Exercise List / Show/Hide Instructions */
-
-.button-toggle-lists {
-    padding        : 0;
-    text-decoration: none;
-    background     : none;
-    font           : inherit;
-    font-weight    : bolder;
-    cursor         : pointer;
-    color          : var(--clr-light-grey-darker);
-}
-
 /* * START SETTINGS SECTION */
 
 #section-settings {
@@ -465,7 +452,7 @@ label {
 }
 
 .settings-checkbox {
-    display: block;
+    display: inline-block;
     margin : 0.5rem 1rem;
 }
 
@@ -478,14 +465,13 @@ label {
 #timer-display-routine-text,
 #timer-display-current-exercise-text {
     font-size    : var(--slightly-smaller-font-size);
+    font-weight  : bolder;
     margin-bottom: 0.25rem;
     color        : var(--clr-light-grey);
 }
 
 .timer-display-cluster {
     padding: 1rem;
-    /* TODO */
-    border : 2px solid red;
 }
 
 #timer-display-routine-name {
@@ -504,7 +490,8 @@ label {
 
 #container-control-buttons {
     /* Don't show buttons if there are no Routines loaded */
-    display: none;
+    display      : none;
+    margin-bottom: 0.9rem;
 
     .button-control {
         /* This is pill shaped*/
@@ -535,16 +522,68 @@ label {
     }
 }
 
+/* * START STYLES FOR EXTRA DETAILS */
+
+/* Visibility toggles for "extra" timer details */
+.timer-extra-hide {
+    display: none;
+}
+
+.timer-extra-show {
+    display: block;
+}
+
+/* TODO */
+/* General styling for timer-extra*/
+.timer-extra {
+    padding: 1rem;
+}
+
+#timer-upcoming-text {
+    font-size    : var(--slightly-smaller-font-size);
+    font-weight  : bolder;
+    color        : var(--clr-light-grey);
+    margin-bottom: 0.4rem;
+}
+
+.timer-extra-details {
+    font-size: var(--slightly-smaller-font-size);
+}
+
+.easter-egg {
+    font-size: 3rem;
+}
+
+/* Show/Hide Exercise List */
+#ol-currently-loaded-routine {
+    display    : none;
+    padding-top: 0.5rem;
+}
+
+/* * START BUTTON TOGGLE LISTS */
+/* For Hide/Show Exercise List / Show/Hide Instructions */
+
+.button-toggle-lists {
+    padding        : 0;
+    text-decoration: none;
+    background     : none;
+    font           : inherit;
+    cursor         : pointer;
+    font-weight    : bold;
+    color          : var(--clr-light-grey);
+}
+
 .list-building-styles {
     font-size: var(--slightly-smaller-font-size);
+}
+
+.flash {
+    color: goldenrod;
 }
 
 /* * START INSTRUCTIONS SECTION */
 
 #container-instructions {
-    /* TODO */
-    border: 2px solid skyblue;
-
     #ol-instructions {
         display    : none;
         padding-top: 0.5rem;
@@ -565,36 +604,6 @@ label {
 
 .span-save {
     color: var(--clr-pastel-yellow-lighter);
-}
-
-/* * START STYLES FOR EXTRA DETAILS */
-
-/* Visibility toggles for "extra" timer details */
-.timer-extra-hide {
-    /* display: none; */
-    /* TODO */
-    border : 2px solid pink;
-    padding: 1rem;
-}
-
-.timer-extra-show {
-    display: block;
-}
-
-#timer-upcoming-text {
-    font-size    : var(--slightly-smaller-font-size);
-    color        : var(--clr-light-grey);
-    margin-bottom: 0.25rem;
-}
-
-.timer-extra-details {
-    font-size: var(--slightly-smaller-font-size);
-}
-
-/* Show/Hide Exercise List */
-#ol-currently-loaded-routine {
-    display    : none;
-    padding-top: 0.5rem;
 }
 
 /* * START SECTION NEW EXERCISE */
