@@ -61,7 +61,7 @@ _On desktop, you can delete local storage for a site directly without erasing al
 
 </details>
 
-## Known Bugs & Future Plans
+## 👀 Known Bugs & Future Plans
 
 ### 🐛 Known Bugs
 
@@ -108,7 +108,7 @@ _On desktop, you can delete local storage for a site directly without erasing al
   
 </details>
 
-## Version History
+## 📄 Version History
 
 <details>
 
