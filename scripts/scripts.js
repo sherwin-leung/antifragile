@@ -84,7 +84,7 @@ function convertToStringAndPad2(x) {
 
 // Helper function - resetTimerDisplayCurrentExerciseNameColor() does as its name says, in the event that current exercise being displayed's name was changed to anything other than lilac
 function resetTimerDisplayCurrentExerciseNameColor() {
-     // This is the same as var(--clr--lilac) in CSS variables
+     // #e7d1ff is the same as var(--clr--lilac) in CSS variables
      document.getElementById("timer-display-current-exercise-name").style.color = "#e7d1ff";
 }
 
@@ -119,9 +119,47 @@ function generateOverlayPhrase() {
      document.getElementById("overlay-phrase").textContent = arrayOfPhrases[randomIndex];
 }
 
+// Settings Section
+/**
+ * * This functions handles toggling the visibility of extra timer details (Upcoming & Show Exercise List)
+ * It is paired with the event handler below
+ */
+function toggleExtraTimerDetailsContainerView() {
+     const upcoming = document.getElementById("container-upcoming");
+     upcoming.classList.toggle("timer-extra-show");
+
+     const exerciseList = document.getElementById("exercise-list");
+     exerciseList.classList.toggle("timer-extra-show");
+}
+
+// Paired with above
+const extraDetailsInput = document.getElementById("input-toggle-extra-details-settings");
+extraDetailsInput.addEventListener("change", function () {
+     toggleExtraTimerDetailsContainerView();
+     showFeedbackSettingsToggle("timer-upcoming-text");
+     showFeedbackSettingsToggle("button-toggle-exercise-list");
+});
+
+/**
+ * * This function handles toggling the visibility of the app's use instructions
+ * It is paired with the event handler below
+ */
+function toggleInstructionsContainerView() {
+     const instructions = document.getElementById("container-instructions");
+     instructions.classList.toggle("timer-extra-show");
+}
+
+// Paired with above
+const instructionsInput = document.getElementById("input-toggle-instructions-settings");
+instructionsInput.addEventListener("change", function () {
+     toggleInstructionsContainerView();
+     showFeedbackSettingsToggle("button-toggle-instructions");
+});
+// ? End Settings Section
+
 /**
  * * This function handles toggling on and off the view of certain contents when the main buttons are CLICKED or TAPPED
- * It us coupled with the two event listeners below
+ * It is coupled with the two event listeners below
  * @param {string} divId indicates which div to toggle on and off
  */
 function toggleViewOnAndOff(divId) {
@@ -136,14 +174,14 @@ function toggleViewOnAndOff(divId) {
      }
 }
 
+// 1
 const newExerciseButton = document.getElementById("button-new-exercise");
-
 newExerciseButton.addEventListener("click", function () {
      toggleViewOnAndOff("div-new-exercise");
 });
 
+// 2
 const newRoutineButton = document.getElementById("button-new-routine");
-
 newRoutineButton.addEventListener("click", function () {
      toggleViewOnAndOff("div-new-routine");
 });
@@ -294,6 +332,26 @@ function showFeedbackErrorEmptyExerciseList(durationInMilliseconds = 550) {
           saveNewRoutineButton.classList.remove("button-error-red");
           saveNewRoutineButton.innerHTML = "Save";
           isShowFeedbackErrorEmptyExerciseListRunning = false;
+     }, durationInMilliseconds);
+}
+
+// TODO
+/**
+ * * This function shows the user visual feedback if they toggle the settings to show more timer details or the instructions
+ * @param {string} target the element to add the feedback
+ * @param {int} durationInMilliseconds how long the button is green for
+ */
+function showFeedbackSettingsToggle(targetParam, durationInMilliseconds = 1000) {
+     const targetElement = document.getElementById(targetParam);
+
+     if (targetElement === null) {
+          return;
+     }
+
+     targetElement.classList.add("glow");
+
+     setTimeout(function () {
+          targetElement.classList.remove("glow");
      }, durationInMilliseconds);
 }
 // ? End Feedback Section
@@ -1073,62 +1131,4 @@ function initializeTimerDetails() {
      } else {
           nextExerciseName.textContent = `Next up - ${parsedData.exerciseList[1].name}`;
      }
-}
-
-// TODO
-// 1
-function toggleExtraTimerDetailsContainerView() {
-     const upcoming = document.getElementById("container-upcoming");
-     upcoming.classList.toggle("timer-extra-show");
-
-     const exerciseList = document.getElementById("exercise-list");
-     exerciseList.classList.toggle("timer-extra-show");
-}
-
-const extraDetailsInput = document.getElementById("input-toggle-extra-details-settings");
-extraDetailsInput.addEventListener("change", function () {
-     toggleExtraTimerDetailsContainerView();
-     showFeedbackSettingsToggle("timer-upcoming-text");
-     showFeedbackSettingsToggle("button-toggle-exercise-list");
-});
-
-// 2
-function toggleInstructionsContainerView() {
-     const instructions = document.getElementById("container-instructions");
-     instructions.classList.toggle("timer-extra-show");
-}
-
-const instructionsInput = document.getElementById("input-toggle-instructions-settings");
-instructionsInput.addEventListener("change", function () {
-     toggleInstructionsContainerView();
-     showFeedbackSettingsToggle("button-toggle-instructions");
-});
-
-/**
- * * This function shows the user visual feedback if they toggle the settings to show more timer details or the instructions
- * @param {string} target the element to add the feedback
- * @param {int} durationInMilliseconds how long the button is green for
- */
-function showFeedbackSettingsToggle(targetParam, durationInMilliseconds = 1000) {
-     const targetElement = document.getElementById(targetParam);
-
-     if (targetElement === null) {
-          return;
-     }
-
-     // Dynamically create a higher specificity rule for this element (classes are less specific than ids, so if an id already has styling in it, classes may not override it)
-     const style = document.createElement("style");
-     style.innerHTML = `
-          #${targetParam}.flash {
-               color: var(--clr-pastel-yellow);
-          }
-     `;
-     document.head.appendChild(style);
-
-     targetElement.classList.add("flash");
-
-     setTimeout(function () {
-          targetElement.classList.remove("flash");
-          document.head.removeChild(style); // Clean up the dynamic style
-     }, durationInMilliseconds);
 }
