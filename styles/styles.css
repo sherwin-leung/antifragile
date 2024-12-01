@@ -443,6 +443,16 @@ label {
 
 /* * START SETTINGS SECTION */
 
+/* Visibility toggles various settings */
+/* Such settings: extra details, instructions */
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
 #section-settings {
     width : var(--settings-original-width);
     margin: 0 auto;
@@ -464,7 +474,7 @@ label {
 
 /* * Feedback - for when user toggle settings to show extra details and/or app instructions */
 .glow {
-    animation: glowEffect 1s ease-out;
+    animation: glowEffect 1s ease-in-out;
 }
 
 @keyframes glowEffect {
@@ -547,15 +557,6 @@ label {
 
 /* * START STYLES FOR EXTRA DETAILS */
 
-/* Visibility toggles for "extra" timer details */
-.timer-extra-hide {
-    display: none;
-}
-
-.timer-extra-show {
-    display: block;
-}
-
 /* General styling for timer-extra*/
 .timer-extra {
     padding: 1rem;
@@ -566,7 +567,6 @@ label {
     font-weight  : bolder;
     color        : var(--clr-light-grey);
     margin-bottom: 0.4rem;
-    display      : inline;
 }
 
 .timer-extra-details {
@@ -577,7 +577,7 @@ label {
     font-size: 3rem;
 }
 
-/* Show/Hide Exercise List */
+/* For "Show/Hide Exercise List" */
 #ol-currently-loaded-routine {
     display    : none;
     padding-top: 0.5rem;

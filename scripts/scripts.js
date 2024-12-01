@@ -32,10 +32,11 @@ window.onload = pageLoad();
  */
 function pageLoad() {
      generateOverlayPhrase();
-     saveNewExerciseToLocalStorage;
-     refreshExerciseCards();
      initializeTimerDetails();
      initializeExerciseList();
+     refreshExtraDetails();
+     refreshInstructions();
+     refreshExerciseCards();
 }
 
 /**
@@ -55,6 +56,15 @@ function sanitize(string) {
      const reg = /[&<>"'/]/gi;
 
      return string.replace(reg, (match) => map[match]);
+}
+
+// Helper function - checks if a string is empty
+function isEmptyString(string) {
+     if (string.trim().length === 0) {
+          return true;
+     }
+
+     return false;
 }
 
 // Helper function - checkIfAlreadyExistsInLocalStorage() checks if an exercise or routine already exists in localStorage
@@ -97,6 +107,7 @@ function disableElement(element) {
 function enableElement(element) {
      element.removeAttribute("disabled");
 }
+// ? End Helper Functions
 
 /**
  * * Disable scrolling while the overlay is showing in case that main content height is > 100vh, which is the overlay's height
@@ -121,39 +132,126 @@ function generateOverlayPhrase() {
 
 // Settings Section
 /**
- * * This functions handles toggling the visibility of extra timer details (Upcoming & Show Exercise List)
- * It is paired with the event handler below
+ * * These functions handle the visibility of the extra timer details
+ * 1) saveExtraTimerDetailsChoiceToLocalStorage() stores the user's choice of whether to display the extra details or not to local storage so it'll persist through sessions
+ * 2) getExtraTimerDetailsChoiceFromLocalStorage() returns the user's choice from function 1), but NOTE: it returns it as a string, NOT a boolean. It will be "true" or "false"
+ * 3) showExtraTimerDetails() shows the extra details
+ * 4) hideExtraTimerDetails() hides the extra details
+ * 5) refreshExtraDetails() toggles between showing and hiding the extra details depending on the user's choice
+ * 6) Event handler paired with these functions
  */
-function toggleExtraTimerDetailsContainerView() {
-     const upcoming = document.getElementById("container-upcoming");
-     upcoming.classList.toggle("timer-extra-show");
-
-     const exerciseList = document.getElementById("exercise-list");
-     exerciseList.classList.toggle("timer-extra-show");
+// 1
+function saveExtraTimerDetailsChoiceToLocalStorage() {
+     let isChecked = document.getElementById("input-toggle-extra-details-settings").checked;
+     // Note: the value is saved as a boolean, but once we use localStorage.getItem, the value returns as a string
+     localStorage.setItem("showExtraTimerDetails", isChecked);
 }
 
-// Paired with above
+// 2
+function getExtraTimerDetailsChoiceFromLocalStorage() {
+     // Reminder: localStorage.getItem() always returns a string
+     return localStorage.getItem("showExtraTimerDetails");
+}
+
+// 3
+function showExtraTimerDetails() {
+     const upcoming = document.getElementById("container-upcoming");
+     upcoming.classList.add("show");
+
+     const exerciseList = document.getElementById("exercise-list");
+     exerciseList.classList.add("show");
+}
+
+// 4
+function hideExtraTimerDetails() {
+     const upcoming = document.getElementById("container-upcoming");
+     upcoming.classList.remove("show");
+
+     const exerciseList = document.getElementById("exercise-list");
+     exerciseList.classList.remove("show");
+}
+
+// 5
+function refreshExtraDetails() {
+     // Because getExtraTimerDetailsChoiceFromLocalStorage() returns a string, we have to compare it with a string in the first check
+     if (getExtraTimerDetailsChoiceFromLocalStorage() === "true") {
+          showExtraTimerDetails();
+          document.getElementById("input-toggle-extra-details-settings").checked = true;
+     }
+}
+
+// Paired with above functions
 const extraDetailsInput = document.getElementById("input-toggle-extra-details-settings");
 extraDetailsInput.addEventListener("change", function () {
-     toggleExtraTimerDetailsContainerView();
-     showFeedbackSettingsToggle("timer-upcoming-text");
-     showFeedbackSettingsToggle("button-toggle-exercise-list");
+     // Make user's choice of extra details visibility persist
+     saveExtraTimerDetailsChoiceToLocalStorage();
+
+     // Because getExtraTimerDetailsChoiceFromLocalStorage() returns a string, we have to compare it with a string
+     if (getExtraTimerDetailsChoiceFromLocalStorage() === "true") {
+          showExtraTimerDetails();
+          showFeedbackSettingsToggle("timer-upcoming-text");
+          showFeedbackSettingsToggle("button-toggle-exercise-list");
+     } else {
+          hideExtraTimerDetails();
+     }
 });
 
 /**
- * * This function handles toggling the visibility of the app's use instructions
- * It is paired with the event handler below
+ * * These functions handle the visibility of the instructions
+ * 1) saveInstructionsChoiceToLocalStorage() stores the user's choice of whether to display the instructions or not to local storage so it'll persist through sessions
+ * 2) getInstructionsChoiceFromLocalStorage() returns the user's choice from function 1), but NOTE: it returns it as a string, NOT a boolean. It will be "true" or "false"
+ * 3) showInstructions() shows the instructions
+ * 4) hideInstructions() hides the instructions
+ * 5) refreshInstructions() toggles between showing and hiding the instructions depending on the user's choice
+ * 6) Event handler paired with these functions
  */
-function toggleInstructionsContainerView() {
-     const instructions = document.getElementById("container-instructions");
-     instructions.classList.toggle("timer-extra-show");
+// 1
+function saveInstructionsChoiceToLocalStorage() {
+     let isChecked = document.getElementById("input-toggle-instructions-settings").checked;
+     // Note: the value is saved as a boolean, but once we use localStorage.getItem, the value returns as a string
+     localStorage.setItem("showInstructions", isChecked);
 }
 
-// Paired with above
+// 2
+function getInstructionsChoiceFromLocalStorage() {
+     // Reminder: localStorage.getItem() always returns a string
+     return localStorage.getItem("showInstructions");
+}
+
+/// 3
+function showInstructions() {
+     const instructions = document.getElementById("container-instructions");
+     instructions.classList.add("show");
+}
+
+// 4
+function hideInstructions() {
+     const instructions = document.getElementById("container-instructions");
+     instructions.classList.remove("show");
+}
+
+// 5
+function refreshInstructions() {
+     // Because getInstructionsChoiceFromLocalStorage() returns a string, we have to compare it with a string in the first check
+     if (getInstructionsChoiceFromLocalStorage() === "true") {
+          showInstructions();
+          document.getElementById("input-toggle-instructions-settings").checked = true;
+     }
+}
+
+// Paired with above functions
 const instructionsInput = document.getElementById("input-toggle-instructions-settings");
 instructionsInput.addEventListener("change", function () {
-     toggleInstructionsContainerView();
-     showFeedbackSettingsToggle("button-toggle-instructions");
+     // Make user's choice of extra details visibility persist
+     saveInstructionsChoiceToLocalStorage();
+
+     // Because getInstructionsChoiceFromLocalStorage() returns a string, we have to compare it with a string
+     if (getInstructionsChoiceFromLocalStorage() === "true") {
+          showInstructions();
+          showFeedbackSettingsToggle("button-toggle-instructions");
+     } else {
+          hideInstructions();
+     }
 });
 // ? End Settings Section
 
@@ -335,7 +433,6 @@ function showFeedbackErrorEmptyExerciseList(durationInMilliseconds = 550) {
      }, durationInMilliseconds);
 }
 
-// TODO
 /**
  * * This function shows the user visual feedback if they toggle the settings to show more timer details or the instructions
  * @param {string} target the element to add the feedback
@@ -429,22 +526,9 @@ instructionsButton.addEventListener("click", function () {
 });
 
 /**
- * * These two functions handle the creation and saving of new Exercises into localStorage
- * 1) isValidNewExerciseInput() returns whether or not the input is an empty String or not
- * 2) saveNewExerciseToLocalStorage() creates an saves a new Exercise object if the name given was not an empty string, and if one with the same name doesn't already exist in local storage
- * Paired with EventListener below that assigns them to the button
+ * * This function creates an saves a new Exercise object if the name given was not an empty string, and if one with the same name doesn't already exist in local storage
+ * Paired with EventListener below
  */
-// 1
-function isValidNewExerciseNameInput() {
-     const exerciseName = sanitize(document.getElementById("new-exercise-input").value);
-     if (exerciseName.trim().length > 0) {
-          return true;
-     }
-
-     return false;
-}
-
-// 2
 function saveNewExerciseToLocalStorage() {
      // Get existing data from localStorage or retrieve an empty array if there is none as a fallback
      const existingExerciseData = JSON.parse(localStorage.getItem("exerciseDataKey")) || [];
@@ -460,14 +544,13 @@ function saveNewExerciseToLocalStorage() {
 
 // Paired with above
 const saveNewExerciseButton = document.getElementById("button-save-new-exercise");
-
 saveNewExerciseButton.addEventListener("click", function () {
-     if (isValidNewExerciseNameInput() === false) {
+     const exerciseName = sanitize(document.getElementById("new-exercise-input").value);
+     if (isEmptyString(exerciseName) === true) {
           showFeedbackInputErrorMissingName("exercise");
           return;
      }
 
-     const exerciseName = sanitize(document.getElementById("new-exercise-input").value);
      const existingExerciseData = JSON.parse(localStorage.getItem("exerciseDataKey")) || [];
      if (checkIfAlreadyExistsInLocalStorage(existingExerciseData, exerciseName) === true) {
           showFeedbackErrorDuplicateExercise();
@@ -783,35 +866,12 @@ function clearRoutineBeingBuiltDetails() {
 }
 
 /**
- * * These three functions handle the creation and saving of new Exercises into localStorage
- * 1) isValidNewRoutineInput() returns whether or not the input is an empty String or not
- * 2) isTempExerciseArrayEmpty() returns whether the temporary Exercise array is empty. If it is empty, the user is not allowed to create a Routine
- * 3) saveNewRoutineToLocalStorage() creates an saves a new Routine object if the name given was not an empty string
- * Paired with EventListener below that assigns them to the button
+ * * This function creates an saves a new Routine object if the name given was not an empty string and there are exercises added into the list
+ * Paired with EventListener below
  */
-// 1
-function isValidNewRoutineNameInput() {
-     const routineName = sanitize(document.getElementById("new-routine-input").value);
-     if (routineName.trim().length > 0) {
-          return true;
-     }
-
-     return false;
-}
-
-// 2
-function isTempExerciseArrayEmpty() {
-     if (tempExerciseArray.length === 0) {
-          return true;
-     }
-
-     return false;
-}
-
-// 3
 function saveNewRoutineToLocalStorage() {
      // Store name of new Routine from input
-     const routineName = sanitize(convertToTitleCase(document.getElementById("new-routine-input").value));
+     const routineName = sanitize(document.getElementById("new-routine-input").value);
      const newRoutine = new Routine(routineName, tempExerciseArray);
      localStorage.setItem("routineDataKey", JSON.stringify(newRoutine));
 }
@@ -819,18 +879,19 @@ function saveNewRoutineToLocalStorage() {
 // Paired with above
 const saveNewRoutineButton = document.getElementById("button-save-new-routine");
 saveNewRoutineButton.addEventListener("click", function () {
-     if (isValidNewRoutineNameInput() === false) {
+     const routineName = sanitize(document.getElementById("new-routine-input").value);
+
+     if (isEmptyString(routineName) === true) {
           showFeedbackInputErrorMissingName("routine");
           return;
      }
 
-     if (isTempExerciseArrayEmpty() === true) {
+     if (tempExerciseArray.length === 0) {
           showFeedbackErrorEmptyExerciseList();
           return;
      }
 
      saveNewRoutineToLocalStorage();
-
      document.getElementById("new-routine-input").value = "";
 
      // Empties out the temporary array and clears the Routine being built's exercise list details
@@ -843,13 +904,13 @@ saveNewRoutineButton.addEventListener("click", function () {
 
      showFeedbackButtonSuccessSave("routine");
 
-     // Initializes the exercise list which users can open and close to refer to
+     // Initializes the extra details exercise list
      initializeExerciseList();
 
      // Timer section gets initialized with the new Routine's data
      initializeTimerDetails();
 
-     // Resets the Exercise name's color to lilac in case it's been changed to yellow (Finished's font color)
+     // Resets the Exercise name's color to lilac in case it's been changed (Finished's font color)
      resetTimerDisplayCurrentExerciseNameColor();
 });
 
