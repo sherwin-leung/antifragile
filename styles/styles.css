@@ -89,14 +89,14 @@ button {
 /* * START HTML ELEMENTS */
 
 body {
-    font-family                     : "Nunito", sans-serif;
-    min-height                      : 100vh;
-    text-align                      : center;
+    font-family      : "Nunito", sans-serif;
+    min-height       : 100vh;
+    text-align       : center;
     /* First one is fallback */
-    background                      : linear-gradient(to bottom, #000000, #040103, #070307, #08050d, #060811, #060c14, #060f17, #061219, #08151c, #0b1720, #0c1a23, #0d1c27);
-    background                      : linear-gradient(in lch, #000000, #040103, #070307, #08050d, #060811, #060c14, #060f17, #061219, #08151c, #0b1720, #0c1a23, #0d1c27);
-    /* background                   : linear-gradient(in lch, var(--clr-sky-blue), mistyrose); */
-    color                           : whitesmoke;
+    background       : linear-gradient(to bottom, #000000, #040103, #070307, #08050d, #060811, #060c14, #060f17, #061219, #08151c, #0b1720, #0c1a23, #0d1c27);
+    background       : linear-gradient(in lch, #000000, #040103, #070307, #08050d, #060811, #060c14, #060f17, #061219, #08151c, #0b1720, #0c1a23, #0d1c27);
+    /* background    : linear-gradient(in lch, var(--clr-sky-blue), mistyrose); */
+    color            : whitesmoke;
 }
 
 button {
@@ -555,6 +555,43 @@ label {
     }
 }
 
+/* * Feedback/Animation - for when the user has fully completed all the exercises in their routine without resetting */
+
+.finished-routine-feedback {
+    background: linear-gradient(45deg,
+            #ffffff,
+            #fff1b9,
+            #faefc1,
+            #ffd6e8,
+            #f1b3e6,
+            #96bcff,
+            #82b0ff,
+            #88d5ff,
+            #c6b3ff,
+            #e3cbff,
+            #c1ffe0,
+            #a8ffd9);
+    background-size        : 300% 300%;
+    background-clip        : text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation              : gradient-text 5s ease infinite;
+}
+
+@keyframes gradient-text {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
 /* * START STYLES FOR EXTRA DETAILS */
 
 /* General styling for timer-extra*/
@@ -920,8 +957,6 @@ label {
         padding         : 0.3rem;
         margin          : 0.5rem 0 1rem;
     }
-
-    /* * Feedback - for when user tries to save a Routine without adding in Exercises */
 }
 
 /* * START MEDIA QUERIES */

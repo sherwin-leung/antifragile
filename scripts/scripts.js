@@ -32,11 +32,35 @@ window.onload = pageLoad();
  */
 function pageLoad() {
      generateOverlayPhrase();
+     checkIfFirstVisit();
+
+     // Timer related
      initializeTimerDetails();
      initializeExerciseList();
+
+     // Settings related
      refreshExtraDetails();
      refreshInstructions();
+
+     // Exercise buttons in Routine section
      refreshExerciseCards();
+}
+
+/**
+ * * Performs certain actions on a user's first visit to the app
+ * 1) Enables extra timer details by default on first visit
+ */
+function checkIfFirstVisit() {
+     if (localStorage.getItem("isFirstVisit") !== null) {
+          return;
+     }
+
+     localStorage.setItem("isFirstVisit", false);
+
+     // Makes it so that extra timer details is enabled by default the first time a user visits the app
+     document.getElementById("input-toggle-extra-details-settings").checked = true;
+     saveExtraTimerDetailsChoiceToLocalStorage();
+     showExtraTimerDetails();
 }
 
 /**
@@ -92,10 +116,10 @@ function convertToStringAndPad2(x) {
      return String(x).padStart(2, "0");
 }
 
-// Helper function - resetTimerDisplayCurrentExerciseNameColor() does as its name says, in the event that current exercise being displayed's name was changed to anything other than lilac
-function resetTimerDisplayCurrentExerciseNameColor() {
+// Helper function - removeRoutineFinishedFeedback() removes any feedback styling for the current Exercise name
+function removeRoutineFinishedFeedback() {
      // #e7d1ff is the same as var(--clr--lilac) in CSS variables
-     document.getElementById("timer-display-current-exercise-name").style.color = "#e7d1ff";
+     document.getElementById("timer-display-current-exercise-name").classList.remove("finished-routine-feedback");
 }
 
 // Helper function - disableElement() sets the "disabled" attribute to an element
@@ -910,8 +934,8 @@ saveNewRoutineButton.addEventListener("click", function () {
      // Timer section gets initialized with the new Routine's data
      initializeTimerDetails();
 
-     // Resets the Exercise name's color to lilac in case it's been changed (Finished's font color)
-     resetTimerDisplayCurrentExerciseNameColor();
+     // Resets the Exercise name's color to lilac and removes any feedback styles
+     removeRoutineFinishedFeedback();
 });
 
 /**
@@ -1019,8 +1043,8 @@ function startCountdown() {
      if (currentExerciseIndex === tempArrayOfDurations.length) {
           stopCountdown();
 
-          timerDisplayExerciseName.textContent = "Finished!🎉";
-          timerDisplayExerciseName.style.color = "#ffcc74";
+          timerDisplayExerciseName.textContent = "✨Finished!🎉";
+          timerDisplayExerciseName.classList.add("finished-routine-feedback");
 
           enableElement(startButton);
           disableElement(stopButton);
@@ -1036,7 +1060,7 @@ function startCountdown() {
      startButton.innerHTML = `<i class="fa-solid fa-pause"></i>`;
 
      // Clean up and update once
-     resetTimerDisplayCurrentExerciseNameColor();
+     removeRoutineFinishedFeedback();
      updateDisplayNextExercise(); // Call this function once to reset the "next exercise" section in case it's been changed to something else
      updateDisplayHowManyExercisesLeft();
 
