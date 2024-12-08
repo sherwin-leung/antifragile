@@ -77,7 +77,7 @@ _On desktop, you can delete local storage for a site directly without erasing al
 
 ### 🔮 Future Plans
 
-* Roughly in order of priority, but subject to change
+Listed roughly in order of priority, but subject to change
   
 <details>
 
@@ -94,6 +94,8 @@ _On desktop, you can delete local storage for a site directly without erasing al
 * Store and load multiple routines
 
 </details>
+
+Listed in chronological order (oldest to newest)
 
 <details>
 
