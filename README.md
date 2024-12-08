@@ -81,15 +81,12 @@ _On desktop, you can delete local storage for a site directly without erasing al
   
 <details>
 
-<summary>Click to list of view planned updates</summary>
+<summary>Click to view list of view planned updates</summary>
 
 * Play a sound for start/finish of an exercise
 * Mute button
 
 * Option to add a "buffer countdown" between each exercise
-
-* Display upcoming exercise's name
-* Display how many exercises left in routine
 
 * Ability to delete exercises
 * Sort excercise buttons by alphabetical order
@@ -105,6 +102,9 @@ _On desktop, you can delete local storage for a site directly without erasing al
 * Pause/resume button and functionality
   
 * Implement visual feedback to the user to indicate successes when saving exercises/routines, or errors such as missing an exercise/routine name while saving
+
+* Display upcoming exercise's name
+* Display how many exercises left in routine
   
 </details>
 
@@ -112,7 +112,7 @@ _On desktop, you can delete local storage for a site directly without erasing al
 
 <details>
 
-<summary>Version 1 Changelog</summary>
+<summary>Click to view version 1 changelog</summary>
 
 * v1.07
   * Added optional ability to toggle on/off extra details related to currently loaded routine in the timer (how many exercises left, which exercise is coming up next, and full exercise list). Instructions view can be toggled on and off as well
