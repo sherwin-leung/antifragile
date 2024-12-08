@@ -4,12 +4,12 @@ Antifragile (stylized as "antifragile.") is a simple countdown timer that allows
 
 ## To Access
 
-* Simply visit this [GitHub Page](https://sherwin-leung.github.io/antifragile/) to use!
+Simply visit this [GitHub Page](https://sherwin-leung.github.io/antifragile/) to use!
 
 ## 💡How To Use
 
 `
-As of version 1.06 - subject to change with when additional functionalities are implemented
+As of version 1.07 - subject to change with when additional functionalities are implemented
 `
 
 ### First Usage
@@ -20,15 +20,15 @@ As of version 1.06 - subject to change with when additional functionalities are 
 2. Press the pill shaped **Routine** button to expand the section
    * Enter a routine name
    * Click/tap on an exercise you want to append to your routine list. There are two by default, "Rest" and "Stretch", and you should see your newly added exercise as a button as well. In this example, you would also see "Shadowboxing"
-   * Fill in the two inputs labeled minutes and seconds. _Empty or non-numeric values will default to as 0_
-   * Press **Save** and you should see your routine's name, the first exercise's name and duration, and a button to start and stop at the top portion of your screen
+   * Fill in the two inputs labeled minutes and seconds. _Empty or non-numeric (e) values will default to as 0_
+   * Press **Save** and you should see your routine's name, the first exercise's name and duration, and buttons to start and stop at the top portion of your screen. If you have additional timer details enabled (in settings), you may see more information
      
-3. Control the timer with the **start** and **stop** buttons
+3. Control the timer with the **start/pause** and **stop** buttons
 
 ### Subsequent Uses
 
 * To add a new exercise, simply repeat step 1 above. The new exercise's button will be appended in the **Routine** section
-* To add a new routine, simply repeat step 2 above. This will overwrite the previous routine
+* To add a new routine, simply repeat step 2 above. This will _**overwrite**_ the previous routine until the ability for multiple routines is implemented
 
 ## 💾 About Storage of Data
 
@@ -65,8 +65,6 @@ _On desktop, you can delete local storage for a site directly without erasing al
 
 ### 🐛 Known Bugs
 
-* If any are listed below, they are high on the priority list to fix
-
 <details>
 
 <summary>Click to view known bugs</summary>
@@ -76,12 +74,12 @@ _On desktop, you can delete local storage for a site directly without erasing al
 </details>
 
 ### 🔮 Future Plans
-
-Listed roughly in order of priority, but subject to change
-  
+ 
 <details>
 
-<summary>Click to view list of view planned updates</summary>
+<summary>Click to view planned updates</summary>
+
+Listed roughly in order of priority, but subject to change
 
 * Play a sound for start/finish of an exercise
 * Mute button
@@ -95,11 +93,11 @@ Listed roughly in order of priority, but subject to change
 
 </details>
 
-Listed in chronological order (oldest to newest)
-
 <details>
 
-<summary>Click to view list of completed updates</summary>
+<summary>Click to view completed updates</summary>
+
+Listed in chronological order (oldest to newest)
 
 * Pause/resume button and functionality
   
