@@ -114,6 +114,9 @@ _On desktop, you can delete local storage for a site directly without erasing al
 
 <summary>Version 1 Changelog</summary>
 
+* v1.07
+  * Added optional ability to toggle on/off extra details related to currently loaded routine in the timer (how many exercises left, which exercise is coming up next, and full exercise list). Instructions view can be toggled on and off as well
+
 * v1.06
   * Added visual feedback when trying to save a duplicate exercise and made the successful save feedback flashier
 
