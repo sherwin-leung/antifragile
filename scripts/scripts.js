@@ -1043,7 +1043,7 @@ function startCountdown() {
      if (currentExerciseIndex === tempArrayOfDurations.length) {
           stopCountdown();
 
-          timerDisplayExerciseName.textContent = "✨Finished!🎉";
+          timerDisplayExerciseName.textContent = "✨Finished!✨";
           timerDisplayExerciseName.classList.add("finished-routine-feedback");
 
           enableElement(startButton);

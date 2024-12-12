@@ -420,7 +420,7 @@ label {
 .button-toggle-view {
     background-color: var(--clr-grey-blue);
     color           : whitesmoke;
-    border-radius   : 3rem;
+    border-radius   : 10rem;
     padding         : 1.25rem;
     font-size       : 1rem;
     width           : var(--btn-toggle-view-original-width);
@@ -517,8 +517,9 @@ label {
 }
 
 #timer-display-countdown {
-    font-size: var(--timer-display-countdown-original-size);
-    color    : white;
+    font-size  : var(--timer-display-countdown-original-size);
+    color      : white;
+    padding-top: 0.5rem;
 }
 
 #container-control-buttons {
@@ -576,6 +577,7 @@ label {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation              : gradient-text 5s ease infinite;
+    font-weight            : bold;
 }
 
 @keyframes gradient-text {
@@ -699,7 +701,7 @@ label {
         margin          : 0 auto;
         margin-top      : 1rem;
         padding         : 1rem 0;
-        border-radius   : 3rem;
+        border-radius   : 10rem;
         color           : rgb(31, 31, 31);
         background-color: var(--clr-pastel-yellow-lighter);
     }
