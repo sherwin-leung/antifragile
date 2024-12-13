@@ -914,6 +914,7 @@ saveNewRoutineButton.addEventListener("click", function () {
           return;
      }
 
+     // Save the routine if everything is okay
      saveNewRoutineToLocalStorage();
      document.getElementById("new-routine-input").value = "";
 
