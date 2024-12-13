@@ -40,7 +40,8 @@
 
 
     /* Sizes */
-    --title-font-size           : 2.5rem;
+    --title-header-font-size    : 3rem;
+    --title-popup-font-size     : 2.5rem;
     --slightly-smaller-font-size: 0.8em;
 
     --new-x-cluster-original-width  : 20rem;
@@ -89,14 +90,14 @@ button {
 /* * START HTML ELEMENTS */
 
 body {
-    font-family      : "Nunito", sans-serif;
-    min-height       : 100vh;
-    text-align       : center;
+    font-family  : "Nunito", sans-serif;
+    min-height   : 100vh;
+    text-align   : center;
     /* First one is fallback */
-    background       : linear-gradient(to bottom, #000000, #040103, #070307, #08050d, #060811, #060c14, #060f17, #061219, #08151c, #0b1720, #0c1a23, #0d1c27);
-    background       : linear-gradient(in lch, #000000, #040103, #070307, #08050d, #060811, #060c14, #060f17, #061219, #08151c, #0b1720, #0c1a23, #0d1c27);
-    /* background    : linear-gradient(in lch, var(--clr-sky-blue), mistyrose); */
-    color            : whitesmoke;
+    background   : linear-gradient(to bottom, #000000, #040103, #070307, #08050d, #060811, #060c14, #060f17, #061219, #08151c, #0b1720, #0c1a23, #0d1c27);
+    background   : linear-gradient(in lch, #000000, #040103, #070307, #08050d, #060811, #060c14, #060f17, #061219, #08151c, #0b1720, #0c1a23, #0d1c27);
+    /* background: linear-gradient(in lch, var(--clr-sky-blue), mistyrose); */
+    color        : whitesmoke;
 }
 
 button {
@@ -178,14 +179,13 @@ label {
     }
 }
 
-.title {
-    /* First one is fall back */
+.title-popup {
     background             : linear-gradient(180deg, rgba(251, 187, 215, 1) 5%, rgba(143, 194, 255, 1) 95%);
     background             : linear-gradient(in lch, rgba(251, 187, 215, 1) 5%, rgba(143, 194, 255, 1) 95%);
-    -webkit-background-clip: text;
     background-clip        : text;
+    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size              : var(--title-font-size);
+    font-size              : var(--title-popup-font-size);
 }
 
 #overlay-phrase {
@@ -409,6 +409,45 @@ label {
     padding-top: 0.7rem;
 }
 
+.title-header {
+    background-image: linear-gradient(45deg,
+            #e0bff9,
+            #dab8f7,
+            #d3b0f0,
+            #ceaae9,
+            #c6a3f9,
+            #be9ff7,
+            #b59cf6,
+            #ac99f4,
+            #a396f2,
+            #9a94f0,
+            #9290ed,
+            #8492ee,
+            #7199f5,
+            #7a9ef3,
+            #8a8deb);
+    background-size        : 300% 300%;
+    background-clip        : text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation              : title-gradient-text 10s ease infinite;
+    font-size              : var(--title-header-font-size);
+}
+
+@keyframes title-gradient-text {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
 /* * START DIV TOGGLE VIEW */
 
 /* Sections are hidden on page load */
@@ -470,6 +509,11 @@ label {
 .settings-checkbox {
     display: inline-block;
     margin : 0.15rem 0.5rem;
+
+    input,
+    label {
+        cursor: pointer;
+    }
 }
 
 /* * Feedback - for when user toggle settings to show extra details and/or app instructions */
@@ -560,27 +604,25 @@ label {
 
 .finished-routine-feedback {
     background: linear-gradient(45deg,
-            #ffffff,
-            #fff1b9,
-            #faefc1,
+            #fff8dc,
+            #fff5cb,
             #ffd6e8,
             #f1b3e6,
+            #88d5ff,
             #96bcff,
             #82b0ff,
-            #88d5ff,
             #c6b3ff,
             #e3cbff,
             #c1ffe0,
-            #a8ffd9);
-    background-size        : 300% 300%;
-    background-clip        : text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation              : gradient-text 5s ease infinite;
-    font-weight            : bold;
+            #a8ffd9) !important;
+    background-size        : 300% 300% !important;
+    background-clip        : text !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    animation              : finished-gradient-text 10s ease infinite !important;
 }
 
-@keyframes gradient-text {
+@keyframes finished-gradient-text {
     0% {
         background-position: 0% 50%;
     }
@@ -741,8 +783,7 @@ label {
 
     .button-success-save.animate:before {
         top: -75%;
-        background-image:
-            radial-gradient(circle, goldenrod 20%, transparent 20%),
+        background-image: radial-gradient(circle, goldenrod 20%, transparent 20%),
             radial-gradient(circle, transparent 20%, goldenrod 20%, transparent 30%),
             radial-gradient(circle, goldenrod 20%, transparent 20%),
             radial-gradient(circle, goldenrod 20%, transparent 20%),
@@ -757,8 +798,7 @@ label {
 
     .button-success-save.animate:after {
         bottom: -75%;
-        background-image:
-            radial-gradient(circle, goldenrod 20%, transparent 20%),
+        background-image: radial-gradient(circle, goldenrod 20%, transparent 20%),
             radial-gradient(circle, goldenrod 20%, transparent 20%),
             radial-gradient(circle, transparent 10%, goldenrod 15%, transparent 20%),
             radial-gradient(circle, goldenrod 20%, transparent 20%),
@@ -987,8 +1027,8 @@ label {
 /* Small laptops */
 /* Content begins to get bigger here  */
 @media (width >=1300px) {
-    .title {
-        font-size: calc(var(--title-font-size) * 1.1);
+    .title-header {
+        font-size: calc(var(--title-header-font-size) * 1.1);
     }
 
     .header-content {
@@ -1020,12 +1060,12 @@ label {
 
 /* Most common desktop screens */
 @media (width >=1800px) {
-    .title {
-        font-size: calc(var(--title-font-size)*1.2);
+    .title-header {
+        font-size: calc(var(--title-header-font-size)*1.3);
     }
 
     .header-content {
-        padding-top: 2rem;
+        padding-top: 1.25rem;
     }
 
 
@@ -1047,12 +1087,12 @@ label {
 }
 
 @media (width >=2400px) {
-    .title {
-        font-size: calc(var(--title-font-size) * 1.3);
+    .title-header {
+        font-size: calc(var(--title-header-font-size) * 1.5);
     }
 
     .header-content {
-        padding-top: 3rem;
+        padding-top: 2rem;
     }
 
     #timer-display-routine-name {

@@ -118,7 +118,6 @@ function convertToStringAndPad2(x) {
 
 // Helper function - removeRoutineFinishedFeedback() removes any feedback styling for the current Exercise name
 function removeRoutineFinishedFeedback() {
-     // #e7d1ff is the same as var(--clr--lilac) in CSS variables
      document.getElementById("timer-display-current-exercise-name").classList.remove("finished-routine-feedback");
 }
 
@@ -934,7 +933,7 @@ saveNewRoutineButton.addEventListener("click", function () {
      // Timer section gets initialized with the new Routine's data
      initializeTimerDetails();
 
-     // Resets the Exercise name's color to lilac and removes any feedback styles
+     // Resets the Exercise name's color to original state and removes any feedback styles
      removeRoutineFinishedFeedback();
 });
 
