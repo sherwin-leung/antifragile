@@ -38,6 +38,8 @@
     --clr-success-green: #73bd73;
     --clr-error-red    : #c95056;
 
+    --gradient-sky-blue-misty-rose: linear-gradient(in lch, var(--clr-sky-blue), mistyrose);
+
 
     /* Sizes */
     --title-header-font-size    : 3rem;
@@ -179,25 +181,23 @@ label {
     }
 }
 
-.title-popup,
-.title-header {
+.title {
     background-image: linear-gradient(45deg,
-            #8a8deb,
-            #7a9ef3,
+            #6b94f3,
             #7199f5,
-            #8492ee,
+            #789ef8,
+            #8291f1,
+            #8184eb,
+            #878ae5,
+            #8b8dee,
             #8a8deb,
             #9290ed,
             #9a94f0,
             #a396f2,
-            #ac99f4,
             #b59cf6,
-            #be9ff7,
             #c6a3f9,
             #ceaae9,
-            #d3b0f0,
-            #dab8f7,
-            #e0bff9);
+            #d3b0f0);
     background-size        : 300% 300%;
     background-clip        : text;
     -webkit-background-clip: text;
@@ -205,17 +205,13 @@ label {
 }
 
 .title-popup {
-    /* background             : linear-gradient(in lch, rgba(251, 187, 215, 1) 5%, rgba(143, 194, 255, 1) 95%);
-    background-clip        : text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent; */
     font-size: var(--title-popup-font-size);
-    animation: animate-gradient-text 3s ease infinite;
+    animation: animate-gradient-text 1.5s ease infinite;
 }
 
 .title-header {
     font-size: var(--title-header-font-size);
-    animation: animate-gradient-text 9s ease infinite;
+    animation: animate-gradient-text 5s ease infinite;
 }
 
 @keyframes animate-gradient-text {
@@ -519,6 +515,17 @@ label {
     label {
         cursor: pointer;
     }
+
+    /* TODO */
+    input[type="checkbox"] {
+        appearance: none;
+    }
+
+    input[type="checkbox"]:checked {
+        appearance  : revert;
+        transform   : scale(1.5);
+        accent-color: transparent;
+    }
 }
 
 /* * Feedback - for when user toggle settings to show extra details and/or app instructions */
@@ -687,7 +694,28 @@ label {
 }
 
 .span-new {
-    color: var(--clr-grey-blue-lighter);
+    background-image: linear-gradient(in lch,
+            #6792f7,
+            #6d91e6,
+            #7a9ef3,
+            #7199f5,
+            #8291f1,
+            #878ae5,
+            #8a8deb,
+            #9290ed,
+            #9a94f0,
+            #a396f2,
+            #ac99f4,
+            #b59cf6,
+            #be9ff7,
+            #c6a3f9,
+            #ceaae9,
+            #d3b0f0,
+            #dab8f7);
+    /* background-size        : 300% 300%; */
+    background-clip        : text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .span-exercise {
@@ -726,7 +754,6 @@ label {
 
     input:hover,
     input:focus {
-        border-bottom: 2px solid var(--clr-grey-blue-lighter);
         border-bottom: 2px solid var(--clr-sky-blue);
     }
 
