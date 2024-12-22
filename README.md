@@ -9,7 +9,7 @@ Simply visit this [GitHub Page](https://sherwin-leung.github.io/antifragile/) to
 ## 💡How To Use
 
 `
-As of version 1.07 - subject to change with when additional functionalities are implemented
+As of version 1.08 - subject to change with when additional functionalities are implemented
 `
 
 ### First Usage
@@ -81,15 +81,14 @@ _On desktop, you can delete local storage for a site directly without erasing al
 
 Listed roughly in order of priority, but subject to change
 
-* Play a sound for start/finish of an exercise
-* Mute button
-
 * Option to add a "buffer countdown" between each exercise
 
 * Ability to delete exercises
 * Sort excercise buttons by alphabetical order
 
 * Store and load multiple routines
+
+* Ability to export data to a JSON file
 
 </details>
 
@@ -114,8 +113,11 @@ Listed in chronological order (oldest to newest)
 
 <summary>Click to view version 1 changelog</summary>
 
+* v1.08
+  * Added ability to toggle on/off sounds for the timer. A sound plays when you successfully complete the entire routine (all exercises finished without quitting - pausing is okay though) and a sound plays when you stop the routine. Looking to add a sound that plays in between exercises for the routine soon. _The sounds right now are just silly Chaewon (from LE SSERAFIM) sounds but may change it in the future._
+ 
 * v1.07
-  * Added optional ability to toggle on/off extra details related to currently loaded routine in the timer (how many exercises left, which exercise is coming up next, and full exercise list). Instructions view can be toggled on and off as well
+  * Added ability to toggle on/off extra details related to currently loaded routine in the timer (how many exercises left, which exercise is coming up next, and full exercise list). Instructions view can be toggled on and off as well
 
 * v1.06
   * Added visual feedback when trying to save a duplicate exercise and made the successful save feedback flashier
@@ -145,5 +147,6 @@ Listed in chronological order (oldest to newest)
 * V.L. for his mentorship and support
 * J.Z. and I.W. for helping me bug test
 * LE SSERAFIM's song [ANTIFRAGILE](https://youtu.be/pyf8cbqyfPs) whose name I ~~purloined~~ borrowed
+* [Chaewon](https://www.instagram.com/_chaechae_1/?hl=en) for her voice
 * [animista](https://animista.net/) - an awesome CSS library for animations
 * Various code snippets from Stack Overflow and around the internet. I try to put credits within comments in the source code if it's something I straight copied
