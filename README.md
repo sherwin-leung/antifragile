@@ -2,9 +2,13 @@
 
 Antifragile (stylized as "antifragile.") is a simple countdown timer that allows you to create exercises, append them to a list, and save the list as a routine.
 
-## To Access
+## How To Access & Troubleshoot
 
 Simply visit this [GitHub Page](https://sherwin-leung.github.io/antifragile/) to use!
+
+If the app seems disfunctional, try [clearing your local storage](https://github.com/sherwin-leung/antifragile/edit/main/README.md#-about-storage-of-data). Sometimes updates add/remove things which break parts of the app and clearing your local storage will most likely fix it.
+
+**Please be aware that all your exercises and the routine will have to be remade until an import/export feature is implemented.** ***Please read the link first!***
 
 ## 💡How To Use
 
@@ -46,6 +50,12 @@ At the moment, there is no functionality to clear existing exerises on the timer
 
 There are plans to implement functionalities to allow users to delete existing exercises and routines in the future, but in the mean time, users using the [timer](https://sherwin-leung.github.io/antifragile/) can delete their associated data (and thus starting the timer with a fresh slate) with the following steps:
 
+</details>
+
+<details>
+
+<summary>Click to see how to delete local storage</summary>
+  
 ### 🖥️ Desktop
 
 _On desktop, you can delete local storage for a site directly without erasing all your cookies._
@@ -57,7 +67,7 @@ _On desktop, you can delete local storage for a site directly without erasing al
 
 ### 📱 Mobile
 
-* Simply clear your browser's cookies/site data. ***Keep in mind that this will probably sign you out of any sites you've signed into on your phone's browser!***
+* Simply clear your browser's cookies/site data. ***Keep in mind that this will probably sign you out of any sites you've signed into on your phone's browser and clear other preferences!***
 
 </details>
 
