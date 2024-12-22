@@ -472,8 +472,7 @@ label {
     }
 }
 
-.button-toggle-view:hover,
-.button-toggle-view:focus {
+.button-toggle-view:hover {
     background-color: var(--clr-grey-blue-darker);
 
     .fa-plus,
@@ -495,10 +494,8 @@ label {
 }
 
 #section-settings {
-    width          : var(--settings-original-width);
-    margin         : 0 auto;
-    /* padding-left is to make up for the fact that the input checkboxes are invisible to the right of the label but still taking up space */
-    /* padding-left: 2rem; */
+    width : var(--settings-original-width);
+    margin: 0 auto;
 
     fieldset {
         border: 0;
@@ -542,7 +539,7 @@ label {
 
 /* TODO */
 #label-popup-info-settings {
-    color: snow;
+    color: var(--clr-pastel-yellow-lighter);
 }
 
 /* * Feedback - for when user toggle settings to show extra details and/or app instructions */
@@ -616,12 +613,6 @@ label {
         border-radius   : 50%;
         width           : 4rem;
         height          : 4rem;
-    }
-
-    .button-control:hover,
-    .button-control:focus {
-        background-color: var(--clr-pastel-purple-darkest);
-        color           : white;
     }
 
     .button-control:disabled {
@@ -784,8 +775,7 @@ label {
         background-color: var(--clr-pastel-yellow-lighter);
     }
 
-    .button-save:hover,
-    .button-save:focus {
+    .button-save:hover {
         background-color: var(--clr-pastel-yellow);
     }
 
@@ -1069,6 +1059,15 @@ label {
 
     .header-content {
         padding-top: 1rem;
+    }
+
+    #container-control-buttons {
+
+        /* Works well on desktop but doesn't quite work that well on mobile because the hover state gets stuck after a user taps on the button. Anything laptop-sized and bigger will have hover styles for the control buttons, but not on mobile  */
+        .button-control:hover {
+            background-color: var(--clr-pastel-purple-darkest);
+            color           : white;
+        }
     }
 
     .button-toggle-view {

@@ -173,7 +173,7 @@ settingsSection.addEventListener("change", function (event) {
           const label = checkbox.previousElementSibling;
 
           if (checkbox.checked) {
-               label.style.color = "snow";
+               label.style.color = "var(--clr-pastel-yellow-lighter)";
           } else {
                label.style.color = ""; // This resets it to default
           }
@@ -230,7 +230,7 @@ function refreshExtraDetailsSettings() {
           document.getElementById("input-toggle-extra-details-settings").checked = true;
 
           // Make icon being lit up persist on page loads
-          document.getElementById("label-toggle-extra-details-settings").style.color = "snow";
+          document.getElementById("label-toggle-extra-details-settings").style.color = "var(--clr-pastel-yellow-lighter)";
      }
 }
 
@@ -272,7 +272,7 @@ function displayProperSoundSettingsIcon() {
      if (getSoundsChoiceFromLocalStorage() === "true") {
           soundsIcon.classList.add("fa-solid", "fa-volume-high");
           soundsIcon.classList.remove("fa-volume-xmark");
-          soundsLabel.style.color = "snow";
+          soundsLabel.style.color = "var(--clr-pastel-yellow-lighter)";
      } else {
           soundsIcon.classList.add("fa-solid", "fa-volume-xmark");
           soundsIcon.classList.remove("fa-volume-high");
@@ -351,7 +351,7 @@ function refreshInstructionsSettings() {
           document.getElementById("input-toggle-instructions-settings").checked = true;
 
           // Make icon being lit up persist on page loads
-          document.getElementById("label-toggle-instructions-settings").style.color = "snow";
+          document.getElementById("label-toggle-instructions-settings").style.color = "var(--clr-pastel-yellow-lighter)";
      }
 }
 
