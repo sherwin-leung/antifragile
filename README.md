@@ -6,9 +6,9 @@ Antifragile (stylized as "antifragile.") is a simple countdown timer that allows
 
 Simply visit this [GitHub Page](https://sherwin-leung.github.io/antifragile/) to use!
 
-If the app seems disfunctional, try [clearing your local storage](https://github.com/sherwin-leung/antifragile/edit/main/README.md#-about-storage-of-data). Sometimes updates add/remove things which break parts of the app and clearing your local storage will most likely fix it.
+If the app seems broken and issues persist, try [clearing your local storage](https://github.com/sherwin-leung/antifragile?tab=readme-ov-file#-about-storage-of-data). Sometimes updates add/remove things which break parts of the app and clearing your local storage will most likely fix it. But they should generally fix themselves if you give the app a short amount of time.
 
-**Please be aware that all your exercises and the routine will have to be remade until an import/export feature is implemented.** ***Please read the link first!***
+**Please be aware that all your exercises and the routine will have to be remade until an import/export feature is implemented.** ***Please read the link first - especially if clearing on mobile devices!***
 
 ## 💡How To Use
 
@@ -28,6 +28,8 @@ As of version 1.08 - subject to change with when additional functionalities are 
    * Press **Save** and you should see your routine's name, the first exercise's name and duration, and buttons to start and stop at the top portion of your screen. If you have additional timer details enabled (in settings), you may see more information
      
 3. Control the timer with the **start/pause** and **stop** buttons
+
+4. Optional: Play around with the settings under the app's title
 
 ### Subsequent Uses
 
