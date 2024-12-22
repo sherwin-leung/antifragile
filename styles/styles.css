@@ -48,7 +48,7 @@
 
     --new-x-cluster-original-width  : 20rem;
     --settings-original-width       : 20rem;
-    --btn-toggle-view-original-width: 15rem;
+    --btn-toggle-view-original-width: 12.5rem;
     --btn-save-original-width       : 10rem;
 
     --timer-display-routine-name-original-size         : 1.5rem;
@@ -82,7 +82,8 @@ img {
 }
 
 /* Mostly for aesthetics */
-button {
+button,
+input[type="button"] {
     border       : 0;
     outline-color: transparent;
 }
@@ -211,7 +212,7 @@ label {
 
 .title-header {
     font-size: var(--title-header-font-size);
-    animation: animate-gradient-text 5s ease infinite;
+    animation: animate-gradient-text 8s ease infinite;
 }
 
 @keyframes animate-gradient-text {
@@ -456,7 +457,6 @@ label {
     display: none;
 }
 
-/* The buttons that are in charge of toggling the show/hide of above */
 .button-toggle-view {
     background-color: var(--clr-grey-blue);
     color           : whitesmoke;
@@ -467,7 +467,8 @@ label {
 
     .fa-plus,
     .fa-minus {
-        color: var(--clr-grey-blue-lighter);
+        /* color: var(--clr-grey-blue-lighter); */
+        color: rgb(200, 200, 200);
     }
 }
 
@@ -494,8 +495,10 @@ label {
 }
 
 #section-settings {
-    width : var(--settings-original-width);
-    margin: 0 auto;
+    width          : var(--settings-original-width);
+    margin         : 0 auto;
+    /* padding-left is to make up for the fact that the input checkboxes are invisible to the right of the label but still taking up space */
+    /* padding-left: 2rem; */
 
     fieldset {
         border: 0;
@@ -510,22 +513,36 @@ label {
 .settings-checkbox {
     display: inline-block;
     margin : 0.15rem 0.5rem;
+    color  : var(--clr-light-grey-darker);
+
 
     input,
     label {
         cursor: pointer;
     }
 
-    /* TODO */
+    label {
+        /* For some reason, this makes the sound icon not shift other icons when being toggled */
+        /* The  sound "on" icon is bigger than the sound "off" icon so it shifts normally */
+        width: 1rem;
+    }
+
     input[type="checkbox"] {
-        appearance: none;
+        opacity      : 0;
+        /* appearance: none; */
     }
 
     input[type="checkbox"]:checked {
-        appearance  : revert;
-        transform   : scale(1.5);
-        accent-color: transparent;
+        opacity              : 0;
+        /* appearance        : revert; */
+        /* transform         : scale(1.5); */
+        /* accent-color      : transparent; */
     }
+}
+
+/* TODO */
+#label-popup-info-settings {
+    color: snow;
 }
 
 /* * Feedback - for when user toggle settings to show extra details and/or app instructions */

@@ -19,7 +19,7 @@
             <img class="bounce-in-top" src="images/icons8-cherry-blossom-blue-16.png" alt="purple cherry blossom" />
             <h1 class="title title-popup tracking-in-expand">antifragile.</h1>
             <p class="text-focus-in" id="overlay-phrase"></p>
-            <p class="version-text text-focus-in">v1.07</p>
+            <p class="version-text text-focus-in">v1.08</p>
         </div>
     </div>
 
@@ -32,27 +32,40 @@
                 <!-- <legend><i class="fa-solid fa-gear"></i></legend> -->
 
                 <div class="settings-checkbox">
-                    <label for="input-toggle-extra-details-settings">
+                    <label id="label-toggle-extra-details-settings" for="input-toggle-extra-details-settings">
                         <i class="fa-solid fa-expand"></i>
                     </label>
                     <input type="checkbox" id="input-toggle-extra-details-settings" />
                 </div>
 
                 <div class="settings-checkbox">
-                    <label for="input-toggle-sounds-settings">
-                        <i class="fa-solid fa-volume-high"></i>
-                        <!-- <i class="fa-solid fa-volume-xmark"></i> -->
+                    <label id="label-toggle-sounds-settings" for="input-toggle-sounds-settings">
+                        <!-- The label's icon is controlled using JS -->
+                        <i id="icon-sound"></i>
                     </label>
                     <input type="checkbox" id="input-toggle-sounds-settings" />
                 </div>
 
                 <div class="settings-checkbox">
-                    <label for="input-toggle-instructions-settings">
-                        <i class="fa-regular fa-circle-question"></i>
+                    <label id="label-toggle-instructions-settings" for="input-toggle-instructions-settings">
+                        <i class="fa-solid fa-info"></i>
                     </label>
                     <input type="checkbox" id="input-toggle-instructions-settings" />
                 </div>
+
+                <div class="settings-checkbox">
+                    <label id="label-popup-info-settings" for="input-popup-instructions-settings">
+                        <i class="fa-regular fa-circle-question"></i>
+                    </label>
+                    <input type="button" id="input-popup-instructions-settings" popovertarget="popover-info" />
+                </div>
             </fieldset>
+
+            <div popover id="popover-info">
+                <h2>hi</h2>
+                <p>hello</p>
+            </div>
+
         </section>
     </header>
 

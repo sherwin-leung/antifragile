@@ -28,7 +28,7 @@ class Routine {
 window.onload = pageLoad();
 
 /**
- * This function is a collection of functions that need to be run upon the user loading the page
+ * * This function is a collection of functions that need to be run upon the user loading the page
  */
 function pageLoad() {
      generateOverlayPhrase();
@@ -39,8 +39,9 @@ function pageLoad() {
      initializeExerciseList();
 
      // Settings related
-     refreshExtraDetails();
-     refreshInstructions();
+     refreshExtraDetailsSettings();
+     refreshSoundsSettings();
+     refreshInstructionsSettings();
 
      // Exercise buttons in Routine section
      refreshExerciseCards();
@@ -51,6 +52,7 @@ function pageLoad() {
  * 1) Enables extra timer details by default on first visit
  */
 function checkIfFirstVisit() {
+     // If there's already a value of false in there, we know it's not the user's first visit
      if (localStorage.getItem("isFirstVisit") !== null) {
           return;
      }
@@ -154,26 +156,52 @@ function generateOverlayPhrase() {
 }
 
 // Settings Section
+
+/**
+ * * This code handles the visual feedback for the settings icons
+ * They are greyed out if inactive/toggeled "off" and lit up if active/toggled "on"
+ * The exception is the info popup button which is always lit up
+ */
+const settingsSection = document.getElementById("section-settings");
+
+// Instead of adding an event listener to every settings checkbox, this is called "event delegation"
+// Learned this towards the end of the project, otherwise it could've been used on other pieces of the app that require a lot of event listeners
+// https://youtu.be/_bOoM0S7zF8?t=226 for more information
+settingsSection.addEventListener("change", function (event) {
+     if (event.target.matches("input[type='checkbox']")) {
+          const checkbox = event.target;
+          const label = checkbox.previousElementSibling;
+
+          if (checkbox.checked) {
+               label.style.color = "snow";
+          } else {
+               label.style.color = ""; // This resets it to default
+          }
+
+          return;
+     }
+});
+
 /**
  * * These functions handle the visibility of the extra timer details
  * 1) saveExtraTimerDetailsChoiceToLocalStorage() stores the user's choice of whether to display the extra details or not to local storage so it'll persist through sessions
  * 2) getExtraTimerDetailsChoiceFromLocalStorage() returns the user's choice from function 1), but NOTE: it returns it as a string, NOT a boolean. It will be "true" or "false"
  * 3) showExtraTimerDetails() shows the extra details
  * 4) hideExtraTimerDetails() hides the extra details
- * 5) refreshExtraDetails() toggles between showing and hiding the extra details depending on the user's choice
+ * 5) refreshExtraDetailsSettings() toggles between showing and hiding the extra details depending on the user's choice
  * 6) Event handler paired with these functions
  */
 // 1
 function saveExtraTimerDetailsChoiceToLocalStorage() {
      let isChecked = document.getElementById("input-toggle-extra-details-settings").checked;
      // Note: the value is saved as a boolean, but once we use localStorage.getItem, the value returns as a string
-     localStorage.setItem("showExtraTimerDetails", isChecked);
+     localStorage.setItem("settingsShowExtraTimerDetails", isChecked);
 }
 
 // 2
 function getExtraTimerDetailsChoiceFromLocalStorage() {
      // Reminder: localStorage.getItem() always returns a string
-     return localStorage.getItem("showExtraTimerDetails");
+     return localStorage.getItem("settingsShowExtraTimerDetails");
 }
 
 // 3
@@ -194,12 +222,15 @@ function hideExtraTimerDetails() {
      exerciseList.classList.remove("show");
 }
 
-// 5
-function refreshExtraDetails() {
+// 5 - used on page load
+function refreshExtraDetailsSettings() {
      // Because getExtraTimerDetailsChoiceFromLocalStorage() returns a string, we have to compare it with a string in the first check
      if (getExtraTimerDetailsChoiceFromLocalStorage() === "true") {
           showExtraTimerDetails();
           document.getElementById("input-toggle-extra-details-settings").checked = true;
+
+          // Make icon being lit up persist on page loads
+          document.getElementById("label-toggle-extra-details-settings").style.color = "snow";
      }
 }
 
@@ -219,26 +250,85 @@ extraDetailsInput.addEventListener("change", function () {
      }
 });
 
+// 1
+function saveSoundsChoiceToLocalStorage() {
+     let isChecked = document.getElementById("input-toggle-sounds-settings").checked;
+     // Note: the value is saved as a boolean, but once we use localStorage.getItem, the value returns as a string
+     localStorage.setItem("settingsPlaySounds", isChecked);
+}
+
+// 2
+function getSoundsChoiceFromLocalStorage() {
+     // Reminder: localStorage.getItem() always returns a string
+     return localStorage.getItem("settingsPlaySounds");
+}
+
+// 3
+function displayProperSoundSettingsIcon() {
+     const soundsLabel = document.getElementById("label-toggle-sounds-settings");
+     const soundsIcon = document.getElementById("icon-sound");
+
+     // Because getSoundsChoiceFromLocalStorage() returns a string, we have to compare it with a string in the first check
+     if (getSoundsChoiceFromLocalStorage() === "true") {
+          soundsIcon.classList.add("fa-solid", "fa-volume-high");
+          soundsIcon.classList.remove("fa-volume-xmark");
+          soundsLabel.style.color = "snow";
+     } else {
+          soundsIcon.classList.add("fa-solid", "fa-volume-xmark");
+          soundsIcon.classList.remove("fa-volume-high");
+          soundsLabel.style.color = "var(--clr-light-grey-darker);";
+     }
+}
+
+// TODO
+function playChaewonDayumSound() {
+     const chaewonDayum = new Audio("sounds/chaewon-dayum-louder.mp3");
+     chaewonDayum.play();
+}
+
+function playChaewonHeySound() {
+     const chaewonHey = new Audio("sounds/chaewon-hey-louder.mp3");
+     chaewonHey.play();
+}
+
+// 5 - used on page load
+function refreshSoundsSettings() {
+     // We always want to check that we have the correct sound icon displayed
+     displayProperSoundSettingsIcon();
+
+     if (getSoundsChoiceFromLocalStorage() === "true") {
+          document.getElementById("input-toggle-sounds-settings").checked = true;
+     }
+}
+
+// Paired with above functions
+const soundsInput = document.getElementById("input-toggle-sounds-settings");
+soundsInput.addEventListener("change", function () {
+     // Make user's choice of extra details visibility persist
+     saveSoundsChoiceToLocalStorage();
+     displayProperSoundSettingsIcon();
+});
+
 /**
  * * These functions handle the visibility of the instructions
  * 1) saveInstructionsChoiceToLocalStorage() stores the user's choice of whether to display the instructions or not to local storage so it'll persist through sessions
  * 2) getInstructionsChoiceFromLocalStorage() returns the user's choice from function 1), but NOTE: it returns it as a string, NOT a boolean. It will be "true" or "false"
  * 3) showInstructions() shows the instructions
  * 4) hideInstructions() hides the instructions
- * 5) refreshInstructions() toggles between showing and hiding the instructions depending on the user's choice
+ * 5) refreshInstructionsSettings() toggles between showing and hiding the instructions depending on the user's choice
  * 6) Event handler paired with these functions
  */
 // 1
 function saveInstructionsChoiceToLocalStorage() {
      let isChecked = document.getElementById("input-toggle-instructions-settings").checked;
      // Note: the value is saved as a boolean, but once we use localStorage.getItem, the value returns as a string
-     localStorage.setItem("showInstructions", isChecked);
+     localStorage.setItem("settingsShowInstructions", isChecked);
 }
 
 // 2
 function getInstructionsChoiceFromLocalStorage() {
      // Reminder: localStorage.getItem() always returns a string
-     return localStorage.getItem("showInstructions");
+     return localStorage.getItem("settingsShowInstructions");
 }
 
 /// 3
@@ -253,12 +343,15 @@ function hideInstructions() {
      instructions.classList.remove("show");
 }
 
-// 5
-function refreshInstructions() {
+// 5 - used on page load
+function refreshInstructionsSettings() {
      // Because getInstructionsChoiceFromLocalStorage() returns a string, we have to compare it with a string in the first check
      if (getInstructionsChoiceFromLocalStorage() === "true") {
           showInstructions();
           document.getElementById("input-toggle-instructions-settings").checked = true;
+
+          // Make icon being lit up persist on page loads
+          document.getElementById("label-toggle-instructions-settings").style.color = "snow";
      }
 }
 
@@ -976,7 +1069,7 @@ const timerDisplayNumberOfExercisesLeft = document.getElementById("timer-extra-n
 const startButton = document.getElementById("button-start");
 const stopButton = document.getElementById("button-stop");
 
-// * [Stop] starts off disabled
+// * [Stop] button starts off as disabled
 disableElement(stopButton);
 
 // Event Listener 1 [Start]
@@ -1010,6 +1103,12 @@ stopButton.addEventListener("click", function () {
 
      // Change next exercise display text
      timerDisplayNextExerciseName.textContent = "Stopped";
+
+     // Reminder: the getter returns a string so we have to compare with a string
+     if (getSoundsChoiceFromLocalStorage() === "true") {
+          // Yell at the user for stopping! The timeout is just to add a very small buffer because of my OCD
+          setTimeout(playChaewonHeySound, 135);
+     }
 });
 
 // 1
@@ -1038,13 +1137,17 @@ function createTempArraysForTimer() {
 
 // 2 - has multiple other functions below used within this function
 function startCountdown() {
-     // If there are no more exercises, stop the timer from running
-     // Also perform a little clean up with buttons
+     // If there are no more exercises, stop the timer from running and performs clean up/feedback
      if (currentExerciseIndex === tempArrayOfDurations.length) {
           stopCountdown();
 
           timerDisplayExerciseName.textContent = "✨Finished!✨";
           timerDisplayExerciseName.classList.add("finished-routine-feedback");
+
+          // Reminder: the getter returns a string so we have to compare with a string
+          if (getSoundsChoiceFromLocalStorage() === "true") {
+               playChaewonDayumSound();
+          }
 
           enableElement(startButton);
           disableElement(stopButton);
@@ -1137,10 +1240,16 @@ function stopCountdown() {
 function tick() {
      // Stop the countdown when time is up for the current exercise
      if (totalCountdownTimeInSeconds < 0) {
-          clearInterval(timerIntervalId); // Triger stop
+          clearInterval(timerIntervalId); // Trigger stop
 
           // Move on to the next exercise
           currentExerciseIndex++;
+
+          // TODO
+          // Reminder: the getter returns a string so we have to compare with a string
+          if (getSoundsChoiceFromLocalStorage() === "true") {
+               playChaewonDayumSound();
+          }
 
           // Start the countdown for the next exercise
           startCountdown();
