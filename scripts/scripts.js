@@ -287,7 +287,7 @@ function playChaewonDayumSound() {
 }
 
 function playChaewonHeySound() {
-     const chaewonHey = new Audio("sounds/chaewon-hey-louder.mp3");
+     const chaewonHey = new Audio("sounds/chaewon-hey.mp3");
      chaewonHey.play();
 }
 
@@ -1063,8 +1063,7 @@ let isTimerPaused = false;
 
 const timerDisplayExerciseName = document.getElementById("timer-display-current-exercise-name");
 const timerDisplayCountdown = document.getElementById("timer-display-countdown");
-const timerDisplayNextExerciseName = document.getElementById("timer-extra-next-exercise-name");
-const timerDisplayNumberOfExercisesLeft = document.getElementById("timer-extra-number-of-exercises-left");
+const timerDisplayNumberOfExercisesLeft = document.getElementById("timer-extra-upcoming");
 
 const startButton = document.getElementById("button-start");
 const stopButton = document.getElementById("button-stop");
@@ -1100,9 +1099,6 @@ stopButton.addEventListener("click", function () {
      // Change timer display text
      timerDisplayExerciseName.textContent = "Stopped";
      timerDisplayCountdown.textContent = "00:00";
-
-     // Change next exercise display text
-     timerDisplayNextExerciseName.textContent = "Stopped";
 
      // Reminder: the getter returns a string so we have to compare with a string
      if (getSoundsChoiceFromLocalStorage() === "true") {
@@ -1164,8 +1160,7 @@ function startCountdown() {
 
      // Clean up and update once
      removeRoutineFinishedFeedback();
-     updateDisplayNextExercise(); // Call this function once to reset the "next exercise" section in case it's been changed to something else
-     updateDisplayHowManyExercisesLeft();
+     updateUpcomingExercises();
 
      // Countdown
      tick(); // Call the update function once to display the initial time..
@@ -1173,19 +1168,15 @@ function startCountdown() {
 }
 
 // 2a
-function updateDisplayHowManyExercisesLeft() {
-     timerDisplayNumberOfExercisesLeft.textContent = `${tempArrayOfNames.length - (currentExerciseIndex + 1)} exercises left`;
-}
-
-// 2b - used inside startCountdown()
-function updateDisplayNextExercise() {
+function updateUpcomingExercises() {
      if (currentExerciseIndex === tempArrayOfNames.length - 1) {
-          timerDisplayNextExerciseName.textContent = "Almost there!";
+          timerDisplayNumberOfExercisesLeft.textContent = `This is your last exercise`;
           return;
      }
 
-     timerDisplayNextExerciseName.textContent = `Next up - ${tempArrayOfNames[currentExerciseIndex + 1]}`;
-     return;
+     timerDisplayNumberOfExercisesLeft.textContent = `${tempArrayOfNames.length - (currentExerciseIndex + 1)} exercises left - next up: ${
+          tempArrayOfNames[currentExerciseIndex + 1]
+     }`;
 }
 
 // 3 (toggles functions 4 and 5 below)
@@ -1232,8 +1223,7 @@ function stopCountdown() {
      startButton.innerHTML = `<i class="fa-solid fa-play"></i>`;
 
      // For Upcoming
-     timerDisplayNumberOfExercisesLeft.textContent = "Rehydrate!";
-     timerDisplayNextExerciseName.textContent = "💧";
+     timerDisplayNumberOfExercisesLeft.textContent = "Rehydration time 💧";
 }
 
 // 7
@@ -1315,13 +1305,10 @@ function initializeTimerDetails() {
      const upcomingText = document.getElementById("timer-upcoming-text");
      upcomingText.textContent = "Upcoming";
 
-     const exercisesLeft = document.getElementById("timer-extra-number-of-exercises-left");
-     exercisesLeft.textContent = `${parsedData.exerciseList.length - 1} exercises left`;
-
-     const nextExerciseName = document.getElementById("timer-extra-next-exercise-name");
+     const upcomingExercises = document.getElementById("timer-extra-upcoming");
      if (JSON.parse(grabbedData).exerciseList.length == 1) {
-          nextExerciseName.textContent = "Only one exercise in this routine";
+          upcomingExercises.textContent = "Only one exercise in this routine";
      } else {
-          nextExerciseName.textContent = `Next up - ${parsedData.exerciseList[1].name}`;
+          upcomingExercises.textContent = `${parsedData.exerciseList.length - 1} exercises left - next up: ${parsedData.exerciseList[1].name}`;
      }
 }

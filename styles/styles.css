@@ -542,6 +542,10 @@ label {
     color: var(--clr-pastel-yellow-lighter);
 }
 
+#popover-info {}
+
+#popover-info:popover-open {}
+
 /* * Feedback - for when user toggle settings to show extra details and/or app instructions */
 .glow {
     animation: glowEffect 1s ease-in-out;
@@ -659,10 +663,6 @@ label {
 
 .timer-extra-details {
     font-size: var(--slightly-smaller-font-size);
-}
-
-.easter-egg {
-    font-size: 3rem;
 }
 
 /* For "Show/Hide Exercise List" */
