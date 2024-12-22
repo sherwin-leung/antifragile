@@ -48,7 +48,7 @@
 
     --new-x-cluster-original-width  : 20rem;
     --settings-original-width       : 20rem;
-    --btn-toggle-view-original-width: 12.5rem;
+    --btn-toggle-view-original-width: 15rem;
     --btn-save-original-width       : 10rem;
 
     --timer-display-routine-name-original-size         : 1.5rem;
@@ -467,7 +467,7 @@ label {
 
     .fa-plus,
     .fa-minus {
-        /* color: var(--clr-grey-blue-lighter); */
+        color: var(--clr-grey-blue-lighter);
         color: rgb(200, 200, 200);
     }
 }

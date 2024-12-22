@@ -1107,7 +1107,7 @@ stopButton.addEventListener("click", function () {
      // Reminder: the getter returns a string so we have to compare with a string
      if (getSoundsChoiceFromLocalStorage() === "true") {
           // Yell at the user for stopping! The timeout is just to add a very small buffer because of my OCD
-          setTimeout(playChaewonHeySound, 135);
+          playChaewonHeySound();
      }
 });
 
@@ -1245,10 +1245,9 @@ function tick() {
           // Move on to the next exercise
           currentExerciseIndex++;
 
-          // TODO
           // Reminder: the getter returns a string so we have to compare with a string
           if (getSoundsChoiceFromLocalStorage() === "true") {
-               playChaewonDayumSound();
+               // TODO
           }
 
           // Start the countdown for the next exercise
