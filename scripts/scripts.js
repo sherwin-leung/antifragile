@@ -282,7 +282,7 @@ function displayProperSoundSettingsIcon() {
 
 // TODO
 function playChaewonDayumSound() {
-     const chaewonDayum = new Audio("sounds/chaewon-dayum-louder.mp3");
+     const chaewonDayum = new Audio("sounds/chaewon-dayum.mp3");
      chaewonDayum.play();
 }
 

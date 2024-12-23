@@ -93,14 +93,13 @@ input[type="button"] {
 /* * START HTML ELEMENTS */
 
 body {
-    font-family        : "Nunito", sans-serif;
-    min-height         : 100vh;
-    text-align         : center;
+    font-family     : "Nunito", sans-serif;
+    min-height      : 100vh;
+    text-align      : center;
     /* First one is fallback */
-    background-image   : linear-gradient(to bottom, #000000, #040103, #070307, #08050d, #060811, #060c14, #060f17, #061219, #08151c, #0b1720, #0c1a23, #0d1c27);
-    background-image   : linear-gradient(in lch, #000000, #040103, #070307, #08050d, #060811, #060c14, #060f17, #061219, #08151c, #0b1720, #0c1a23, #0d1c27);
-    /* background-image: linear-gradient(in lch, var(--clr-sky-blue), mistyrose); */
-    color              : whitesmoke;
+    background-image: linear-gradient(to bottom, #000000, #040103, #070307, #08050d, #060811, #060c14, #060f17, #061219, #08151c, #0b1720, #0c1a23, #0d1c27);
+    background-image: linear-gradient(in lch, #000000, #040103, #070307, #08050d, #060811, #060c14, #060f17, #061219, #08151c, #0b1720, #0c1a23, #0d1c27);
+    color           : whitesmoke;
 }
 
 button {
@@ -212,7 +211,7 @@ label {
 
 .title-header {
     font-size: var(--title-header-font-size);
-    animation: animate-gradient-text 8s ease infinite;
+    animation: animate-gradient-text 6s ease infinite;
 }
 
 @keyframes animate-gradient-text {
@@ -447,7 +446,7 @@ label {
 /* * START HEADER */
 
 .header-content {
-    padding-top: 0.7rem;
+    padding-top: 0.75rem;
 }
 
 /* * START DIV TOGGLE VIEW */
@@ -658,7 +657,7 @@ label {
     font-size    : var(--slightly-smaller-font-size);
     font-weight  : bolder;
     color        : var(--clr-light-grey);
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.5rem;
 }
 
 .timer-extra-details {
@@ -669,6 +668,10 @@ label {
 #ol-currently-loaded-routine {
     display    : none;
     padding-top: 0.5rem;
+}
+
+#exercise-list {
+    padding-bottom: 0rem;
 }
 
 /* * START BUTTON TOGGLE LISTS */
