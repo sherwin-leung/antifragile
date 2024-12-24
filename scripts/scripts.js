@@ -388,32 +388,69 @@ instructionsInput.addEventListener("change", function () {
 // ? End Settings Section
 
 /**
- * * This function handles toggling on and off the view of certain contents when the main buttons are CLICKED or TAPPED
- * It is coupled with the two event listeners below
- * @param {string} divId indicates which div to toggle on and off
+ * * The following functions handles expanding/minimizing the +Exercise and +Routine sections
+ * 1) expandOrMinimizeSection() toggles between expanding and collapsing the section
+ * 2) expandSection() expands the section
+ * 3) collapseSection() collapses the section
+ *  @param {string} divId indicates which div to toggle on and off
+ * 4) Paired with two event listeners but expandSection() and collapseSection() are used in other places too
+ *
+ * ! Note, needs "interpolate-size: allow-keywords;" in :root{} inside CSS to work
+ * More information: https://youtu.be/JN-nme9oF10
  */
-function toggleViewOnAndOff(divId) {
+// 1
+function expandOrMinimizeSection(divId) {
      const sectionId = document.getElementById(divId);
 
-     if (sectionId.style.display === "block") {
-          sectionId.style.display = "none";
-          showPlusOnButton(sectionId.id);
+     if (sectionId.classList.contains("expand")) {
+          collapseSection(divId);
      } else {
-          sectionId.style.display = "block";
-          showMinusOnButton(sectionId.id);
+          expandSection(divId);
      }
 }
 
-// 1
+// 2
+function expandSection(divId) {
+     const sectionId = document.getElementById(divId);
+
+     // Set the height to 0 initially before expanding
+     sectionId.style.height = "0";
+     sectionId.classList.add("expand");
+
+     // Use requestAnimationFrame for smoother transitions
+     requestAnimationFrame(() => {
+          sectionId.style.height = "auto";
+     });
+
+     // Update button to show "-" state
+     showMinusOnButton(divId);
+}
+
+// 3
+function collapseSection(divId) {
+     const sectionId = document.getElementById(divId);
+
+     sectionId.style.height = "auto"; // Set current height
+     requestAnimationFrame(() => {
+          sectionId.style.height = "0";
+     });
+
+     sectionId.classList.remove("expand"); // Remove the open class
+
+     // Update button to show "+" state
+     showPlusOnButton(divId);
+}
+
+// Event listener 1
 const newExerciseButton = document.getElementById("button-new-exercise");
 newExerciseButton.addEventListener("click", function () {
-     toggleViewOnAndOff("div-new-exercise");
+     expandOrMinimizeSection("div-new-exercise");
 });
 
-// 2
+// Event listener 2
 const newRoutineButton = document.getElementById("button-new-routine");
 newRoutineButton.addEventListener("click", function () {
-     toggleViewOnAndOff("div-new-routine");
+     expandOrMinimizeSection("div-new-routine");
 });
 
 /**
@@ -692,7 +729,7 @@ saveNewExerciseButton.addEventListener("click", function () {
      saveNewExerciseToLocalStorage();
      document.getElementById("new-exercise-input").value = "";
      refreshExerciseCards();
-     toggleSection("open", "routine");
+     expandSection("div-new-routine");
      showFeedbackButtonSuccessSave("exercise");
 });
 
@@ -1033,9 +1070,16 @@ saveNewRoutineButton.addEventListener("click", function () {
      // Scrolls to the top
      setTimeout(function () {
           window.scrollTo(0, 0);
-     }, 550);
+     }, 500);
 
-     showFeedbackButtonSuccessSave("routine", 700);
+     // Collapses sections
+     setTimeout(function () {
+          collapseSection("div-new-exercise");
+          collapseSection("div-new-routine");
+     }, 1000);
+
+     // Show feedback that the routine was saved
+     showFeedbackButtonSuccessSave("routine");
 
      // Initializes the extra details routine list
      initializeRoutineList();

@@ -57,6 +57,8 @@
 
     --container-exercise-cards-left-and-right-padding-original-size: 1rem;
 
+    interpolate-size: allow-keywords;
+
 }
 
 /* * START RESETS */
@@ -447,9 +449,17 @@ label {
 
 /* * START DIV TOGGLE VIEW */
 
-/* Sections are hidden on page load */
-.div-toggle-view {
-    display: none;
+/* Reference https: //youtu.be/JN-nme9oF10 */
+/* Requires "interpolate-size: allow-keywords; in :root{} to work */
+.div-toggle-expand {
+    height    : 0;
+    overflow  : hidden;
+    transition: height 0.3s ease;
+    visibility: hidden;
+}
+
+.div-toggle-expand.expand {
+    visibility: visible;
 }
 
 .button-toggle-section {
