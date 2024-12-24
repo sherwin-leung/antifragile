@@ -36,7 +36,7 @@ function pageLoad() {
 
      // Timer related
      initializeTimerDetails();
-     initializeExerciseList();
+     initializeRoutineList();
 
      // Settings related
      refreshExtraDetailsSettings();
@@ -209,7 +209,7 @@ function showExtraTimerDetails() {
      const upcoming = document.getElementById("container-upcoming");
      upcoming.classList.add("show");
 
-     const exerciseList = document.getElementById("exercise-list");
+     const exerciseList = document.getElementById("routine-list");
      exerciseList.classList.add("show");
 }
 
@@ -218,7 +218,7 @@ function hideExtraTimerDetails() {
      const upcoming = document.getElementById("container-upcoming");
      upcoming.classList.remove("show");
 
-     const exerciseList = document.getElementById("exercise-list");
+     const exerciseList = document.getElementById("routine-list");
      exerciseList.classList.remove("show");
 }
 
@@ -244,7 +244,7 @@ extraDetailsInput.addEventListener("change", function () {
      if (getExtraTimerDetailsChoiceFromLocalStorage() === "true") {
           showExtraTimerDetails();
           showFeedbackSettingsToggle("timer-upcoming-text");
-          showFeedbackSettingsToggle("button-toggle-exercise-list");
+          showFeedbackSettingsToggle("button-toggle-routine-list");
      } else {
           hideExtraTimerDetails();
      }
@@ -289,7 +289,6 @@ function displayProperSoundSettingsIcon() {
      }
 }
 
-// TODO
 // 4a
 function playChaewonDayumAudio() {
      const chaewonDayumAudio = new Audio("sounds/chaewon-dayum.mp3");
@@ -588,10 +587,10 @@ function showFeedbackSettingsToggle(targetParam, durationInMilliseconds = 1000) 
 
 /**
  * * The following TWO functions work together *
- * 1) initializeExerciseList() this function displays the currently loaded Routine to the user. It persists on page load and refreshes when user saves a new Routine
- * 2) addToggleExerciseListViewFunctionToButton() - because a new button to toggle exercise list view is generated each time a new Routine is saved, it needs to be re-assigned the function enabling it to toggle views
+ * 1) initializeRoutineList() this function displays the currently loaded Routine to the user. It persists on page load and refreshes when user saves a new Routine
+ * 2) addToggleRoutineListViewFunctionToButton() - because a new button to toggle routine list view is generated each time a new Routine is saved, it needs to be re-assigned the function enabling it to toggle views
  */
-function initializeExerciseList() {
+function initializeRoutineList() {
      // Grab the saved Routine from localStorage
      const grabbedData = localStorage.getItem("routineDataKey");
 
@@ -601,11 +600,11 @@ function initializeExerciseList() {
 
      const currentlyLoadedRoutine = JSON.parse(grabbedData);
 
-     // Displaying the exercise list in the Routine
-     const exerciseDetails = document.getElementById("exercise-list");
+     // Displaying the routine list
+     const routineList = document.getElementById("routine-list");
 
-     // Creates button for toggling exercise list view
-     let htmlString = `<button class='button-toggle-lists' id='button-toggle-exercise-list'><i class="fa-solid fa-angle-down"></i> Show Exercise List <i class="fa-solid fa-angle-down"></i></button>`;
+     // Creates button for toggling routine list visibility
+     let htmlString = `<button class='button-toggle-lists' id='button-toggle-routine-list'><i class="fa-solid fa-angle-down"></i> Show Routine <i class="fa-solid fa-angle-down"></i></button>`;
 
      htmlString += "<ol id='ol-currently-loaded-routine'>";
      for (i = 0; i < currentlyLoadedRoutine.exerciseList.length; i++) {
@@ -615,23 +614,23 @@ function initializeExerciseList() {
      }
      htmlString += "</ol>";
 
-     exerciseDetails.innerHTML = htmlString;
+     routineList.innerHTML = htmlString;
 
-     addToggleExerciseListViewFunctionToButton();
+     addToggleRoutineListViewFunctionToButton();
 }
 
 // Paired with above
-function addToggleExerciseListViewFunctionToButton() {
-     const exerciseListToggleButton = document.getElementById("button-toggle-exercise-list");
+function addToggleRoutineListViewFunctionToButton() {
+     const exerciseListToggleButton = document.getElementById("button-toggle-routine-list");
      exerciseListToggleButton.addEventListener("click", function () {
           const olRoutine = document.getElementById("ol-currently-loaded-routine");
 
           if (olRoutine.style.display === "block") {
                olRoutine.style.display = "none";
-               exerciseListToggleButton.innerHTML = `<i class="fa-solid fa-angle-down"></i> Show Exercise List <i class="fa-solid fa-angle-down"></i>`;
+               exerciseListToggleButton.innerHTML = `<i class="fa-solid fa-angle-down"></i> Show Routine <i class="fa-solid fa-angle-down"></i>`;
           } else {
                olRoutine.style.display = "block";
-               exerciseListToggleButton.innerHTML = `<i class="fa-solid fa-angle-up"></i> Hide Exercise List <i class="fa-solid fa-angle-up"></i>`;
+               exerciseListToggleButton.innerHTML = `<i class="fa-solid fa-angle-up"></i> Hide Routine <i class="fa-solid fa-angle-up"></i>`;
           }
      });
 }
@@ -1038,8 +1037,8 @@ saveNewRoutineButton.addEventListener("click", function () {
 
      showFeedbackButtonSuccessSave("routine", 700);
 
-     // Initializes the extra details exercise list
-     initializeExerciseList();
+     // Initializes the extra details routine list
+     initializeRoutineList();
 
      // Timer section gets initialized with the new Routine's data
      initializeTimerDetails();
@@ -1054,7 +1053,7 @@ saveNewRoutineButton.addEventListener("click", function () {
  *
  * 1) createTempArraysForTimer() grabs Routine data and stores the name & duration of each Exercise in the Routine's exerciseList in global temporary arrays
  *
- * 2) startCountdown() starts the countdown for the current Exercise (based on the index). Fires up tick() and then tells it to run every 1 second. If there are no Exercises left in the exercise list, it performs clean up and stops the countdown
+ * 2) startCountdown() starts the countdown for the current Exercise (based on the index). Fires up tick() and then tells it to run every 1 second. If there are no Exercises left in the routine list, it performs clean up and stops the countdown
  *
  * 3) togglePauseAndResumeCountdown() is for the [Pause button]. It calls function 4) and 5) below. If the timer is currently paused, it will resume it from where it left off. If it's currently running, it will pause it at the current countdown state
  *

@@ -25,7 +25,7 @@
 
     --clr-grey-blue-lightest: rgb(182, 193, 249);
     --clr-grey-blue-lighter : rgb(69, 101, 138);
-    --clr-grey-blue         : rgb(38, 56, 78);
+    --clr-grey-blue         : rgb(32, 51, 71);
     --clr-grey-blue-darker  : rgb(25, 38, 53);
 
     --clr-pastel-purple-lighter: #b6c1f9;
@@ -453,7 +453,7 @@ label {
 }
 
 .button-toggle-section {
-    background-color: var(--clr-grey-blue);
+    background-color: var(--clr-grey-blue-darker);
     color           : whitesmoke;
     border-radius   : 10rem;
     padding         : 1.25rem;
@@ -465,16 +465,6 @@ label {
     .fa-minus {
         color: var(--clr-grey-blue-lighter);
         color: rgb(200, 200, 200);
-    }
-}
-
-/* Consider moving this to the small laptop sized media query */
-.button-toggle-section:hover {
-    background-color: var(--clr-grey-blue-darker);
-
-    .fa-plus,
-    .fa-minus {
-        color: var(--clr-grey-blue-lightest);
     }
 }
 
@@ -499,7 +489,7 @@ label {
     height       : 100%;
     width        : 100%;
     border-radius: inherit;
-    padding      : 1.75px;
+    padding      : 1.5px;
     top          : 50%;
     left         : 50%;
     translate    : -50% -50%;
@@ -711,7 +701,7 @@ label {
     padding-top: 0.5rem;
 }
 
-#exercise-list {
+#routine-list {
     padding-bottom: 0rem;
 }
 
@@ -1102,15 +1092,25 @@ label {
         padding-top: 1rem;
     }
 
+    /* Don't want a hover effect over buttons that are disabled */
     #container-control-buttons {
-        .button-control:hover {
-            background-color: var(--clr-pastel-purple-darkest);
+        .button-control:not(:disabled):hover {
+            background-color: var(--clr-grey-blue-darker);
             color           : white;
         }
     }
 
     .button-toggle-section {
         width: calc(var(--btn-toggle-view-original-width) * 1.1);
+    }
+
+    .button-toggle-section:hover {
+        background-color: var(--clr-grey-blue);
+
+        .fa-plus,
+        .fa-minus {
+            color: var(--clr-grey-blue-lightest);
+        }
     }
 
     .new-x-cluster {
