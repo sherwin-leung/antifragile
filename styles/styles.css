@@ -82,10 +82,13 @@ img {
 }
 
 /* Mostly for aesthetics */
-button,
-input[type="button"] {
+button {
     border       : 0;
     outline-color: transparent;
+}
+
+button:hover {
+    cursor: pointer;
 }
 
 /* End resets */
@@ -103,15 +106,8 @@ body {
 }
 
 button {
-    font-family  : "Nunito", sans-serif;
-    outline-color: transparent;
-    border       : 0;
-    transition   : 300ms ease;
-}
-
-
-button:hover {
-    cursor: pointer;
+    font-family: "Nunito", sans-serif;
+    transition : 300ms ease;
 }
 
 li {
@@ -534,6 +530,11 @@ label {
         /* transform         : scale(1.5); */
         /* accent-color      : transparent; */
     }
+
+    input[type="button"] {
+        border       : 0;
+        outline-color: transparent;
+    }
 }
 
 /* TODO */
@@ -776,10 +777,6 @@ label {
         border-radius   : 10rem;
         color           : rgb(31, 31, 31);
         background-color: var(--clr-pastel-yellow-lighter);
-    }
-
-    .button-save:hover {
-        background-color: var(--clr-pastel-yellow);
     }
 
     /* * Feedback - for successful save of an Exercise or Routine */
@@ -1087,6 +1084,10 @@ label {
 
         .button-save {
             width: calc(var(--btn-save-original-width)*1.1);
+        }
+
+        .button-save:hover {
+            background-color: var(--clr-pastel-yellow);
         }
     }
 

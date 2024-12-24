@@ -250,6 +250,15 @@ extraDetailsInput.addEventListener("change", function () {
      }
 });
 
+/**
+ * * These functions handle the audio that plays if the user has the option turned on
+ * 1) saveSoundsChoiceToLocalStorage() stores the user's choice of whether to play sounds or not to local storage so it'll persist through sessions
+ * 2) getSoundsChoiceFromLocalStorage() returns the user's choice from function 1), but NOTE: it returns it as a string, NOT a boolean. It will be "true" or "false"
+ * 3) displayProperSoundSettingsIcon() changes the icon to speaker on/speaker mute depending on whether the user has enabled sounds or not as well as the proper color
+ * 4) Various functions that play different soundbytes
+ * 5) refreshSoundsSettings() is used on pageload to check whether the user has enabled or disabled sounds
+ * 6) Event handler paired with these functions
+ */
 // 1
 function saveSoundsChoiceToLocalStorage() {
      let isChecked = document.getElementById("input-toggle-sounds-settings").checked;
@@ -281,16 +290,22 @@ function displayProperSoundSettingsIcon() {
 }
 
 // TODO
-function playChaewonDayumSound() {
-     const chaewonDayum = new Audio("sounds/chaewon-dayum.mp3");
-     chaewonDayum.load();
-     chaewonDayum.play();
+// 4a
+function playChaewonDayumAudio() {
+     const chaewonDayumAudio = new Audio("sounds/chaewon-dayum.mp3");
+     chaewonDayumAudio.play();
 }
 
-function playChaewonHeySound() {
-     const chaewonHey = new Audio("sounds/chaewon-hey.mp3");
-     chaewonHey.load();
-     chaewonHey.play();
+// 4b - played when the user presses the stop button
+function playChaewonHeyAudio() {
+     const chaewonHeyAudio = new Audio("sounds/chaewon-hey.mp3");
+     chaewonHeyAudio.play();
+}
+
+// 4c - played when the user completes their entire routine
+function playImAntifragileAudio() {
+     const imAntifragileAudio = new Audio("sounds/im-antifragile.mp3");
+     imAntifragileAudio.play();
 }
 
 // 5 - used on page load
@@ -1021,7 +1036,7 @@ saveNewRoutineButton.addEventListener("click", function () {
           window.scrollTo(0, 0);
      }, 550);
 
-     showFeedbackButtonSuccessSave("routine");
+     showFeedbackButtonSuccessSave("routine", 700);
 
      // Initializes the extra details exercise list
      initializeExerciseList();
@@ -1104,8 +1119,7 @@ stopButton.addEventListener("click", function () {
 
      // Reminder: the getter returns a string so we have to compare with a string
      if (getSoundsChoiceFromLocalStorage() === "true") {
-          // Yell at the user for stopping! The timeout is just to add a very small buffer because of my OCD
-          playChaewonHeySound();
+          playChaewonHeyAudio();
      }
 });
 
@@ -1135,6 +1149,7 @@ function createTempArraysForTimer() {
 
 // 2 - has multiple other functions below used within this function
 function startCountdown() {
+     // * For full routine completion
      // If there are no more exercises, stop the timer from running and performs clean up/feedback
      if (currentExerciseIndex === tempArrayOfDurations.length) {
           stopCountdown();
@@ -1144,7 +1159,7 @@ function startCountdown() {
 
           // Reminder: the getter returns a string so we have to compare with a string
           if (getSoundsChoiceFromLocalStorage() === "true") {
-               playChaewonDayumSound();
+               playImAntifragileAudio();
           }
 
           enableElement(startButton);
@@ -1236,11 +1251,6 @@ function tick() {
 
           // Move on to the next exercise
           currentExerciseIndex++;
-
-          // Reminder: the getter returns a string so we have to compare with a string
-          if (getSoundsChoiceFromLocalStorage() === "true") {
-               // TODO
-          }
 
           // Start the countdown for the next exercise
           startCountdown();
