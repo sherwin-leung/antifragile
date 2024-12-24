@@ -104,21 +104,6 @@ Listed roughly in order of priority, but subject to change
 
 </details>
 
-<details>
-
-<summary>Click to view completed updates</summary>
-
-Listed in chronological order (oldest to newest)
-
-* Pause/resume button and functionality
-  
-* Implement visual feedback to the user to indicate successes when saving exercises/routines, or errors such as missing an exercise/routine name while saving
-
-* Display upcoming exercise's name
-* Display how many exercises left in routine
-  
-</details>
-
 ## 📄 Version History
 
 <details>
@@ -126,7 +111,7 @@ Listed in chronological order (oldest to newest)
 <summary>Click to view version 1 changelog</summary>
 
 * v1.08
-  * Added ability to toggle on/off sounds for the timer. A sound plays when you successfully complete the entire routine (all exercises finished without quitting - pausing is okay though) and a sound plays when you stop the routine. Looking to add a sound that plays in between exercises for the routine soon. _The sounds right now are just silly Chaewon (from LE SSERAFIM) sounds but may change it in the future._
+  * Added ability to toggle on/off sounds for the timer. A sound plays when you successfully complete the entire routine (all exercises finished without quitting - pausing is okay though) and a sound plays when you stop the routine. Looking to add a sound that plays in between exercises for the routine soon. _The sounds right now are just silly Chaewon/LE SSERAFIM sounds but may change in the future._
  
 * v1.07
   * Added ability to toggle on/off extra details related to currently loaded routine in the timer (how many exercises left, which exercise is coming up next, and full exercise list). Instructions view can be toggled on and off as well
