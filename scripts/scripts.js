@@ -283,11 +283,13 @@ function displayProperSoundSettingsIcon() {
 // TODO
 function playChaewonDayumSound() {
      const chaewonDayum = new Audio("sounds/chaewon-dayum.mp3");
+     chaewonDayum.load();
      chaewonDayum.play();
 }
 
 function playChaewonHeySound() {
      const chaewonHey = new Audio("sounds/chaewon-hey.mp3");
+     chaewonHey.load();
      chaewonHey.play();
 }
 
