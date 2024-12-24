@@ -62,8 +62,8 @@
 /* * START RESETS */
 
 *,
-*:before,
-*:after {
+*::before,
+*::after {
     box-sizing: border-box;
 }
 
@@ -452,13 +452,14 @@ label {
     display: none;
 }
 
-.button-toggle-view {
+.button-toggle-section {
     background-color: var(--clr-grey-blue);
     color           : whitesmoke;
     border-radius   : 10rem;
     padding         : 1.25rem;
     font-size       : 1rem;
     width           : var(--btn-toggle-view-original-width);
+    position        : relative;
 
     .fa-plus,
     .fa-minus {
@@ -467,12 +468,52 @@ label {
     }
 }
 
-.button-toggle-view:hover {
+/* Consider moving this to the small laptop sized media query */
+.button-toggle-section:hover {
     background-color: var(--clr-grey-blue-darker);
 
     .fa-plus,
     .fa-minus {
         color: var(--clr-grey-blue-lightest);
+    }
+}
+
+/* Animated gradient effect from https: //www.youtube.com/watch?v=ezP4kbOvs_E */
+@property --angle {
+    syntax       : "<angle>";
+    initial-value: 0deg;
+    inherits     : false;
+}
+
+.button-toggle-section::after {
+    content                                      : '';
+    position                                     : absolute;
+    /* Normally everything is box-sizing         : border-box, but for the padding to be applied in this case, we have to use box-sizing: initial to change this pseudo element specifically back to content-box */
+    box-sizing                                   : initial;
+    background-image                             : conic-gradient(from var(--angle),
+            #648dee,
+            #8291f1,
+            #b59cf6,
+            #8291f1,
+            #648dee);
+    height       : 100%;
+    width        : 100%;
+    border-radius: inherit;
+    padding      : 1.75px;
+    top          : 50%;
+    left         : 50%;
+    translate    : -50% -50%;
+    z-index      : -1;
+    animation    : 3.5s button-gradient-spin linear infinite;
+}
+
+@keyframes button-gradient-spin {
+    from {
+        --angle: 0deg;
+    }
+
+    to {
+        --angle: 360deg;
     }
 }
 
@@ -537,7 +578,6 @@ label {
     }
 }
 
-/* TODO */
 #label-popup-info-settings {
     color: var(--clr-pastel-yellow-lighter);
 }
@@ -766,7 +806,7 @@ label {
 
     input:hover,
     input:focus {
-        border-bottom: 2px solid var(--clr-sky-blue);
+        border-bottom: 2px solid var(--clr-lilac);
     }
 
     .button-save {
@@ -1050,8 +1090,9 @@ label {
     }
 }
 
-/* Small laptops */
-/* Content begins to get bigger here  */
+/* Small laptops
+? Content begins to get bigger here Hover effects work well on desktop but doesn't quite work that well on mobile because the hover state gets stuck after a user taps on the button.
+ */
 @media (width >=1300px) {
     .title-header {
         font-size: calc(var(--title-header-font-size) * 1.1);
@@ -1062,15 +1103,13 @@ label {
     }
 
     #container-control-buttons {
-
-        /* Works well on desktop but doesn't quite work that well on mobile because the hover state gets stuck after a user taps on the button. Anything laptop-sized and bigger will have hover styles for the control buttons, but not on mobile  */
         .button-control:hover {
             background-color: var(--clr-pastel-purple-darkest);
             color           : white;
         }
     }
 
-    .button-toggle-view {
+    .button-toggle-section {
         width: calc(var(--btn-toggle-view-original-width) * 1.1);
     }
 
@@ -1107,8 +1146,7 @@ label {
         padding-top: 1.25rem;
     }
 
-
-    .button-toggle-view {
+    .button-toggle-section {
         width: calc(var(--btn-toggle-view-original-width)*1.2);
     }
 
