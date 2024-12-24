@@ -13,7 +13,7 @@ If the app seems broken and issues persist, try [clearing your local storage](ht
 ## 💡How To Use
 
 `
-As of version 1.08 - subject to change with when additional functionalities are implemented
+As of version 1.09 - subject to change with when additional functionalities are implemented
 `
 
 ### First Usage
@@ -109,6 +109,9 @@ Listed roughly in order of priority, but subject to change
 <details>
 
 <summary>Click to view version 1 changelog</summary>
+
+* v1.09
+  * Visual improvements: animated gradients on some buttons, sections expanding/collapsing instead of appearing/disappearing instantly
 
 * v1.08
   * Added ability to toggle on/off sounds for the timer. A sound plays when you successfully complete the entire routine (all exercises finished without quitting - pausing is okay though) and a sound plays when you stop the routine. Looking to add a sound that plays in between exercises for the routine soon. _The sounds right now are just silly Chaewon/LE SSERAFIM sounds but may change in the future._
