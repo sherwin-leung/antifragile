@@ -40,7 +40,6 @@
 
     --gradient-sky-blue-misty-rose: linear-gradient(in lch, var(--clr-sky-blue), mistyrose);
 
-
     /* Sizes */
     --title-header-font-size    : 3rem;
     --title-popup-font-size     : 2.5rem;
@@ -59,6 +58,12 @@
 
     interpolate-size: allow-keywords;
 
+}
+
+@property --angle {
+    syntax       : "<angle>";
+    initial-value: 0deg;
+    inherits     : false;
 }
 
 /* * START RESETS */
@@ -105,6 +110,16 @@ body {
     background-image: linear-gradient(to bottom, #000000, #040103, #070307, #08050d, #060811, #060c14, #060f17, #061219, #08151c, #0b1720, #0c1a23, #0d1c27);
     background-image: linear-gradient(in lch, #000000, #040103, #070307, #08050d, #060811, #060c14, #060f17, #061219, #08151c, #0b1720, #0c1a23, #0d1c27);
     color           : whitesmoke;
+
+    /* TODO */
+    /* background-image: conic-gradient(from var(--angle),
+            #000000,
+            #040103,
+            #070307,
+            #0b1720,
+            #0c1a23,
+            #0d1c27,
+            #000000); */
 }
 
 button {
@@ -447,18 +462,19 @@ label {
     padding-top: 0.75rem;
 }
 
-/* * START DIV TOGGLE VIEW */
+/* * START DIV TOGGLE EXPAND */
 
 /* Reference https: //youtu.be/JN-nme9oF10 */
 /* Requires "interpolate-size: allow-keywords; in :root{} to work */
 .div-toggle-expand {
+    /* Initially starts in collapsed state */
     height    : 0;
-    overflow  : hidden;
-    transition: height 0.3s ease;
     visibility: hidden;
+    overflow  : hidden;
+    transition: height 0.35s ease;
 }
 
-.div-toggle-expand.expand {
+.expand {
     visibility: visible;
 }
 
@@ -478,25 +494,14 @@ label {
     }
 }
 
-/* Animated gradient effect from https: //www.youtube.com/watch?v=ezP4kbOvs_E */
-@property --angle {
-    syntax       : "<angle>";
-    initial-value: 0deg;
-    inherits     : false;
-}
-
 .button-toggle-section::after {
-    content                                      : '';
-    position                                     : absolute;
-    /* Normally everything is box-sizing         : border-box, but for the padding to be applied in this case, we have to use box-sizing: initial to change this pseudo element specifically back to content-box */
-    box-sizing                                   : initial;
-    background-image                             : conic-gradient(from var(--angle),
-            #648dee,
-            #8291f1,
-            #b59cf6,
-            #8291f1,
-            #648dee);
-    height       : 100%;
+    content : '';
+    position: absolute;
+
+    /* Normally everything is box-sizing: border-box, but for the padding to be applied in this case, we have to use box-sizing: initial to change this pseudo element specifically back to content-box */
+    box-sizing: initial;
+    height    : 100%;
+
     width        : 100%;
     border-radius: inherit;
     padding      : 1.5px;
@@ -504,7 +509,15 @@ label {
     left         : 50%;
     translate    : -50% -50%;
     z-index      : -1;
-    animation    : 3.5s button-gradient-spin linear infinite;
+
+    /* Animated gradient effect from https       : //www.youtube.com/watch?v=ezP4kbOvs_E */
+    background-image: conic-gradient(from var(--angle),
+            #648dee,
+            #8291f1,
+            #b59cf6,
+            #8291f1,
+            #648dee);
+    animation: 3.5s button-gradient-spin linear infinite;
 }
 
 @keyframes button-gradient-spin {
@@ -595,7 +608,7 @@ label {
 
     0%,
     100% {
-        text-shadow: 0 0 2.5px var(--clr-pastel-purple), 0 0 5px var(--clr-pastel-purple), 0 0 10px var(--clr-pastel-purple);
+        text-shadow: 0 0 2.5px var(--clr-pastel-purple-darkest), 0 0 5px var(--clr-pastel-purple-darkest), 0 0 10px var(--clr-pastel-purple-darkest);
     }
 
     50% {
@@ -683,8 +696,8 @@ label {
     background-clip        : text !important;
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
-    /* animate-gradient-text are keyframes that belong to title */
-    animation              : animate-gradient-text 10s ease infinite !important;
+    /* animate-gradient-text are keyframes that belong to .title class */
+    animation              : animate-gradient-text 8s ease infinite !important;
 }
 
 /* * START STYLES FOR EXTRA DETAILS */
@@ -746,28 +759,16 @@ label {
 }
 
 .span-new {
-    background-image: linear-gradient(in lch,
-            #6792f7,
-            #6d91e6,
-            #7a9ef3,
-            #7199f5,
+    background-image: linear-gradient(45deg,
+            #648dee,
             #8291f1,
-            #878ae5,
-            #8a8deb,
-            #9290ed,
-            #9a94f0,
-            #a396f2,
-            #ac99f4,
             #b59cf6,
-            #be9ff7,
-            #c6a3f9,
-            #ceaae9,
-            #d3b0f0,
-            #dab8f7);
-    /* background-size        : 300% 300%; */
+            #8291f1);
+    background-size        : 200% 200%;
     background-clip        : text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    animation              : animate-gradient-text 3s ease infinite reverse;
 }
 
 .span-exercise {
@@ -806,7 +807,7 @@ label {
 
     input:hover,
     input:focus {
-        border-bottom: 2px solid var(--clr-lilac);
+        border-bottom: 2px solid var(--clr-lilac-darker);
     }
 
     .button-save {

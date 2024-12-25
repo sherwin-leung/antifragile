@@ -32,7 +32,7 @@ window.onload = pageLoad();
  */
 function pageLoad() {
      generateOverlayPhrase();
-     checkIfFirstVisit();
+     // checkIfFirstVisit();
 
      // Timer related
      initializeTimerDetails();
@@ -59,6 +59,7 @@ function checkIfFirstVisit() {
 
      localStorage.setItem("isFirstVisit", false);
 
+     // TODO refactor to be popup instructions
      // Makes it so that extra timer details is enabled by default the first time a user visits the app
      document.getElementById("input-toggle-extra-details-settings").checked = true;
      saveExtraTimerDetailsChoiceToLocalStorage();
@@ -390,8 +391,8 @@ instructionsInput.addEventListener("change", function () {
 /**
  * * The following functions handles expanding/minimizing the +Exercise and +Routine sections
  * 1) expandOrMinimizeSection() toggles between expanding and collapsing the section
- * 2) expandSection() expands the section
- * 3) collapseSection() collapses the section
+ * 2) expandSection() expands the target section
+ * 3) collapseSection() collapses the target section
  *  @param {string} divId indicates which div to toggle on and off
  * 4) Paired with two event listeners but expandSection() and collapseSection() are used in other places too
  *
@@ -412,32 +413,22 @@ function expandOrMinimizeSection(divId) {
 // 2
 function expandSection(divId) {
      const sectionId = document.getElementById(divId);
-
-     // Set the height to 0 initially before expanding
-     sectionId.style.height = "0";
-     sectionId.classList.add("expand");
-
-     // Use requestAnimationFrame for smoother transitions
      requestAnimationFrame(() => {
           sectionId.style.height = "auto";
      });
+     sectionId.classList.add("expand");
 
-     // Update button to show "-" state
      showMinusOnButton(divId);
 }
 
 // 3
 function collapseSection(divId) {
      const sectionId = document.getElementById(divId);
-
-     sectionId.style.height = "auto"; // Set current height
      requestAnimationFrame(() => {
           sectionId.style.height = "0";
      });
+     sectionId.classList.remove("expand");
 
-     sectionId.classList.remove("expand"); // Remove the open class
-
-     // Update button to show "+" state
      showPlusOnButton(divId);
 }
 
@@ -729,8 +720,8 @@ saveNewExerciseButton.addEventListener("click", function () {
      saveNewExerciseToLocalStorage();
      document.getElementById("new-exercise-input").value = "";
      refreshExerciseCards();
-     expandSection("div-new-routine");
      showFeedbackButtonSuccessSave("exercise");
+     expandSection("div-new-routine");
 });
 
 /**
@@ -1230,7 +1221,7 @@ function startCountdown() {
 // 2a
 function updateUpcomingExercises() {
      if (currentExerciseIndex === tempArrayOfNames.length - 1) {
-          timerDisplayNumberOfExercisesLeft.textContent = `This is your last exercise`;
+          timerDisplayNumberOfExercisesLeft.textContent = `No more exercises after this`;
           return;
      }
 
