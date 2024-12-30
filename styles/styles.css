@@ -106,10 +106,10 @@ body {
     font-family     : "Nunito", sans-serif;
     min-height      : 100vh;
     text-align      : center;
+    color           : whitesmoke;
     /* First one is fallback */
     background-image: linear-gradient(to bottom, #000000, #040103, #070307, #08050d, #060811, #060c14, #060f17, #061219, #08151c, #0b1720, #0c1a23, #0d1c27);
     background-image: linear-gradient(in lch, #000000, #040103, #070307, #08050d, #060811, #060c14, #060f17, #061219, #08151c, #0b1720, #0c1a23, #0d1c27);
-    color           : whitesmoke;
 
     /* TODO */
     /* background-image: conic-gradient(from var(--angle),
@@ -224,7 +224,7 @@ label {
 
 .title-header {
     font-size: var(--title-header-font-size);
-    animation: animate-gradient-text 6s ease infinite;
+    animation: animate-gradient-text 5s ease infinite;
 }
 
 @keyframes animate-gradient-text {
@@ -504,7 +504,7 @@ label {
 
     width        : 100%;
     border-radius: inherit;
-    padding      : 1.5px;
+    padding      : 1.65px;
     top          : 50%;
     left         : 50%;
     translate    : -50% -50%;
@@ -591,6 +591,7 @@ label {
     }
 }
 
+/* TODO */
 #label-popup-info-settings {
     color: var(--clr-pastel-yellow-lighter);
 }
@@ -611,7 +612,7 @@ label {
         text-shadow: 0 0 2.5px var(--clr-pastel-purple-darkest), 0 0 5px var(--clr-pastel-purple-darkest), 0 0 10px var(--clr-pastel-purple-darkest);
     }
 
-    50% {
+    35% {
         text-shadow: 0 0 5px var(--clr-pastel-purple), 0 0 10px var(--clr-pastel-purple), 0 0 15px var(--clr-pastel-purple);
     }
 }
@@ -827,12 +828,6 @@ label {
         transition      : transform ease-in 0.1s, box-shadow ease-in 0.25s;
         box-shadow      : 0 2px 1rem rgba(40, 167, 69, 0.5);
         position        : relative;
-    }
-
-    /* Just in case the user was hovering the button after pressing save, this will ensure that the button isn't showing yellow like color */
-    .button-success-save:hover,
-    .button-success-save:focus {
-        background-color: var(--clr-success-green);
     }
 
     /* Credits to https: //codepen.io/nourabusoud/pen/ypZzMM?editors=0110 for the bubble effects */
@@ -1138,6 +1133,12 @@ label {
 
         .button-save:hover {
             background-color: var(--clr-pastel-yellow);
+        }
+
+        /* Just in case the user was hovering the button after pressing save, this will ensure that the button isn't showing yellow like color */
+        .button-success-save:hover,
+        .button-success-save:focus {
+            background-color: var(--clr-success-green);
         }
     }
 
