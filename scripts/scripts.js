@@ -651,14 +651,14 @@ function initializeRoutineList() {
 function addToggleRoutineListViewFunctionToButton() {
      const exerciseListToggleButton = document.getElementById("button-toggle-routine-list");
      exerciseListToggleButton.addEventListener("click", function () {
-          const olRoutine = document.getElementById("ol-currently-loaded-routine");
+          // This is the function used for the +Exercise and +Routine buttons
+          expandOrMinimizeSection("ol-currently-loaded-routine");
 
-          if (olRoutine.style.display === "block") {
-               olRoutine.style.display = "none";
-               exerciseListToggleButton.innerHTML = `<i class="fa-solid fa-angle-down"></i> Show Routine <i class="fa-solid fa-angle-down"></i>`;
-          } else {
-               olRoutine.style.display = "block";
+          const olRoutine = document.getElementById("ol-currently-loaded-routine");
+          if (olRoutine.classList.contains("expand")) {
                exerciseListToggleButton.innerHTML = `<i class="fa-solid fa-angle-up"></i> Hide Routine <i class="fa-solid fa-angle-up"></i>`;
+          } else {
+               exerciseListToggleButton.innerHTML = `<i class="fa-solid fa-angle-down"></i> Show Routine <i class="fa-solid fa-angle-down"></i>`;
           }
      });
 }

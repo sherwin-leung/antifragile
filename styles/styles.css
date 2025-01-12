@@ -469,7 +469,7 @@ label {
 /* * START DIV TOGGLE EXPAND */
 
 /* Reference https: //youtu.be/JN-nme9oF10 */
-/* Requires "interpolate-size: allow-keywords; in :root{} to work */
+/* Requires "interpolate-size: allow-keywords;" in :root{} to work */
 .div-toggle-expand {
     /* Initially starts in collapsed state */
     height    : 0;
@@ -725,8 +725,10 @@ label {
 
 /* For "Show/Hide Exercise List" */
 #ol-currently-loaded-routine {
-    display    : none;
     padding-top: 0.5rem;
+    height     : 0;
+    overflow   : hidden;
+    transition : height 0.25s ease;
 }
 
 #routine-list {
