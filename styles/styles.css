@@ -112,16 +112,6 @@ body {
     /* First one is fallback */
     background-image: linear-gradient(to bottom, #000000, #040103, #070307, #08050d, #060811, #060c14, #060f17, #061219, #08151c, #0b1720, #0c1a23, #0d1c27);
     background-image: linear-gradient(in lch, #000000, #040103, #070307, #08050d, #060811, #060c14, #060f17, #061219, #08151c, #0b1720, #0c1a23, #0d1c27);
-
-    /* TODO */
-    /* background-image: conic-gradient(from var(--angle),
-            #000000,
-            #040103,
-            #070307,
-            #0b1720,
-            #0c1a23,
-            #0d1c27,
-            #000000); */
 }
 
 button {
@@ -180,9 +170,9 @@ label {
     color           : rgba(245, 245, 245, 0.867);
 
     /* Overlay animation */
-    animation      : fade-back ease-out forwards;
+    animation         : fade-back ease-out forwards;
     /* ! DISABLE/ENABLE FOR TESTING */
-    animation-delay: 1.5s;
+    /* animation-delay: 1.5s; */
 
     img {
         display: inline;
@@ -560,7 +550,7 @@ label {
     }
 }
 
-.settings-checkbox {
+.settings-bar {
     display: inline-block;
     margin : 0.15rem 0.5rem;
     color  : var(--clr-light-grey-darker);
@@ -578,15 +568,11 @@ label {
     }
 
     input[type="checkbox"] {
-        opacity      : 0;
-        /* appearance: none; */
+        opacity: 0;
     }
 
     input[type="checkbox"]:checked {
-        opacity              : 0;
-        /* appearance        : revert; */
-        /* transform         : scale(1.5); */
-        /* accent-color      : transparent; */
+        opacity: 0;
     }
 
     input[type="button"] {
@@ -600,9 +586,9 @@ label {
     color: var(--clr-pastel-yellow-lighter);
 }
 
-#popover-info {}
+#popover-instructions {}
 
-#popover-info:popover-open {}
+#popover-instructions:popover-open {}
 
 /* * Feedback - for when user toggle settings to show extra details and/or app instructions */
 .glow {
@@ -989,7 +975,8 @@ label {
 }
 
 #routine-being-built-details {
-    padding: 1rem;
+    /* border: 2px solid palevioletred; */
+    margin: 1.5rem 0;
 
     #p-exercise-to-add {
         font-weight: bold;
@@ -1007,6 +994,32 @@ label {
         font-size       : 0.75rem;
         color           : rgb(235, 235, 235);
         background-color: #b2a7b867;
+    }
+}
+
+/* TODO */
+#container-buffer-duration {
+    display           : flex;
+    /* flex-direction : column; */
+    align-items       : center;
+    justify-content   : center;
+    padding-bottom    : 1.5rem;
+
+    label {
+        font-size    : var(--slightly-smaller-font-size);
+        padding-right: 0.5rem;
+        color        : white;
+    }
+
+    input {
+        border-radius   : 0.2rem;
+        color           : rgb(31, 31, 31);
+        background-color: white;
+        border          : 0;
+        outline-color   : transparent;
+        width           : 5rem;
+        padding         : 2.5px;
+        margin          : 0 1.5px;
     }
 }
 

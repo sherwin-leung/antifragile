@@ -43,6 +43,10 @@ function pageLoad() {
      refreshSoundsSettings();
      refreshInstructionsSettings();
 
+     // Buffer input values
+     enforceValidInputMinutesValueForBufferDuration();
+     enforceValidInputSecondsValueForBufferDuration();
+
      // Exercise buttons in Routine section
      refreshExerciseCards();
 }
@@ -770,10 +774,9 @@ function renderExerciseCards() {
      addEventListenerToAddButtons();
 
      // Ensures that the minutes (for duration) that a user inputs cannot be a negative number
-     enforceValidInputMinutesValue();
-
      // Ensures that the seconds (for duration) that a user inputs cannot outside of 0-59
-     enforceValidInputSecondsValue();
+     enforceValidInputMinutesValueForExerciseCards();
+     enforceValidInputSecondsValueForExerciseCards();
 }
 
 /**
@@ -940,10 +943,47 @@ function addEventListenerToAddButtons() {
 }
 
 /**
- * * This function enforces that the user can only input positive numbers in the input for duration in minutes
+ * * This function enforces that the user can only input valid numbers in the input for buffer duration between exercises
+ * For minutes, number is valid as long as it's not a negative number
  * Credits: https://stackoverflow.com/questions/34577806/how-to-prevent-inserting-value-that-is-greater-than-to-max-in-number-field-in-ht
  */
-function enforceValidInputMinutesValue() {
+function enforceValidInputMinutesValueForBufferDuration() {
+     const bufferDurationInputMinutes = document.getElementById("input-buffer-duration-minutes");
+     bufferDurationInputMinutes.oninput = function () {
+          const minutesMin = parseInt(bufferDurationInputMinutes.min);
+          const minutesValue = parseInt(bufferDurationInputMinutes.value);
+
+          if (minutesValue < minutesMin) {
+               bufferDurationInputMinutes.value = minutesMin;
+          }
+     };
+}
+
+/**
+ * * This function enforces that the user can only input valid numbers in the input for buffer duration between exercises
+ * For seconds, number is valid as long as it's not a negative number
+ * Credits: https://stackoverflow.com/questions/34577806/how-to-prevent-inserting-value-that-is-greater-than-to-max-in-number-field-in-ht
+ */
+function enforceValidInputSecondsValueForBufferDuration() {
+     const bufferDurationInputSeconds = document.getElementById("input-buffer-duration-seconds");
+     bufferDurationInputSeconds.oninput = function () {
+          const secondsMin = parseInt(bufferDurationInputSeconds.min);
+          const secondsMax = parseInt(bufferDurationInputSeconds.max);
+          const secondsValue = bufferDurationInputSeconds.value;
+
+          if (secondsValue > secondsMax) {
+               bufferDurationInputSeconds.value = secondsMax;
+          } else if (secondsValue < secondsMin) {
+               bufferDurationInputSeconds.value = secondsMin;
+          }
+     };
+}
+
+/**
+ * * This function enforces that the user can only input positive numbers in the input for duration in minutes for the exercise cards
+ * Credits: https://stackoverflow.com/questions/34577806/how-to-prevent-inserting-value-that-is-greater-than-to-max-in-number-field-in-ht
+ */
+function enforceValidInputMinutesValueForExerciseCards() {
      const allInputMinutes = document.getElementsByClassName("input-minutes-duration");
 
      for (let i = 0; i < allInputMinutes.length; i++) {
@@ -958,10 +998,10 @@ function enforceValidInputMinutesValue() {
 }
 
 /**
- * * This function enforces that the user can only input numbers between 0-59 inclusive in the input for duration in seconds
+ * * This function enforces that the user can only input numbers between 0-59 inclusive in the input for duration in seconds for the exercise cards
  * Credits: https://stackoverflow.com/questions/34577806/how-to-prevent-inserting-value-that-is-greater-than-to-max-in-number-field-in-ht
  */
-function enforceValidInputSecondsValue() {
+function enforceValidInputSecondsValueForExerciseCards() {
      const allInputSeconds = document.getElementsByClassName("input-seconds-duration");
 
      for (let i = 0; i < allInputSeconds.length; i++) {
@@ -1021,7 +1061,6 @@ function createClearButton() {
 // 4
 function clearRoutineBeingBuiltDetails() {
      tempExerciseArray = [];
-     // displayRoutineBeingBuiltDetails();
      document.getElementById("routine-being-built-details").textContent = "";
 }
 

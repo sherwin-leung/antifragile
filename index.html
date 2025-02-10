@@ -31,14 +31,14 @@
             <fieldset>
                 <!-- <legend><i class="fa-solid fa-gear"></i></legend> -->
 
-                <div class="settings-checkbox">
+                <div class="settings-bar">
                     <label id="label-toggle-extra-details-settings" for="input-toggle-extra-details-settings">
                         <i class="fa-solid fa-expand"></i>
                     </label>
                     <input type="checkbox" id="input-toggle-extra-details-settings" />
                 </div>
 
-                <div class="settings-checkbox">
+                <div class="settings-bar">
                     <label id="label-toggle-sounds-settings" for="input-toggle-sounds-settings">
                         <!-- The label's icon is controlled using JS -->
                         <i id="icon-sound"></i>
@@ -46,22 +46,22 @@
                     <input type="checkbox" id="input-toggle-sounds-settings" />
                 </div>
 
-                <div class="settings-checkbox">
+                <div class="settings-bar">
                     <label id="label-toggle-instructions-settings" for="input-toggle-instructions-settings">
-                        <i class="fa-solid fa-info"></i>
+                        <i class="fa-regular fa-circle-question"></i>
                     </label>
                     <input type="checkbox" id="input-toggle-instructions-settings" />
                 </div>
 
-                <div class="settings-checkbox">
+                <div class="settings-bar">
                     <label id="label-popup-info-settings" for="input-popup-instructions-settings">
-                        <i class="fa-regular fa-circle-question"></i>
+                        <i class="fa-solid fa-info"></i>
                     </label>
-                    <input type="button" id="input-popup-instructions-settings" popovertarget="popover-info" />
+                    <input type="button" id="input-popup-instructions-settings" popovertarget="popover-instructions" />
                 </div>
             </fieldset>
 
-            <div popover id="popover-info">
+            <div popover id="popover-instructions">
                 <h2>hi</h2>
                 <p>this is not working yet heh</p>
             </div>
@@ -127,21 +127,6 @@
             <div class="list-building-styles timer-extra hide" id="routine-list"></div>
         </section>
 
-        <!-- ! New Exercise Section -->
-        <section id="section-new-exercise">
-            <button class="button-toggle-section" id="button-new-exercise">
-                <i class="fa-solid fa-plus"></i> Exercise
-            </button>
-
-            <div class="div-toggle-expand" id="div-new-exercise">
-                <div class="new-x-cluster" id="new-exercise-cluster">
-                    <label class="label-x-name" for="new-exercise-input">Exercise Name</label>
-                    <input required type="text" id="new-exercise-input" name="exercise-name" />
-                    <button class="button-save" id="button-save-new-exercise">Save</button>
-                </div>
-            </div>
-        </section>
-
         <!--! New Routine Section -->
         <section id="section-new-routine">
             <button class="button-toggle-section" id="button-new-routine">
@@ -157,7 +142,32 @@
 
                 <div class="list-building-styles" id="routine-being-built-details"></div>
 
+                <!-- TODO -->
+                <div id="container-buffer-duration">
+                    <label id="label-buffer-duration" for="input-buffer-duration">Buffer Between Exercises</label>
+                    <input id="input-buffer-duration-minutes" type="number" inputmode="numeric" min="0"
+                        placeholder="Min">
+                    <input id="input-buffer-duration-seconds" type="number" inputmode="numeric" min="0" max="59"
+                        placeholder="Sec">
+
+                </div>
+
                 <div id="container-exercise-cards"></div>
+            </div>
+        </section>
+
+        <!-- ! New Exercise Section -->
+        <section id="section-new-exercise">
+            <button class="button-toggle-section" id="button-new-exercise">
+                <i class="fa-solid fa-plus"></i> Exercise
+            </button>
+
+            <div class="div-toggle-expand" id="div-new-exercise">
+                <div class="new-x-cluster" id="new-exercise-cluster">
+                    <label class="label-x-name" for="new-exercise-input">Exercise Name</label>
+                    <input required type="text" id="new-exercise-input" name="exercise-name" />
+                    <button class="button-save" id="button-save-new-exercise">Save</button>
+                </div>
             </div>
         </section>
 
