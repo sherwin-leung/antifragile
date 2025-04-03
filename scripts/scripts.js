@@ -261,7 +261,7 @@ extraDetailsInput.addEventListener("change", function () {
  * 2) getSoundsChoiceFromLocalStorage() returns the user's choice from function 1), but NOTE: it returns it as a string, NOT a boolean. It will be "true" or "false"
  * 3) displayProperSoundSettingsIcon() changes the icon to speaker on/speaker mute depending on whether the user has enabled sounds or not as well as the proper color
  * 4) Various functions that play different soundbytes
- * 5) refreshSoundsSettings() is used on pageload to check whether the user has enabled or disabled sounds
+ * 5) refreshSoundsSettings() is used in on page load (in pageLoad()) to check whether the user has enabled or disabled sounds
  * 6) Event handler paired with these functions
  */
 // 1
@@ -336,7 +336,7 @@ soundsInput.addEventListener("change", function () {
  * 2) getInstructionsChoiceFromLocalStorage() returns the user's choice from function 1), but NOTE: it returns it as a string, NOT a boolean. It will be "true" or "false"
  * 3) showInstructions() shows the instructions
  * 4) hideInstructions() hides the instructions
- * 5) refreshInstructionsSettings() toggles between showing and hiding the instructions depending on the user's choice
+ * 5) refreshInstructionsSettings() decides between showing and hiding the instructions depending on the user's choice on page load (in pageLoad())
  * 6) Event handler paired with these functions
  */
 // 1
@@ -389,6 +389,28 @@ instructionsInput.addEventListener("change", function () {
      } else {
           hideInstructions();
      }
+});
+
+/**
+ * * The following function and Event Listener work together to hide and show the instructions for how to create Exercises and Routines
+ */
+function toggleInstructionsListView() {
+     const instructions = document.getElementById("ol-instructions");
+     const showInstructionsLabel = document.getElementById("button-toggle-instructions");
+
+     if (instructions.style.display === "block") {
+          instructions.style.display = "none";
+          showInstructionsLabel.innerHTML = `<i class="fa-solid fa-angle-down"></i> Show Instructions <i class="fa-solid fa-angle-down"></i>`;
+     } else {
+          instructions.style.display = "block";
+          showInstructionsLabel.innerHTML = `<i class="fa-solid fa-angle-up"></i> Hide Instructions <i class="fa-solid fa-angle-up"></i>`;
+     }
+}
+
+// Paired with above
+const instructionsButton = document.getElementById("button-toggle-instructions");
+instructionsButton.addEventListener("click", function () {
+     toggleInstructionsListView();
 });
 // ? End Settings Section
 
@@ -500,6 +522,7 @@ function showMinusOnButton(sectionId) {
 }
 
 // Feedback Section
+
 /**
  * * This function shows the user visual feedback if they were able to save a new Exercise or Routine
  * @param {string} x will be either "exercise" or "routine"
@@ -666,28 +689,6 @@ function addToggleRoutineListViewFunctionToButton() {
           }
      });
 }
-
-/**
- * * The following function and Event Listener work together to hide and show the instructions for how to create Exercises and Routines
- */
-function toggleInstructionsListView() {
-     const instructions = document.getElementById("ol-instructions");
-     const showInstructionsLabel = document.getElementById("button-toggle-instructions");
-
-     if (instructions.style.display === "block") {
-          instructions.style.display = "none";
-          showInstructionsLabel.innerHTML = `<i class="fa-solid fa-angle-down"></i> Show Instructions <i class="fa-solid fa-angle-down"></i>`;
-     } else {
-          instructions.style.display = "block";
-          showInstructionsLabel.innerHTML = `<i class="fa-solid fa-angle-up"></i> Hide Instructions <i class="fa-solid fa-angle-up"></i>`;
-     }
-}
-
-// Paired with above
-const instructionsButton = document.getElementById("button-toggle-instructions");
-instructionsButton.addEventListener("click", function () {
-     toggleInstructionsListView();
-});
 
 /**
  * * This function creates an saves a new Exercise object if the name given was not an empty string, and if one with the same name doesn't already exist in local storage
@@ -943,43 +944,6 @@ function addEventListenerToAddButtons() {
 }
 
 /**
- * * This function enforces that the user can only input valid numbers in the input for buffer duration between exercises
- * For minutes, number is valid as long as it's not a negative number
- * Credits: https://stackoverflow.com/questions/34577806/how-to-prevent-inserting-value-that-is-greater-than-to-max-in-number-field-in-ht
- */
-function enforceValidInputMinutesValueForBufferDuration() {
-     const bufferDurationInputMinutes = document.getElementById("input-buffer-duration-minutes");
-     bufferDurationInputMinutes.oninput = function () {
-          const minutesMin = parseInt(bufferDurationInputMinutes.min);
-          const minutesValue = parseInt(bufferDurationInputMinutes.value);
-
-          if (minutesValue < minutesMin) {
-               bufferDurationInputMinutes.value = minutesMin;
-          }
-     };
-}
-
-/**
- * * This function enforces that the user can only input valid numbers in the input for buffer duration between exercises
- * For seconds, number is valid as long as it's not a negative number
- * Credits: https://stackoverflow.com/questions/34577806/how-to-prevent-inserting-value-that-is-greater-than-to-max-in-number-field-in-ht
- */
-function enforceValidInputSecondsValueForBufferDuration() {
-     const bufferDurationInputSeconds = document.getElementById("input-buffer-duration-seconds");
-     bufferDurationInputSeconds.oninput = function () {
-          const secondsMin = parseInt(bufferDurationInputSeconds.min);
-          const secondsMax = parseInt(bufferDurationInputSeconds.max);
-          const secondsValue = bufferDurationInputSeconds.value;
-
-          if (secondsValue > secondsMax) {
-               bufferDurationInputSeconds.value = secondsMax;
-          } else if (secondsValue < secondsMin) {
-               bufferDurationInputSeconds.value = secondsMin;
-          }
-     };
-}
-
-/**
  * * This function enforces that the user can only input positive numbers in the input for duration in minutes for the exercise cards
  * Credits: https://stackoverflow.com/questions/34577806/how-to-prevent-inserting-value-that-is-greater-than-to-max-in-number-field-in-ht
  */
@@ -1020,9 +984,9 @@ function enforceValidInputSecondsValueForExerciseCards() {
 
 /**
  * * The following FOUR functions work together
- * 1) displayRoutineBeingBuiltDetails() shows users the list of exercise for the current Routine that they're building
+ * 1) displayRoutineBeingBuiltDetails() shows users the list of exercises for the current Routine that they're building
  * 2) createTempExerciseList() builds a string from tempExerciseArray and returns it
- * 3) createClearButton() creates the button to be assigned to the clearRoutineBeingBuilt() function
+ * 3) createClearButton() creates the button to be assigned to the clearRoutineBeingBuiltDetails() function
  * 4) clearRoutineBeingBuiltDetails() clears out the list of exercises the user currently is building for a new Routine for if the user wants to restart selection process
  */
 // 1
@@ -1065,12 +1029,88 @@ function clearRoutineBeingBuiltDetails() {
 }
 
 /**
+ * * This function enforces that the user can only input valid numbers in the input for buffer duration between exercises
+ * For minutes, number is valid as long as it's not a negative number
+ * Credits: https://stackoverflow.com/questions/34577806/how-to-prevent-inserting-value-that-is-greater-than-to-max-in-number-field-in-ht
+ */
+function enforceValidInputMinutesValueForBufferDuration() {
+     const bufferDurationInputMinutes = document.getElementById("input-buffer-duration-minutes");
+     bufferDurationInputMinutes.oninput = function () {
+          const minutesMin = parseInt(bufferDurationInputMinutes.min);
+          const minutesValue = parseInt(bufferDurationInputMinutes.value);
+
+          if (minutesValue < minutesMin) {
+               bufferDurationInputMinutes.value = minutesMin;
+          }
+     };
+}
+
+/**
+ * * This function enforces that the user can only input valid numbers in the input for buffer duration between exercises
+ * For seconds, number is valid as long as it's not a negative number
+ * Credits: https://stackoverflow.com/questions/34577806/how-to-prevent-inserting-value-that-is-greater-than-to-max-in-number-field-in-ht
+ */
+function enforceValidInputSecondsValueForBufferDuration() {
+     const bufferDurationInputSeconds = document.getElementById("input-buffer-duration-seconds");
+     bufferDurationInputSeconds.oninput = function () {
+          const secondsMin = parseInt(bufferDurationInputSeconds.min);
+          const secondsMax = parseInt(bufferDurationInputSeconds.max);
+          const secondsValue = bufferDurationInputSeconds.value;
+
+          if (secondsValue > secondsMax) {
+               bufferDurationInputSeconds.value = secondsMax;
+          } else if (secondsValue < secondsMin) {
+               bufferDurationInputSeconds.value = secondsMin;
+          }
+     };
+}
+
+// TODO
+/**
+ * * The following THREE functions work together
+ * 1) getBufferDurationMinutes() retrieves and returns the minutes part of a user's desired buffer time. Defaults to 0 if the user does not enter a value in
+ * 2) getBufferDurationSeconds() retrieves and returns the seconds part of a user's desired buffer time. Defaults to 1 if the user does not enter a value in
+ * 3) insertBufferBetweenExercises() inserts a "buffer" Exercise *between* each existing Exercise in tempExerciseArray
+ */
+// 1
+function getBufferDurationMinutes() {
+     return parseInt(document.getElementById("input-buffer-duration-minutes").value) || 0;
+}
+
+// 2
+function getBufferDurationSeconds() {
+     return parseInt(document.getElementById("input-buffer-duration-seconds").value) || 1;
+}
+
+// 3
+// Credits: https://stackoverflow.com/questions/31879576/what-is-the-most-elegant-way-to-insert-objects-between-array-elements But without ternary and arrow functions to make it more readable
+function insertBufferBetweenExercises() {
+     // Creates the buffer between exercises which is really just a new Exercise
+     const bufferExercise = new Exercise("Buffer", getBufferDurationMinutes(), getBufferDurationSeconds());
+
+     // Generating a new array with the buffer exercises then assigning that to tempExerciseArray
+     tempExerciseArray = tempExerciseArray.flatMap(function (exercise, index) {
+          // This is to ensure it doesn't create a buffer AFTER the last exercise
+          if (index < tempExerciseArray.length - 1) {
+               return [exercise, bufferExercise];
+          } else {
+               return [exercise];
+          }
+     });
+}
+
+/**
  * * This function creates an saves a new Routine object if the name given was not an empty string and there are exercises added into the list
  * Paired with EventListener below
  */
 function saveNewRoutineToLocalStorage() {
      // Store name of new Routine from input
      const routineName = sanitize(document.getElementById("new-routine-input").value);
+
+     // Inserts buffers
+     insertBufferBetweenExercises();
+
+     // Saves the Routine to local storage
      const newRoutine = new Routine(routineName, tempExerciseArray);
      localStorage.setItem("routineDataKey", JSON.stringify(newRoutine));
 }
@@ -1127,7 +1167,7 @@ saveNewRoutineButton.addEventListener("click", function () {
  *
  * 1) createTempArraysForTimer() grabs Routine data and stores the name & duration of each Exercise in the Routine's exerciseList in global temporary arrays
  *
- * 2) startCountdown() starts the countdown for the current Exercise (based on the index). Fires up tick() and then tells it to run every 1 second. If there are no Exercises left in the routine list, it performs clean up and stops the countdown
+ * 2) startCountdownForCurrentExercise() starts the countdown for the current Exercise (based on the index). Fires up tick() and then tells it to run every 1 second. If there are no Exercises left in the routine list, it performs clean up and stops the countdown
  *
  * 3) togglePauseAndResumeCountdown() is for the [Pause button]. It calls function 4) and 5) below. If the timer is currently paused, it will resume it from where it left off. If it's currently running, it will pause it at the current countdown state
  *
@@ -1137,13 +1177,13 @@ saveNewRoutineButton.addEventListener("click", function () {
  *
  * 6) stopCountdown() stops the countdown and performs a lot of clean up. If the user presses [Start] again, it restarts the countdown from the beginning of the list
  *
- * 7) tick() in charge of displaying to the user the countdown timer. If the seconds reach -1 (the duration is over), it stops the countdown, increments the index by 1, and tells startCountdown() to run for the next Exercise if there is one
+ * 7) tick() in charge of displaying to the user the countdown timer. If the seconds reach -1 (the duration is over), it stops the countdown, increments the index by 1, and tells startCountdownForCurrentExercise() to run for the next Exercise if there is one
  *
  */
 let timerIntervalId;
 let totalCountdownTimeInSeconds;
 
-let tempArrayOfNames = [];
+let tempArrayOfExerciseNames = [];
 let tempArrayOfDurations = [];
 
 let currentExerciseIndex = 0; // To keep track of the current exercise that's being timed
@@ -1170,7 +1210,7 @@ startButton.addEventListener("click", function () {
 
           // Start the countdown for the first exercise
           currentExerciseIndex = 0;
-          startCountdown();
+          startCountdownForCurrentExercise();
      } else {
           togglePauseAndResumeCountdown();
      }
@@ -1210,7 +1250,7 @@ function createTempArraysForTimer() {
      for (let i = 0; i < currentlyLoadedRoutine.exerciseList.length; i++) {
           // Names
           const exerciseName = currentlyLoadedRoutine.exerciseList[i].name;
-          tempArrayOfNames.push(exerciseName);
+          tempArrayOfExerciseNames.push(exerciseName);
 
           // Full durations in seconds
           const startingMinutes = currentlyLoadedRoutine.exerciseList[i].durationMinutes;
@@ -1221,7 +1261,7 @@ function createTempArraysForTimer() {
 }
 
 // 2 - has multiple other functions below used within this function
-function startCountdown() {
+function startCountdownForCurrentExercise() {
      // * For full routine completion
      // If there are no more exercises, stop the timer from running and performs clean up/feedback
      if (currentExerciseIndex === tempArrayOfDurations.length) {
@@ -1259,14 +1299,34 @@ function startCountdown() {
 
 // 2a
 function updateUpcomingExercises() {
-     if (currentExerciseIndex === tempArrayOfNames.length - 1) {
+     // Current exercise (remember that "Buffer" is still an exercise too, we're just skipping past them when updating the textContent)
+     const currentExercise = tempArrayOfExerciseNames[currentExerciseIndex];
+
+     // If the current exercise is named "Buffer", don't update the display - keeps it at the same state it was for the last exercise
+     if (currentExercise === "Buffer") {
+          return;
+     }
+
+     // Create a filtered array that excludes all exercises named "Buffer"
+     const filteredArrayOfExerciseNames = tempArrayOfExerciseNames.filter((name) => name !== "Buffer");
+
+     // Find the index of the current exercise within the filtered array
+     const currentFilteredIndex = filteredArrayOfExerciseNames.indexOf(currentExercise);
+
+     // In the case of the current exercise being the last exercise (no more after it)
+     if (currentFilteredIndex === filteredArrayOfExerciseNames.length - 1) {
           timerDisplayNumberOfExercisesLeft.textContent = `No more exercises after this`;
           return;
      }
 
-     timerDisplayNumberOfExercisesLeft.textContent = `${tempArrayOfNames.length - (currentExerciseIndex + 1)} exercises left - next up: ${
-          tempArrayOfNames[currentExerciseIndex + 1]
-     }`;
+     // Determine how many exercises remain
+     const remainingExercises = filteredArrayOfExerciseNames.length - (currentFilteredIndex + 1);
+
+     // Determine the next exercise
+     const nextExercise = filteredArrayOfExerciseNames[currentFilteredIndex + 1];
+
+     // Update the text content
+     timerDisplayNumberOfExercisesLeft.textContent = `${remainingExercises} exercises left - next up: ${nextExercise}`;
 }
 
 // 3 (toggles functions 4 and 5 below)
@@ -1293,7 +1353,7 @@ function pauseCountdown() {
 function resumeCountdown() {
      timerIntervalId = setInterval(tick, 1000);
      isTimerPaused = false;
-     timerDisplayExerciseName.textContent = tempArrayOfNames[currentExerciseIndex];
+     timerDisplayExerciseName.textContent = tempArrayOfExerciseNames[currentExerciseIndex];
 
      // Change button icon
      startButton.innerHTML = `<i class="fa-solid fa-pause"></i>`;
@@ -1306,7 +1366,7 @@ function stopCountdown() {
 
      // Empties out temp arrays to ensure previous instances of countdowns are erased
      // * Must be run every time stopCountdown is called, so cannot be in an Event Listener
-     tempArrayOfNames = [];
+     tempArrayOfExerciseNames = [];
      tempArrayOfDurations = [];
 
      // Change button icon
@@ -1325,8 +1385,8 @@ function tick() {
           // Move on to the next exercise
           currentExerciseIndex++;
 
-          // Start the countdown for the next exercise
-          startCountdown();
+          // Start the countdown again for the next exercise
+          startCountdownForCurrentExercise();
 
           return;
      }
@@ -1341,7 +1401,7 @@ function calculateAndUpdateMinutesAndSeconds() {
      const displaySeconds = totalCountdownTimeInSeconds % 60;
 
      // Update display with the current exercise name
-     timerDisplayExerciseName.textContent = tempArrayOfNames[currentExerciseIndex];
+     timerDisplayExerciseName.textContent = tempArrayOfExerciseNames[currentExerciseIndex];
 
      // Update the display with the current exercise time
      timerDisplayCountdown.textContent = `${convertToStringAndPad2(displayMinutes)}:${convertToStringAndPad2(displaySeconds)}`;
@@ -1394,6 +1454,7 @@ function initializeTimerDetails() {
      if (JSON.parse(grabbedData).exerciseList.length == 1) {
           upcomingExercises.textContent = "Only one exercise in this routine";
      } else {
-          upcomingExercises.textContent = `${parsedData.exerciseList.length - 1} exercises left - next up: ${parsedData.exerciseList[1].name}`;
+          upcomingExercises.textContent = "A good workout is imminent 😤";
+          // upcomingExercises.textContent = `${parsedData.exerciseList.length - 1} exercises left - next up: ${parsedData.exerciseList[1].name}`;
      }
 }
