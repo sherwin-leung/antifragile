@@ -1,6 +1,6 @@
 # Antifragile
 
-Antifragile (stylized as "antifragile.") is a simple countdown timer that allows you to create exercises, append them to a list, and save the list as a routine.
+**Antifragile** (stylized as "**antifragile.**") is a simple countdown timer that allows you to create exercises, append them to a list, and save the list as a routine.
 
 Dedicated to Daniel, the best workout partner I could've ever asked for. Fly high, brother. 🦉
 
@@ -21,24 +21,26 @@ As of version 1.10 - subject to change with when additional functionalities are 
 ### First Usage
 
 1. Press the pill shaped **Exercise** button to expand the section.
-   * Enter in an exercise name, eg. "shadowboxing", and press **Save**. This exercise will be saved and displayed in step 2
+   * Enter in an exercise name, eg. "Shadowboxing", and press **Save**. This exercise will be saved and displayed in step 2
 
 2. Press the pill shaped **Routine** button to expand the section
    * Enter a routine name
 
    * Click/tap on an exercise you want to add to your routine. There are two by default, "Additional Rest" and "Stretch", and you should see your newly added exercise as a button as well. In this example, you would also see "Shadowboxing"
 
-   * Fill in the two inputs labeled minutes and seconds. _Empty or non-numeric (e) values will default to as 0_
+   * Fill in the **two** inputs labeled minutes and seconds with the desired exercise duration
+     <br>_Empty or non-numeric (e) values will default to as 0_
 
-   * Press **Add** to append the exercise to the _Exercises To Add_ list
+   * Press _**Add**_ to append the exercise to the **Exercises To Add** list
 
-   * Fill in both inputs beside _Rest Between Exercises_. This allows you to specify a buffer between each exercise. Use the "Additional Rest" exercise to increase the buffer period wherever you need. _If left empty or non-numeric (e), the minutes input defaults to 0 and the seconds input defaults to 0_
+   * Fill in the **two** inputs beside **Buffer Between Exercises**. This allows you to specify a buffer period between each exercise. Use the "Additional Rest" exercise to increase the buffer period wherever you need in the routine
+     <br>_Does not add a buffer period after the last exercise or after "Additional Rest"s. Empty or non-numeric (e) values will default to as 0_
 
-   * Press **Save** to create your routine. You should see your routine's name, the first exercise's name and duration, and buttons to start and stop at the top portion of your screen. If you have additional timer details enabled (in settings), you may see more information
+   * Press **Save** to create your routine. You should see your routine's name, the first exercise's name and duration, and buttons to start and stop at the top portion of your screen. If you have additional timer details enabled (the first toggle in settings), you may see more information
      
 3. Control the timer with the **start/pause** and **stop** buttons
 
-4. Optional: Play around with the settings under the app's title in the header
+4. Optional: Play around with the settings under the app's title in the header (they're toggles)
 
 ### Subsequent Uses
 
@@ -56,7 +58,7 @@ There is currently no database storage associated with this app. Exercises and r
 
 While state and exercises/routines persist through each visit, be aware that they _will_ be deleted if a user manually clears their cookies/site data on a **desktop** or **mobile**.
 
-There may be a case where users may want to manually delete their data associated with Antifragile (nothing sensitive, just saved exercises/routines).
+There may be a case where users may want to manually delete their data associated with Antifragile (nothing sensitive is saved, just exercises/routines).
 
 At the moment, there is no functionality to clear existing exerises on the timer, only the ability to add new ones. Additionally, currently creating a new routine only overwrites the previous one, and there is no ability to remove it.
 
@@ -71,15 +73,15 @@ There are plans to implement functionalities to allow users to delete existing e
 ### 🖥️ Desktop
 
 _On desktop, you can delete local storage for a site directly without erasing all your cookies._
-1. Press **F12** to access dev tools
-2. Click **Application** tab
-3. Expand **Local storage** under _Storage_ category
-4. Click `https://sherwin-leung.github.io`
+1. Press **F12** to access dev tools **while on the timer's page**
+2. Click the **Application** tab
+3. Expand **Local storage** under the _Storage_ category
+4. Click on `https://sherwin-leung.github.io`
 5. Click the **Ø** symbol next to the filter bar to clear all data
 
 ### 📱 Mobile
 
-* Simply clear your browser's cookies/site data. ***Keep in mind that this will probably sign you out of any sites you've signed into on your phone's browser and clear other preferences!***
+* Simply clear your browser's cookies/site data. ***Keep in mind that this will probably sign you out of any sites you've signed into on your phone's browser and clear other preferences unless you have a way to explicitly only clear Antifragile's site data!***
 
 </details>
 
@@ -91,7 +93,9 @@ _On desktop, you can delete local storage for a site directly without erasing al
 
 <summary>Click to view known bugs</summary>
 
-* None found, for now! 😰
+* 0 (zero) is considered a number to count down a full second for.
+  <br>What should happen: 3.. 2.. 1.. 0 ding!
+  <br>What happens right now: 3.. 2.. 1.. 0.. ding!
 
 </details>
 
@@ -102,8 +106,6 @@ _On desktop, you can delete local storage for a site directly without erasing al
 <summary>Click to view planned updates</summary>
 
 Listed roughly in order of priority, but subject to change
-
-* Option to add a "buffer countdown" between each exercise
 
 * Ability to delete exercises
 * Sort excercise buttons by alphabetical order
@@ -120,11 +122,14 @@ Listed roughly in order of priority, but subject to change
 
 <summary>Click to view version 1 changelog</summary>
 
+* v1.10
+  * Added the ability to insert a buffer period (duration-based, just like with exercises) between exercises in a routine. Will not add a buffer period after the last exercise or after "Additional Rest"s.
+
 * v1.09
   * Visual improvements: animated gradients on some buttons, sections expanding/collapsing instead of appearing/disappearing instantly
 
 * v1.08
-  * Added ability to toggle on/off sounds for the timer. A sound plays when you successfully complete the entire routine (all exercises finished without quitting - pausing is okay though) and a sound plays when you stop the routine. Looking to add a sound that plays in between exercises for the routine soon. _The sounds right now are just silly Chaewon/LE SSERAFIM sounds but may change in the future._
+  * Added ability to toggle on/off sounds for the timer. A sound plays when you successfully complete the entire routine (all exercises finished without quitting - pausing is okay though) and a sound plays when you stop the routine. Looking to add a sound that plays in between exercises for the routine soon.
  
 * v1.07
   * Added ability to toggle on/off extra details related to currently loaded routine in the timer (how many exercises left, which exercise is coming up next, and full exercise list). Instructions view can be toggled on and off as well
