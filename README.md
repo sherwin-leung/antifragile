@@ -2,6 +2,8 @@
 
 Antifragile (stylized as "antifragile.") is a simple countdown timer that allows you to create exercises, append them to a list, and save the list as a routine.
 
+Dedicated to Daniel, the best workout partner I could've ever asked for. Fly high, brother. 🦉
+
 ## How To Access & Troubleshoot
 
 Simply visit this [GitHub Page](https://sherwin-leung.github.io/antifragile/) to use!
@@ -13,7 +15,7 @@ If the app seems broken and issues persist, try [clearing your local storage](ht
 ## 💡How To Use
 
 `
-As of version 1.09 - subject to change with when additional functionalities are implemented
+As of version 1.10 - subject to change with when additional functionalities are implemented
 `
 
 ### First Usage
@@ -23,17 +25,25 @@ As of version 1.09 - subject to change with when additional functionalities are 
 
 2. Press the pill shaped **Routine** button to expand the section
    * Enter a routine name
-   * Click/tap on an exercise you want to append to your routine list. There are two by default, "Rest" and "Stretch", and you should see your newly added exercise as a button as well. In this example, you would also see "Shadowboxing"
+
+   * Click/tap on an exercise you want to add to your routine. There are two by default, "Additional Rest" and "Stretch", and you should see your newly added exercise as a button as well. In this example, you would also see "Shadowboxing"
+
    * Fill in the two inputs labeled minutes and seconds. _Empty or non-numeric (e) values will default to as 0_
-   * Press **Save** and you should see your routine's name, the first exercise's name and duration, and buttons to start and stop at the top portion of your screen. If you have additional timer details enabled (in settings), you may see more information
+
+   * Press **Add** to append the exercise to the _Exercises To Add_ list
+
+   * Fill in both inputs beside _Rest Between Exercises_. This allows you to specify a buffer between each exercise. Use the "Additional Rest" exercise to increase the buffer period wherever you need. _If left empty or non-numeric (e), the minutes input defaults to 0 and the seconds input defaults to 0_
+
+   * Press **Save** to create your routine. You should see your routine's name, the first exercise's name and duration, and buttons to start and stop at the top portion of your screen. If you have additional timer details enabled (in settings), you may see more information
      
 3. Control the timer with the **start/pause** and **stop** buttons
 
-4. Optional: Play around with the settings under the app's title
+4. Optional: Play around with the settings under the app's title in the header
 
 ### Subsequent Uses
 
 * To add a new exercise, simply repeat step 1 above. The new exercise's button will be appended in the **Routine** section
+
 * To add a new routine, simply repeat step 2 above. This will _**overwrite**_ the previous routine until the ability for multiple routines is implemented
 
 ## 💾 About Storage of Data
@@ -149,4 +159,4 @@ Listed roughly in order of priority, but subject to change
 * LE SSERAFIM's song [ANTIFRAGILE](https://youtu.be/pyf8cbqyfPs) whose name I ~~purloined~~ borrowed
 * [Chaewon](https://www.instagram.com/_chaechae_1/?hl=en) for her voice
 * [animista](https://animista.net/) - an awesome CSS library for animations
-* Various code snippets from Stack Overflow and around the internet. I try to put credits within comments in the source code if it's something I straight copied
+* Various code snippets from Stack Overflow and around the internet. I try to put credits within comments in the source code if it's something I straight up copied
