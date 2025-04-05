@@ -154,7 +154,7 @@ setTimeout(function () {
  * * This functions handles generating a random phrase each time the page is loaded/reloaded
  */
 function generateOverlayPhrase() {
-     const arrayOfPhrases = ["an exercise timer"];
+     const arrayOfPhrases = ["dedicated to daniel", "an exercise timer"];
      const randomIndex = Math.floor(Math.random() * arrayOfPhrases.length);
 
      document.getElementById("overlay-phrase").textContent = arrayOfPhrases[randomIndex];
@@ -655,6 +655,9 @@ function initializeRoutineList() {
 
      const currentlyLoadedRoutine = JSON.parse(grabbedData);
 
+     // Filter the Routine in local storage's exercise list to not include the exercise named "Rest" (the buffer) and save it into filteredArrayOfExercises
+     const filteredArrayOfExercises = currentlyLoadedRoutine.exerciseList.filter((exercise) => exercise.name !== "Rest");
+
      // Displaying the routine list
      const routineList = document.getElementById("routine-list");
 
@@ -662,10 +665,10 @@ function initializeRoutineList() {
      let htmlString = `<button class='button-toggle-lists' id='button-toggle-routine-list'><i class="fa-solid fa-angle-down"></i> Show Routine <i class="fa-solid fa-angle-down"></i></button>`;
 
      htmlString += "<ol id='ol-currently-loaded-routine'>";
-     for (i = 0; i < currentlyLoadedRoutine.exerciseList.length; i++) {
-          htmlString += `<li>${currentlyLoadedRoutine.exerciseList[i].name} - ${convertToStringAndPad2(
-               currentlyLoadedRoutine.exerciseList[i].durationMinutes
-          )}m:${convertToStringAndPad2(currentlyLoadedRoutine.exerciseList[i].durationSeconds)}s</li>`;
+     for (i = 0; i < filteredArrayOfExercises.length; i++) {
+          htmlString += `<li>${filteredArrayOfExercises[i].name} - ${convertToStringAndPad2(
+               filteredArrayOfExercises[i].durationMinutes
+          )}m:${convertToStringAndPad2(filteredArrayOfExercises[i].durationSeconds)}s</li>`;
      }
      htmlString += "</ol>";
 
@@ -754,8 +757,8 @@ function clearExerciseCards() {
 
 // 3
 function renderExerciseCards() {
-     // Create the Rest button which is always at the beginning
-     createNewExerciseCard("Rest");
+     // Create the Additional Rest and Stretch exercise buttons which is always displayed at the beginning
+     createNewExerciseCard("Additional Rest");
      createNewExerciseCard("Stretch");
 
      // Grabs existing exercises data from localStorage and converts it into an array
@@ -1029,8 +1032,7 @@ function clearRoutineBeingBuiltDetails() {
 }
 
 /**
- * * This function enforces that the user can only input valid numbers in the input for buffer duration between exercises
- * For minutes, number is valid as long as it's not a negative number
+ * * This function enforces that the user can only input positive numbers or zero in the input for buffer duration between exercises
  * Credits: https://stackoverflow.com/questions/34577806/how-to-prevent-inserting-value-that-is-greater-than-to-max-in-number-field-in-ht
  */
 function enforceValidInputMinutesValueForBufferDuration() {
@@ -1046,8 +1048,7 @@ function enforceValidInputMinutesValueForBufferDuration() {
 }
 
 /**
- * * This function enforces that the user can only input valid numbers in the input for buffer duration between exercises
- * For seconds, number is valid as long as it's not a negative number
+ * * This function enforces that the user can only input numbers between 0-59 inclusive in the input for buffer duration between exercises
  * Credits: https://stackoverflow.com/questions/34577806/how-to-prevent-inserting-value-that-is-greater-than-to-max-in-number-field-in-ht
  */
 function enforceValidInputSecondsValueForBufferDuration() {
@@ -1065,33 +1066,32 @@ function enforceValidInputSecondsValueForBufferDuration() {
      };
 }
 
-// TODO
 /**
  * * The following THREE functions work together
- * 1) getBufferDurationMinutes() retrieves and returns the minutes part of a user's desired buffer time. Defaults to 0 if the user does not enter a value in
- * 2) getBufferDurationSeconds() retrieves and returns the seconds part of a user's desired buffer time. Defaults to 1 if the user does not enter a value in
+ * 1) getBufferDurationMinutes() retrieves and returns the minutes part of a user's desired buffer time (defaults 0 if blank)
+ * 2) getBufferDurationSeconds() retrieves and returns the seconds part of a user's desired buffer time (defaults 0 if blank)
  * 3) insertBufferBetweenExercises() inserts a "buffer" Exercise *between* each existing Exercise in tempExerciseArray
  */
 // 1
 function getBufferDurationMinutes() {
-     return parseInt(document.getElementById("input-buffer-duration-minutes").value) || 0;
+     return parseInt(document.getElementById("input-buffer-duration-minutes").value);
 }
 
 // 2
 function getBufferDurationSeconds() {
-     return parseInt(document.getElementById("input-buffer-duration-seconds").value) || 1;
+     return parseInt(document.getElementById("input-buffer-duration-seconds").value);
 }
 
 // 3
 // Credits: https://stackoverflow.com/questions/31879576/what-is-the-most-elegant-way-to-insert-objects-between-array-elements But without ternary and arrow functions to make it more readable
 function insertBufferBetweenExercises() {
      // Creates the buffer between exercises which is really just a new Exercise
-     const bufferExercise = new Exercise("Buffer", getBufferDurationMinutes(), getBufferDurationSeconds());
+     const bufferExercise = new Exercise("Rest", getBufferDurationMinutes(), getBufferDurationSeconds());
 
      // Generating a new array with the buffer exercises then assigning that to tempExerciseArray
      tempExerciseArray = tempExerciseArray.flatMap(function (exercise, index) {
-          // This is to ensure it doesn't create a buffer AFTER the last exercise
-          if (index < tempExerciseArray.length - 1) {
+          // This is to ensure it doesn't create a buffer after the last exercise as well as not after manually added rest periods
+          if (index < tempExerciseArray.length - 1 && exercise.name !== "Additional Rest") {
                return [exercise, bufferExercise];
           } else {
                return [exercise];
@@ -1262,7 +1262,7 @@ function createTempArraysForTimer() {
 
 // 2 - has multiple other functions below used within this function
 function startCountdownForCurrentExercise() {
-     // * For full routine completion
+     // * For full routine completion (user finishes the entire routine from start to finish)
      // If there are no more exercises, stop the timer from running and performs clean up/feedback
      if (currentExerciseIndex === tempArrayOfDurations.length) {
           stopCountdown();
@@ -1299,19 +1299,23 @@ function startCountdownForCurrentExercise() {
 
 // 2a
 function updateUpcomingExercises() {
-     // Current exercise (remember that "Buffer" is still an exercise too, we're just skipping past them when updating the textContent)
+     // Current exercise (remember that "Rest" [the buffer] is still an exercise too, we're just skipping past them when updating the textContent)
      const currentExercise = tempArrayOfExerciseNames[currentExerciseIndex];
 
-     // If the current exercise is named "Buffer", don't update the display - keeps it at the same state it was for the last exercise
-     if (currentExercise === "Buffer") {
+     // If the current exercise is named "Rest" or "Additional Rest", don't update the display - keeps it at the same state it was for the last exercise
+     if (currentExercise === "Rest" || currentExercise === "Additional Rest") {
           return;
      }
 
-     // Create a filtered array that excludes all exercises named "Buffer"
-     const filteredArrayOfExerciseNames = tempArrayOfExerciseNames.filter((name) => name !== "Buffer");
+     // Create a filtered array that excludes all exercises named "Rest" and "Additional Rest"
+     const filteredArrayOfExerciseNames = tempArrayOfExerciseNames.filter((name) => name !== "Rest" && name !== "Additional Rest");
 
      // Find the index of the current exercise within the filtered array
      const currentFilteredIndex = filteredArrayOfExerciseNames.indexOf(currentExercise);
+
+     // Determine how many exercises remain and determine the next exercise
+     const remainingExercises = filteredArrayOfExerciseNames.length - (currentFilteredIndex + 1);
+     const nextExercise = filteredArrayOfExerciseNames[currentFilteredIndex + 1];
 
      // In the case of the current exercise being the last exercise (no more after it)
      if (currentFilteredIndex === filteredArrayOfExerciseNames.length - 1) {
@@ -1319,11 +1323,12 @@ function updateUpcomingExercises() {
           return;
      }
 
-     // Determine how many exercises remain
-     const remainingExercises = filteredArrayOfExerciseNames.length - (currentFilteredIndex + 1);
+     // For the second last exercise so "1 exercises left" becomes "1 exercise left" for grammar purposes
+     if (currentFilteredIndex === filteredArrayOfExerciseNames.length - 2) {
+          timerDisplayNumberOfExercisesLeft.textContent = `1 exercise left - next up: ${nextExercise}`;
 
-     // Determine the next exercise
-     const nextExercise = filteredArrayOfExerciseNames[currentFilteredIndex + 1];
+          return;
+     }
 
      // Update the text content
      timerDisplayNumberOfExercisesLeft.textContent = `${remainingExercises} exercises left - next up: ${nextExercise}`;
