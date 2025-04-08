@@ -717,6 +717,10 @@ label {
     transition : height 0.25s ease;
 }
 
+.routine-list-exercise {
+    color: var(--clr-lilac);
+}
+
 #routine-list {
     padding-bottom: 0rem;
 }

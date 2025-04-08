@@ -43,7 +43,7 @@ function pageLoad() {
      refreshSoundsSettings();
      refreshInstructionsSettings();
 
-     // Buffer input values
+     // Buffer input values - enforces them to be valid when user is inputting values
      enforceValidInputMinutesValueForBufferDuration();
      enforceValidInputSecondsValueForBufferDuration();
 
@@ -664,13 +664,21 @@ function initializeRoutineList() {
      // Creates button for toggling routine list visibility
      let htmlString = `<button class='button-toggle-lists' id='button-toggle-routine-list'><i class="fa-solid fa-angle-down"></i> Show Routine <i class="fa-solid fa-angle-down"></i></button>`;
 
+     // Start HTML string
      htmlString += "<ol id='ol-currently-loaded-routine'>";
+
+     htmlString += `<p>Rest between each exercise: ${convertToStringAndPad2(getBufferDurationMinutes())}m:${convertToStringAndPad2(
+          getBufferDurationSeconds()
+     )}s</p>`;
+
      for (i = 0; i < filteredArrayOfExercises.length; i++) {
-          htmlString += `<li>${filteredArrayOfExercises[i].name} - ${convertToStringAndPad2(
+          htmlString += `<li><span class="routine-list-exercise">${filteredArrayOfExercises[i].name}</span> - ${convertToStringAndPad2(
                filteredArrayOfExercises[i].durationMinutes
           )}m:${convertToStringAndPad2(filteredArrayOfExercises[i].durationSeconds)}s</li>`;
      }
+
      htmlString += "</ol>";
+     // End HTML string
 
      routineList.innerHTML = htmlString;
 
@@ -1067,22 +1075,34 @@ function enforceValidInputSecondsValueForBufferDuration() {
 }
 
 /**
- * * The following THREE functions work together
- * 1) getBufferDurationMinutes() retrieves and returns the minutes part of a user's desired buffer time (defaults 0 if blank)
- * 2) getBufferDurationSeconds() retrieves and returns the seconds part of a user's desired buffer time (defaults 0 if blank)
- * 3) insertBufferBetweenExercises() inserts a "buffer" Exercise *between* each existing Exercise in tempExerciseArray
+ * * The following FIVE functions are related or work together
+ * 1) saveBufferDurationMinutes() stores the buffer's minute duration to local storage (defaults 0 if blank)
+ * 2) saveBufferDurationSeconds() stores the buffer's minute duration to local storage (defaults 0 if blank)
+ * 3) getBufferDurationMinutes() retrieves and returns the minutes part of a user's desired buffer time (defaults 0 if blank)
+ * 4) getBufferDurationSeconds() retrieves and returns the seconds part of a user's desired buffer time (defaults 0 if blank)
+ * 5) insertBufferBetweenExercises() inserts a "buffer" Exercise *between* each existing Exercise in tempExerciseArray
  */
 // 1
-function getBufferDurationMinutes() {
-     return parseInt(document.getElementById("input-buffer-duration-minutes").value);
+function saveBufferDurationMinutes() {
+     localStorage.setItem("bufferDurationMinutes", parseInt(document.getElementById("input-buffer-duration-minutes").value) || 0);
 }
 
 // 2
-function getBufferDurationSeconds() {
-     return parseInt(document.getElementById("input-buffer-duration-seconds").value);
+function saveBufferDurationSeconds() {
+     localStorage.setItem("bufferDurationSeconds", parseInt(document.getElementById("input-buffer-duration-seconds").value) || 0);
 }
 
 // 3
+function getBufferDurationMinutes() {
+     return localStorage.getItem("bufferDurationMinutes");
+}
+
+// 4
+function getBufferDurationSeconds() {
+     return localStorage.getItem("bufferDurationSeconds");
+}
+
+// 5
 // Credits: https://stackoverflow.com/questions/31879576/what-is-the-most-elegant-way-to-insert-objects-between-array-elements But without ternary and arrow functions to make it more readable
 function insertBufferBetweenExercises() {
      // Creates the buffer between exercises which is really just a new Exercise
@@ -1107,7 +1127,11 @@ function saveNewRoutineToLocalStorage() {
      // Store name of new Routine from input
      const routineName = sanitize(document.getElementById("new-routine-input").value);
 
-     // Inserts buffers
+     // Saves the buffer durations to local storage
+     saveBufferDurationMinutes();
+     saveBufferDurationSeconds();
+
+     // Inserts buffers between exercises
      insertBufferBetweenExercises();
 
      // Saves the Routine to local storage
@@ -1459,7 +1483,6 @@ function initializeTimerDetails() {
      if (JSON.parse(grabbedData).exerciseList.length == 1) {
           upcomingExercises.textContent = "Only one exercise in this routine";
      } else {
-          upcomingExercises.textContent = "A good workout is imminent 😤";
-          // upcomingExercises.textContent = `${parsedData.exerciseList.length - 1} exercises left - next up: ${parsedData.exerciseList[1].name}`;
+          upcomingExercises.textContent = "A great workout is imminent 😤";
      }
 }
