@@ -524,7 +524,7 @@ function showMinusOnButton(sectionId) {
 // Feedback Section
 
 /**
- * * This function shows the user visual feedback if they were able to save a new Exercise or Routine
+ * * This function shows the user visual feedback if they were able to successfully save a new Exercise or Routine
  * @param {string} x will be either "exercise" or "routine"
  * @param {int} durationInMilliseconds how long the button is green for. Default is 1000ms
  */
@@ -576,7 +576,7 @@ function showFeedbackErrorBufferMissingValue(minsOrSecs, durationInMilliseconds 
 }
 
 /**
- * * This function shows the user visual feedback if they try to save a Routine with no Excercises added to the list
+ * * This function shows the user visual feedback if they try to save an Exercise that already exists in local storage
  * @param {int} durationInMilliseconds
  */
 let isShowFeedbackErrorDuplicateExerciseRunning = false;
@@ -739,13 +739,29 @@ function saveNewExerciseToLocalStorage() {
 const saveNewExerciseButton = document.getElementById("button-save-new-exercise");
 saveNewExerciseButton.addEventListener("click", function () {
      const exerciseName = sanitize(document.getElementById("new-exercise-input").value);
+     const existingExerciseData = JSON.parse(localStorage.getItem("exerciseDataKey")) || [];
+
      if (isEmptyString(exerciseName) === true) {
           showFeedbackInputErrorMissingName("exercise");
           return;
      }
 
-     const existingExerciseData = JSON.parse(localStorage.getItem("exerciseDataKey")) || [];
      if (checkIfAlreadyExistsInLocalStorage(existingExerciseData, exerciseName) === true) {
+          showFeedbackErrorDuplicateExercise();
+          return;
+     }
+
+     if (exerciseName.toLowerCase() === "additional rest") {
+          showFeedbackErrorDuplicateExercise();
+          return;
+     }
+
+     if (exerciseName.toLowerCase() === "stretch") {
+          showFeedbackErrorDuplicateExercise();
+          return;
+     }
+
+     if (exerciseName.toLowerCase() === "rest") {
           showFeedbackErrorDuplicateExercise();
           return;
      }
@@ -1166,6 +1182,11 @@ saveNewRoutineButton.addEventListener("click", function () {
           return;
      }
 
+     if (tempExerciseArray.length === 0) {
+          showFeedbackErrorEmptyExerciseList();
+          return;
+     }
+
      const bufferMin = parseInt(document.getElementById("input-buffer-duration-minutes").value);
      if (isNaN(bufferMin) === true) {
           showFeedbackErrorBufferMissingValue("minutes");
@@ -1175,11 +1196,6 @@ saveNewRoutineButton.addEventListener("click", function () {
      const bufferSec = parseInt(document.getElementById("input-buffer-duration-seconds").value);
      if (isNaN(bufferSec) === true) {
           showFeedbackErrorBufferMissingValue("seconds");
-          return;
-     }
-
-     if (tempExerciseArray.length === 0) {
-          showFeedbackErrorEmptyExerciseList();
           return;
      }
 
@@ -1450,6 +1466,7 @@ function tick() {
           return;
      }
 
+     playRestCountdownAudio();
      calculateAndUpdateMinutesAndSeconds();
 }
 
@@ -1467,6 +1484,37 @@ function calculateAndUpdateMinutesAndSeconds() {
 
      // Decrement the time for the current exercise
      totalCountdownTimeInSeconds--;
+}
+
+// 7b - used inside playRestCountdownAudio()
+function playCountdownChimeAudio() {
+     const countdownChimeAudio = new Audio("sounds/countdown-chime.mp3");
+     countdownChimeAudio.play();
+}
+
+// 7c - used inside playRestCountdownAudio()
+function playCountdownGoAudio() {
+     const countdownGoAudio = new Audio("sounds/countdown-go.mp3");
+     countdownGoAudio.play();
+}
+
+// 7d - used inside tick()
+function playRestCountdownAudio() {
+     // Reminder: the getter returns a string so we have to compare with a string
+     if (getSoundsChoiceFromLocalStorage() === "true") {
+          const isRest =
+               tempArrayOfExerciseNames[currentExerciseIndex] === "Rest" || tempArrayOfExerciseNames[currentExerciseIndex] === "Additional Rest";
+
+          const nextExercise = tempArrayOfExerciseNames[currentExerciseIndex + 1];
+
+          if (isRest === true && nextExercise !== "Additional Rest") {
+               if (totalCountdownTimeInSeconds <= 5 && totalCountdownTimeInSeconds >= 2) {
+                    playCountdownChimeAudio();
+               } else if (totalCountdownTimeInSeconds === 1) {
+                    playCountdownGoAudio();
+               }
+          }
+     }
 }
 
 /**
