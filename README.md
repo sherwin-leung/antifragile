@@ -15,7 +15,7 @@ If the app seems broken and issues persist, try [clearing your local storage](ht
 ## 💡How To Use
 
 `
-As of version 1.10 - subject to change with when additional functionalities are implemented
+As of version 1.11 - subject to change with when additional functionalities are implemented
 `
 
 ### First Usage
@@ -94,7 +94,9 @@ _On desktop, you can delete local storage for a site directly without erasing al
 
 <summary>Click to view known bugs</summary>
 
-* 0 (zero) is considered a number to count down a full second for.
+* None so far as of the current version.
+
+* **FIXED in v1.11** - 0 (zero) is considered a number to count down a full second for.
   <br>What should happen: 3.. 2.. 1.. 0 ding!
   <br>What happens right now: 3.. 2.. 1.. 0.. ding!
 
@@ -122,6 +124,9 @@ Listed roughly in order of priority, but subject to change
 <details>
 
 <summary>Click to view version 1 changelog</summary>
+
+* v1.11
+  * Fixed a bug where the timer would consider 0 (zero) a number to fully count down a second for.
 
 * v1.10
   * Added the ability to insert a buffer period (duration-based, just like with exercises) between exercises in a routine. Will not add a buffer period after the last exercise or after any "Additional Rest"
