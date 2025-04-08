@@ -561,6 +561,21 @@ function showFeedbackInputErrorMissingName(x, durationInMilliseconds = 350) {
 }
 
 /**
+ * * This function shows the user visual feedback if they try to save a Routine without filling out either buffer duration input field
+ * @param {string} minsOrSecs
+ * @param {int} durationInMilliseconds
+ */
+function showFeedbackErrorBufferMissingValue(minsOrSecs, durationInMilliseconds = 350) {
+     const bufferInput = document.getElementById(`input-buffer-duration-${minsOrSecs}`);
+
+     bufferInput.classList.add("input-error-missing-value");
+
+     setTimeout(function () {
+          bufferInput.classList.remove("input-error-missing-value");
+     }, durationInMilliseconds);
+}
+
+/**
  * * This function shows the user visual feedback if they try to save a Routine with no Excercises added to the list
  * @param {int} durationInMilliseconds
  */
@@ -667,9 +682,11 @@ function initializeRoutineList() {
      // Start HTML string
      htmlString += "<ol id='ol-currently-loaded-routine'>";
 
-     htmlString += `<p>Rest between each exercise: ${convertToStringAndPad2(getBufferDurationMinutes())}m:${convertToStringAndPad2(
-          getBufferDurationSeconds()
-     )}s</p>`;
+     if (filteredArrayOfExercises.length > 1) {
+          htmlString += `<p>Rest between each exercise: ${convertToStringAndPad2(getBufferDurationMinutes())}m:${convertToStringAndPad2(
+               getBufferDurationSeconds()
+          )}s</p>`;
+     }
 
      for (i = 0; i < filteredArrayOfExercises.length; i++) {
           htmlString += `<li><span class="routine-list-exercise">${filteredArrayOfExercises[i].name}</span> - ${convertToStringAndPad2(
@@ -1076,20 +1093,20 @@ function enforceValidInputSecondsValueForBufferDuration() {
 
 /**
  * * The following FIVE functions are related or work together
- * 1) saveBufferDurationMinutes() stores the buffer's minute duration to local storage (defaults 0 if blank)
- * 2) saveBufferDurationSeconds() stores the buffer's minute duration to local storage (defaults 0 if blank)
- * 3) getBufferDurationMinutes() retrieves and returns the minutes part of a user's desired buffer time (defaults 0 if blank)
- * 4) getBufferDurationSeconds() retrieves and returns the seconds part of a user's desired buffer time (defaults 0 if blank)
+ * 1) saveBufferDurationMinutes() stores the buffer's minute duration to local storage
+ * 2) saveBufferDurationSeconds() stores the buffer's minute duration to local storage
+ * 3) getBufferDurationMinutes() retrieves and returns the minutes part of a user's desired buffer time
+ * 4) getBufferDurationSeconds() retrieves and returns the seconds part of a user's desired buffer time
  * 5) insertBufferBetweenExercises() inserts a "buffer" Exercise *between* each existing Exercise in tempExerciseArray
  */
 // 1
 function saveBufferDurationMinutes() {
-     localStorage.setItem("bufferDurationMinutes", parseInt(document.getElementById("input-buffer-duration-minutes").value) || 0);
+     localStorage.setItem("bufferDurationMinutes", parseInt(document.getElementById("input-buffer-duration-minutes").value));
 }
 
 // 2
 function saveBufferDurationSeconds() {
-     localStorage.setItem("bufferDurationSeconds", parseInt(document.getElementById("input-buffer-duration-seconds").value) || 0);
+     localStorage.setItem("bufferDurationSeconds", parseInt(document.getElementById("input-buffer-duration-seconds").value));
 }
 
 // 3
@@ -1146,6 +1163,18 @@ saveNewRoutineButton.addEventListener("click", function () {
 
      if (isEmptyString(routineName) === true) {
           showFeedbackInputErrorMissingName("routine");
+          return;
+     }
+
+     const bufferMin = parseInt(document.getElementById("input-buffer-duration-minutes").value);
+     if (isNaN(bufferMin) === true) {
+          showFeedbackErrorBufferMissingValue("minutes");
+          return;
+     }
+
+     const bufferSec = parseInt(document.getElementById("input-buffer-duration-seconds").value);
+     if (isNaN(bufferSec) === true) {
+          showFeedbackErrorBufferMissingValue("seconds");
           return;
      }
 

@@ -15,7 +15,7 @@
 
     /* Colors */
     --clr-light-grey-lighter: rgb(219, 219, 219);
-    --clr-light-grey        : rgb(193, 193, 193);
+    --clr-light-grey        : rgb(200, 200, 200);
     --clr-light-grey-darker : rgb(170, 170, 170);
 
     --clr-pastel-yellow-lighter: #f5cc87;
@@ -96,6 +96,19 @@ button {
 
 button:hover {
     cursor: pointer;
+}
+
+/* Removes the increment/decrement arrows for number inputs */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin            : 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
 }
 
 /* End resets */
@@ -669,7 +682,6 @@ label {
 }
 
 /* * Feedback/Animation - for when the user has fully completed all the exercises in their routine without resetting */
-
 .finished-routine-feedback {
     background-image: linear-gradient(45deg,
             #fff8dc,
@@ -813,7 +825,7 @@ label {
         margin-top      : 1rem;
         padding         : 1rem 0;
         border-radius   : 10rem;
-        color           : rgb(31, 31, 31);
+        color           : rgb(35, 35, 35);
         background-color: var(--clr-pastel-yellow-lighter);
     }
 
@@ -1011,19 +1023,28 @@ label {
     label {
         font-size    : var(--slightly-smaller-font-size);
         padding-right: 0.5rem;
-        color        : white;
     }
 
     input {
-        border-radius   : 0.2rem;
-        color           : rgb(31, 31, 31);
-        background-color: white;
-        border          : 0;
+        outline         : 0;
         outline-color   : transparent;
-        width           : 5rem;
+        border          : 0;
+        border-bottom   : 2px solid var(--clr-light-grey);
+        background-color: transparent;
+        color           : var(--clr-light-grey);
+        width           : 3rem;
+        text-align      : center;
         padding         : 2.5px;
         margin          : 0 1.5px;
     }
+
+    /* * Feedback for when either of the buffer's duration inputs are empty */
+    .input-error-missing-value {
+        border-bottom: 2px solid var(--clr-error-red);
+        animation    : horizontal-shaking-less 0.15s infinite;
+    }
+
+
 }
 
 #container-exercise-cards {
@@ -1051,7 +1072,7 @@ label {
     .button-add {
         width        : 100%;
         border-radius: 0.4rem;
-        color        : rgb(31, 31, 31);
+        color        : rgb(35, 35, 35);
     }
 
     .button-exercise {
