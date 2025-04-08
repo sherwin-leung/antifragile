@@ -29,12 +29,13 @@ As of version 1.10 - subject to change with when additional functionalities are 
    * Click/tap on an exercise you want to add to your routine. There are two by default, "Additional Rest" and "Stretch", and you should see your newly added exercise as a button as well. In this example, you would also see "Shadowboxing"
 
    * Fill in the **two** inputs labeled minutes and seconds with the desired exercise duration
-     <br>_Empty or non-numeric (e) values will default to as 0_
+     <br>_- Empty or non-numeric (e) values will default to as 0_
 
    * Press _**Add**_ to append the exercise to the **Exercises To Add** list
 
    * Fill in the **two** inputs beside **Buffer Between Exercises**. This allows you to specify a buffer period between each exercise. Use the "Additional Rest" exercise to increase the buffer period wherever you need in the routine
-     <br>_Does not add a buffer period after the last exercise or after "Additional Rest"s. Empty or non-numeric (e) values will default to as 0_
+     <br>_- Cannot be left blank, specify 0 mins and 0 secs if you want no breaks in between_
+     <br>_- Does not add a buffer period after the last exercise or after any "Additional Rest"_
 
    * Press **Save** to create your routine. You should see your routine's name, the first exercise's name and duration, and buttons to start and stop at the top portion of your screen. If you have additional timer details enabled (the first toggle in settings), you may see more information
      
@@ -123,7 +124,7 @@ Listed roughly in order of priority, but subject to change
 <summary>Click to view version 1 changelog</summary>
 
 * v1.10
-  * Added the ability to insert a buffer period (duration-based, just like with exercises) between exercises in a routine. Will not add a buffer period after the last exercise or after "Additional Rest"s.
+  * Added the ability to insert a buffer period (duration-based, just like with exercises) between exercises in a routine. Will not add a buffer period after the last exercise or after any "Additional Rest"
 
 * v1.09
   * Visual improvements: animated gradients on some buttons, sections expanding/collapsing instead of appearing/disappearing instantly
