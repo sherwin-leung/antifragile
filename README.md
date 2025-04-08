@@ -15,7 +15,7 @@ If the app seems broken and issues persist, try [clearing your local storage](ht
 ## 💡How To Use
 
 `
-As of version 1.11 - subject to change with when additional functionalities are implemented
+As of version 1.12 - subject to change with when additional functionalities are implemented
 `
 
 ### First Usage
@@ -125,8 +125,11 @@ Listed roughly in order of priority, but subject to change
 
 <summary>Click to view version 1 changelog</summary>
 
+* v1.12
+  * Added countdown sounds starting from 5 seconds or less remaining for "Rest" and "Additional Rest"
+
 * v1.11
-  * Fixed a bug where the timer would consider 0 (zero) a number to fully count down a second for.
+  * Fixed a bug where the timer would consider 0 (zero) a number to count down a full second for
 
 * v1.10
   * Added the ability to insert a buffer period (duration-based, just like with exercises) between exercises in a routine. Will not add a buffer period after the last exercise or after any "Additional Rest"
