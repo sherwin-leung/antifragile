@@ -1322,6 +1322,7 @@ function startCountdownForCurrentExercise() {
 
           timerDisplayExerciseName.textContent = "✨Finished!✨";
           timerDisplayExerciseName.classList.add("finished-routine-feedback");
+          timerDisplayCountdown.textContent = "00:00";
 
           // Reminder: the getter returns a string so we have to compare with a string
           if (getSoundsChoiceFromLocalStorage() === "true") {
@@ -1437,7 +1438,7 @@ function stopCountdown() {
 // 7
 function tick() {
      // Stop the countdown when time is up for the current exercise
-     if (totalCountdownTimeInSeconds < 0) {
+     if (totalCountdownTimeInSeconds === 0) {
           clearInterval(timerIntervalId); // Trigger stop
 
           // Move on to the next exercise
