@@ -294,22 +294,34 @@ function displayProperSoundSettingsIcon() {
      }
 }
 
-// 4a
-function playChaewonDayumAudio() {
-     const chaewonDayumAudio = new Audio("sounds/chaewon-dayum.mp3");
-     chaewonDayumAudio.play();
-}
-
-// 4b - played when the user presses the stop button
+// 4a - played when the user presses the stop button
 function playChaewonHeyAudio() {
      const chaewonHeyAudio = new Audio("sounds/chaewon-hey.mp3");
      chaewonHeyAudio.play();
 }
 
-// 4c - played when the user completes their entire routine
+// 4b - played when the user completes their entire routine
 function playImAntifragileAudio() {
      const imAntifragileAudio = new Audio("sounds/im-antifragile.mp3");
      imAntifragileAudio.play();
+}
+
+// 4c - played when 5 seconds of an exercise or rest/additional rest duration (only plays the first four seconds)
+function playCountdownChimeAudio() {
+     const countdownChimeAudio = new Audio("sounds/countdown-chime.mp3");
+     countdownChimeAudio.play();
+}
+
+// 4d - played during the last second of an EXERCISE duration
+function playChaewonDayumAudio() {
+     const chaewonDayumAudio = new Audio("sounds/chaewon-dayum.mp3");
+     chaewonDayumAudio.play();
+}
+
+// 4e - played during the last second of a REST/ADDITIONAL REST duration
+function playCountdownGoAudio() {
+     const countdownGoAudio = new Audio("sounds/countdown-go.mp3");
+     countdownGoAudio.play();
 }
 
 // 5 - used on page load
@@ -1466,8 +1478,9 @@ function tick() {
           return;
      }
 
+     playExerciseCountdownAudio();
      playRestCountdownAudio();
-     calculateAndUpdateMinutesAndSeconds();
+     calculateAndUpdateMinutesAndSeconds(); // Must run after the two audio related functions above
 }
 
 // 7a - used inside tick()
@@ -1486,19 +1499,24 @@ function calculateAndUpdateMinutesAndSeconds() {
      totalCountdownTimeInSeconds--;
 }
 
-// 7b - used inside playRestCountdownAudio()
-function playCountdownChimeAudio() {
-     const countdownChimeAudio = new Audio("sounds/countdown-chime.mp3");
-     countdownChimeAudio.play();
+// 7b - used inside tick()
+function playExerciseCountdownAudio() {
+     // Reminder: the getter returns a string so we have to compare with a string
+     if (getSoundsChoiceFromLocalStorage() === "true") {
+          const isExercise =
+               tempArrayOfExerciseNames[currentExerciseIndex] !== "Rest" && tempArrayOfExerciseNames[currentExerciseIndex] !== "Additional Rest";
+
+          if (isExercise === true) {
+               if (totalCountdownTimeInSeconds <= 5 && totalCountdownTimeInSeconds >= 2) {
+                    playCountdownChimeAudio();
+               } else if (totalCountdownTimeInSeconds === 1) {
+                    playChaewonDayumAudio();
+               }
+          }
+     }
 }
 
-// 7c - used inside playRestCountdownAudio()
-function playCountdownGoAudio() {
-     const countdownGoAudio = new Audio("sounds/countdown-go.mp3");
-     countdownGoAudio.play();
-}
-
-// 7d - used inside tick()
+// 7c - used inside tick()
 function playRestCountdownAudio() {
      // Reminder: the getter returns a string so we have to compare with a string
      if (getSoundsChoiceFromLocalStorage() === "true") {
