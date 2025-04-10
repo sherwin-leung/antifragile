@@ -126,7 +126,8 @@ Listed roughly in order of priority, but subject to change
 <summary>Click to view version 1 changelog</summary>
 
 * v1.12
-  * Added countdown sounds starting from 5 seconds or less remaining for "Rest" and "Additional Rest"
+  * Added countdown sounds starting from 5 seconds or less remaining for any "Rest" and "Additional Rest" blocks
+  * Added countdown sounds for all exercises too after collecting some feedback - thanks Majuba!
 
 * v1.11
   * Fixed a bug where the timer would consider 0 (zero) a number to count down a full second for
