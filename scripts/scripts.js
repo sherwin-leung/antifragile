@@ -154,10 +154,10 @@ setTimeout(function () {
  * * This functions handles generating a random phrase each time the page is loaded/reloaded
  */
 function generateOverlayPhrase() {
-     const arrayOfPhrases = ["dedicated to daniel", "an exercise timer"];
+     const arrayOfPhrases = ['"you have to lock in"<br>- chaewon'];
      const randomIndex = Math.floor(Math.random() * arrayOfPhrases.length);
 
-     document.getElementById("overlay-phrase").textContent = arrayOfPhrases[randomIndex];
+     document.getElementById("overlay-phrase").innerHTML = arrayOfPhrases[randomIndex];
 }
 
 // Settings Section
@@ -818,16 +818,15 @@ function renderExerciseCards() {
      const existingExerciseDataInStringForm = localStorage.getItem("exerciseDataKey");
      const existingExerciseDataInArrayForm = existingExerciseDataInStringForm ? JSON.parse(existingExerciseDataInStringForm) : [];
 
-     // Now for each  exercise in the array
+     // Now for each exercise in the array
      for (i = 0; i < existingExerciseDataInArrayForm.length; i++) {
           const name = existingExerciseDataInArrayForm[i].name;
           createNewExerciseCard(name);
      }
 
-     // Add Event Listeners to to all [Exercise] buttons
+     // Add Event Listeners for buttons
      addEventListenerToExerciseButtons();
-
-     // Add Event Listeners to all [Add] buttons
+     addEventListenerToDeleteButtons();
      addEventListenerToAddButtons();
 
      // Ensures that the minutes (for duration) that a user inputs cannot be a negative number
@@ -861,6 +860,15 @@ function createNewExerciseCard(name) {
      newButtonExercise.classList.add("button-exercise");
      newButtonExercise.id = `${nameHyphenated}`;
      newCard.append(newButtonExercise);
+
+     // Create a button and append it to the parent container. This one is for delete the exercise
+     const newDeleteButton = document.createElement("button");
+     newDeleteButton.textContent = "Delete";
+     newDeleteButton.classList.add("button-delete");
+     newCard.append(newDeleteButton);
+     if (name === "Additional Rest" || name === "Stretch") {
+          newDeleteButton.textContent = "Cannot Delete";
+     }
 
      // Create a new label and append it to the parent container for MINUTES
      const newLabelMinutesDuration = document.createElement("label");
@@ -907,7 +915,7 @@ function createNewExerciseCard(name) {
 }
 
 /**
- * * This function gives all exercise buttons an Event Listener
+ * * This function gives all exercise buttons an Event Listener toggles its visibility on and off
  *
  * 1) On click of a button, it will unhide/"expand" the exercise card associated with  it and hide/"close" previous expanded cards
  * 2) The user clicks on the a button that has its card expanded, it will hide it
@@ -921,7 +929,9 @@ function addEventListenerToExerciseButtons() {
                // Find the parent container of the current button
                const currentParentContainer = currentButton.closest(".exercise-card");
 
-               // Storing the current label, input, and [Add] button's *display*. Call it a "cluster"
+               // Storing the current [Delete] button, label, input, and [Add] button's *display*. Call it a "cluster"
+               const deleteButton = currentParentContainer.querySelector(".button-delete");
+
                const minutesLabel = currentParentContainer.querySelector("label");
                const minutesInput = currentParentContainer.querySelector("input");
 
@@ -937,11 +947,14 @@ function addEventListenerToExerciseButtons() {
                     minutesInput.style.display === "block" &&
                     secondsLabel.style.display === "block" &&
                     secondsInput.style.display === "block" &&
-                    addButton.style.display === "block";
+                    addButton.style.display === "block" &&
+                    deleteButton.style.display === "block";
 
                // First hide all labels, inputs, and [Add] buttons
                const allContainers = document.querySelectorAll(".exercise-card");
                allContainers.forEach(function (container) {
+                    container.querySelector(".button-delete").style.display = "none";
+
                     container.querySelector("label").style.display = "none";
                     container.querySelector("input").style.display = "none";
 
@@ -953,6 +966,8 @@ function addEventListenerToExerciseButtons() {
 
                // Then if the current cluster is hidden, unhide/show it. That way, only cluster is expanded/shown is shown at a time (the one that's clicked)
                if (isCurrentClusterVisible === false) {
+                    deleteButton.style.display = "block";
+
                     minutesLabel.style.display = "block";
                     minutesInput.style.display = "block";
 
@@ -964,6 +979,37 @@ function addEventListenerToExerciseButtons() {
 
                // Stores id of current exerciseButton selected/"expanded" in global variable to keep track of which is selected/"expanded"
                currentlySelectedExerciseButtonId = currentButton.id;
+          });
+     });
+}
+
+/**
+ * * This function allows the user to delete an exercise card by pressing the [Delete] button
+ * Paired with it is the Event Listener function that assigns the function to ALL [delete] buttons
+ * Does not work with "Additional Rest" and "Stretch" as those are not meant to be deleted - subject to change based on feedback
+ */
+function deleteExerciseFromLocalStorage() {
+     const existingExerciseData = JSON.parse(localStorage.getItem("exerciseDataKey")) || [];
+     // currentlySelectedExerciseButtonId is a global variable
+     const exerciseToDelete = currentlySelectedExerciseButtonId.split("-").join(" ");
+
+     for (i = 0; i < existingExerciseData.length; i++) {
+          if (existingExerciseData[i].name.toLowerCase() === exerciseToDelete.toLowerCase()) {
+               existingExerciseData.splice(i, 1);
+               localStorage.setItem("exerciseDataKey", JSON.stringify(existingExerciseData));
+               refreshExerciseCards();
+               return;
+          }
+     }
+}
+
+// Paired with above
+function addEventListenerToDeleteButtons() {
+     const deleteButtons = document.querySelectorAll(".button-delete");
+
+     deleteButtons.forEach(function (currentButton) {
+          currentButton.addEventListener("click", function () {
+               deleteExerciseFromLocalStorage();
           });
      });
 }
@@ -985,7 +1031,7 @@ function addToTempExerciseList() {
      tempExerciseArray.push(newExercise); // tempExerciseArray in global variables
 }
 
-// Paired with above and below
+// Paired with above and below (displayRoutineBeingBuiltDetails)
 function addEventListenerToAddButtons() {
      const addButtons = document.querySelectorAll(".button-add");
 
@@ -1481,6 +1527,7 @@ function tick() {
      playExerciseCountdownAudio();
      playRestCountdownAudio();
      calculateAndUpdateMinutesAndSeconds(); // Must run after the two audio related functions above
+     updateCurrentExerciseName();
 }
 
 // 7a - used inside tick()
@@ -1488,9 +1535,6 @@ function calculateAndUpdateMinutesAndSeconds() {
      // Calculate minutes and seconds for the current exercise
      const displayMinutes = Math.floor(totalCountdownTimeInSeconds / 60);
      const displaySeconds = totalCountdownTimeInSeconds % 60;
-
-     // Update display with the current exercise name
-     timerDisplayExerciseName.textContent = tempArrayOfExerciseNames[currentExerciseIndex];
 
      // Update the display with the current exercise time
      timerDisplayCountdown.textContent = `${convertToStringAndPad2(displayMinutes)}:${convertToStringAndPad2(displaySeconds)}`;
@@ -1500,6 +1544,12 @@ function calculateAndUpdateMinutesAndSeconds() {
 }
 
 // 7b - used inside tick()
+function updateCurrentExerciseName() {
+     // Update display with the current exercise name
+     timerDisplayExerciseName.textContent = tempArrayOfExerciseNames[currentExerciseIndex];
+}
+
+// 7c - used inside tick()
 function playExerciseCountdownAudio() {
      // Reminder: the getter returns a string so we have to compare with a string
      if (getSoundsChoiceFromLocalStorage() === "true") {
@@ -1516,7 +1566,7 @@ function playExerciseCountdownAudio() {
      }
 }
 
-// 7c - used inside tick()
+// 7d - used inside tick()
 function playRestCountdownAudio() {
      // Reminder: the getter returns a string so we have to compare with a string
      if (getSoundsChoiceFromLocalStorage() === "true") {
