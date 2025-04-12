@@ -1079,7 +1079,7 @@ label {
 
     .button-exercise {
         background-color: var(--clr-lilac);
-        padding         : 0.55rem 0;
+        padding         : 0.6rem 0;
     }
 
     .button-exercise:hover,
@@ -1108,11 +1108,10 @@ label {
     }
 
     .button-delete {
-        background-color: var(--clr-light-grey-darker);
+        background-color: dimgray;
         color           : floralwhite;
         padding         : 0.25rem;
         margin          : 0.35rem 0 0;
-
     }
 }
 

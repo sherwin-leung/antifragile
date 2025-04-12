@@ -872,6 +872,7 @@ function createNewExerciseCard(name) {
      newCard.append(newDeleteButton);
      if (name === "Additional Rest" || name === "Stretch") {
           newDeleteButton.textContent = "Cannot Delete";
+          newDeleteButton.style.backgroundColor = "var(--clr-light-grey-darker";
      }
 
      // Create a new label and append it to the parent container for MINUTES
