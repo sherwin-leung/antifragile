@@ -818,6 +818,10 @@ function renderExerciseCards() {
      const existingExerciseDataInStringForm = localStorage.getItem("exerciseDataKey");
      const existingExerciseDataInArrayForm = existingExerciseDataInStringForm ? JSON.parse(existingExerciseDataInStringForm) : [];
 
+     // Sorts the array of exercise objects alphabetically by the exercise objects' name
+     // Syntax explanation: https://stackoverflow.com/questions/1129216/sort-array-of-objects-by-string-property-value
+     existingExerciseDataInArrayForm.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
+
      // Now for each exercise in the array
      for (i = 0; i < existingExerciseDataInArrayForm.length; i++) {
           const name = existingExerciseDataInArrayForm[i].name;
