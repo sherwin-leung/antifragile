@@ -15,13 +15,14 @@ If the app seems broken and issues persist, try [clearing your local storage](ht
 ## 💡How To Use
 
 `
-As of version 1.12 - subject to change with when additional functionalities are implemented
+As of version 1.13 - subject to change with when additional functionalities are implemented
 `
 
 ### First Usage
 
 1. Press the pill shaped **Exercise** button to expand the section.
    * Enter in an exercise name, eg. "Shadowboxing", and press **Save**. This exercise will be saved and displayed in step 2
+   <br>_- Note, exercises are not appended at the end, but rather alphabetically by name - with the exception of **Additional Rest** and **Stretch** which are always at the top (subject to change)_
 
 2. Press the pill shaped **Routine** button to expand the section
    * Enter a routine name
@@ -43,11 +44,15 @@ As of version 1.12 - subject to change with when additional functionalities are 
 
 4. Optional: Play around with the settings under the app's title in the header (they're toggles)
 
+5. Optional: If you need to delete an exercise, just click/tap on it then click/tap **_Delete_**
+
 ### Subsequent Uses
 
-* To add a new exercise, simply repeat step 1 above. The new exercise's button will be appended in the **Routine** section
+* To add a new exercise, simply repeat step 1 above. The new exercise's button will be added in the **Routine** section
 
-* To add a new routine, simply repeat step 2 above. This will _**overwrite**_ the previous routine until the ability for multiple routines is implemented
+* To delete an unwanted existing exercise, just click/tap on it then click/tap **_Delete_**
+
+* To add a new routine, simply repeat step 2 from instructions above. This will _**overwrite**_ the previous routine until the ability for multiple routines is implemented
 
 ## 💾 About Storage of Data
 
@@ -110,12 +115,13 @@ _On desktop, you can delete local storage for a site directly without erasing al
 
 Listed roughly in order of priority, but subject to change
 
-* Ability to delete exercises
-* Sort excercise buttons by alphabetical order
+* Ability to favorite exercises (they will show up at the top of the list)
 
-* Store and load multiple routines
+* Revamp the instructions/information section into a popup
 
 * Ability to export data to a JSON file
+
+* Store and load multiple routines
 
 </details>
 
@@ -124,6 +130,10 @@ Listed roughly in order of priority, but subject to change
 <details>
 
 <summary>Click to view version 1 changelog</summary>
+
+* v1.13
+  * Added the ability to delete unwanted exercises
+  * Changed the exercise buttons to be displayed alphabetically (except Additional Rest and Stretch which stay at the top). _Subject to change based on feedback!_
 
 * v1.12
   * Added countdown sounds starting from 5 seconds or less remaining for any "Rest" and "Additional Rest" blocks
