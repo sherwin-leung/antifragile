@@ -1250,16 +1250,19 @@ saveNewRoutineButton.addEventListener("click", function () {
           return;
      }
 
-     const bufferMin = parseInt(document.getElementById("input-buffer-duration-minutes").value);
-     if (isNaN(bufferMin) === true) {
-          showFeedbackErrorBufferMissingValue("minutes");
-          return;
-     }
+     // If there is only one exercise, no need to force the user to input a buffer
+     if (tempExerciseArray.length >= 2) {
+          const bufferMin = parseInt(document.getElementById("input-buffer-duration-minutes").value);
+          if (isNaN(bufferMin) === true) {
+               showFeedbackErrorBufferMissingValue("minutes");
+               return;
+          }
 
-     const bufferSec = parseInt(document.getElementById("input-buffer-duration-seconds").value);
-     if (isNaN(bufferSec) === true) {
-          showFeedbackErrorBufferMissingValue("seconds");
-          return;
+          const bufferSec = parseInt(document.getElementById("input-buffer-duration-seconds").value);
+          if (isNaN(bufferSec) === true) {
+               showFeedbackErrorBufferMissingValue("seconds");
+               return;
+          }
      }
 
      // Save the routine if everything is okay
